@@ -11,6 +11,7 @@ const Form = () => {
     tg.MainButton.setParams({
       text: 'відправити данні',
     });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const Form = () => {
     } else {
       tg.MainButton.show();
     }
+    // eslint-disable-next-line
   }, [state, street]);
   return (
     <div className="form">
@@ -44,5 +46,4 @@ const Form = () => {
     </div>
   );
 };
-
 export default Form;
