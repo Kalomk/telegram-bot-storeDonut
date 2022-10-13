@@ -1,0 +1,22 @@
+.form {
+  h3 {
+    font-size: 24px;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 25px;
+  input {
+    width: 100%;
+    padding: 15px;
+    max-width: 450px;
+    border-radius: 7px;
+  }
+  select {
+    width: 100%;
+    padding: 15px;
+    max-width: 450px;
+    border-radius: 7px;
+  }
+}
