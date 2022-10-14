@@ -3,7 +3,7 @@ import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import useTelegram from './hooks/useTelegram';
 import Header from './components/Header/Header';
-import ItemList from './components/ItemList/ItemList';
+import ProductList from './components/ProductList/ProductList';
 import Form from './components/Form/Form';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<ItemList />} />
+        <Route path="/" element={<ProductList />} />
         <Route path="/form" element={<Form />} />
       </Routes>
     </div>

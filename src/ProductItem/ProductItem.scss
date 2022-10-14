@@ -1,0 +1,22 @@
+.product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px;
+  border: 1px solid var(--tg-theme-button-color);
+  &__img {
+    width: 100%;
+    background-color: lightgray;
+    height: 100px;
+  }
+  &__description {
+    font-size: 18px;
+  }
+  &__price {
+    font-size: 12px;
+  }
+  &__btn {
+    width: 100%;
+  }
+}

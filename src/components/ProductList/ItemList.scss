@@ -1,0 +1,4 @@
+.product__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+}
