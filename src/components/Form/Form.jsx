@@ -21,7 +21,7 @@ const Form = () => {
       select,
     };
     tg.sendData(JSON.stringify(data));
-  });
+  }, [select, state, street]);
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
     return () => {
@@ -54,7 +54,11 @@ const Form = () => {
         value={street}
         placeholder="Вулиця"
       />
-      <select onChange={(e) => setSelect(e.target.value)} value={select} className="form__select">
+      <select
+        onChange={(e) => setSelect(e.target.value)}
+        value={select}
+        className="form-control form-control-lg"
+      >
         <option value="physical">Фіз.обліччя</option>
         <option value="legal">Юр.обліччя</option>
       </select>
