@@ -1,6 +1,7 @@
 import './ItemList.scss';
 import { useState } from 'react';
 import useTelegram from '../../hooks/useTelegram';
+import ProductItem from '../../ProductItem/ProductItem';
 const products = [
   {
     id: '1',
@@ -60,7 +61,7 @@ const products = [
 function getTotalPrice(items = []) {
   return items.reduce((acc, item) => {
     return (acc += item.price);
-  });
+  }, 0);
 }
 const ProductList = () => {
   const [items, setNewitems] = useState([]);
@@ -86,7 +87,7 @@ const ProductList = () => {
   return (
     <ul className="product__items">
       {products.map((item) => (
-        <ProductList key={item.id} products={item} className={'item'} onAdd={onAdd} />
+        <ProductItem key={item.id} product={item} className={'item'} onAdd={onAdd} />
       ))}
     </ul>
   );

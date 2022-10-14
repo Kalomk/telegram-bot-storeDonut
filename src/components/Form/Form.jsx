@@ -7,36 +7,36 @@ const Form = () => {
   const [street, setStreet] = useState('');
   const [select, setSelect] = useState('physical');
   const { tg } = useTelegram();
-  useEffect(() => {
-    tg.MainButton.setParams({
-      text: 'відправити данні',
-    });
-    // eslint-disable-next-line
-  }, []);
+  //   useEffect(() => {
+  //     tg.MainButton.setParams({
+  //       text: 'відправити данні',
+  //     });
+  //     // eslint-disable-next-line
+  //   }, []);
 
-  const onSendData = useCallback(() => {
-    const data = {
-      state,
-      street,
-      select,
-    };
-    tg.sendData(JSON.stringify(data));
-  }, [select, state, street]);
-  useEffect(() => {
-    tg.onEvent('mainButtonClicked', onSendData);
-    return () => {
-      tg.onEvent.offEvent('mainButtonClicked', onSendData);
-    };
-  }, []);
+  //   const onSendData = useCallback(() => {
+  //     const data = {
+  //       state,
+  //       street,
+  //       select,
+  //     };
+  //     tg.sendData(JSON.stringify(data));
+  //   }, [select, state, street]);
+  //   useEffect(() => {
+  //     tg.onEvent('mainButtonClicked', onSendData);
+  //     return () => {
+  //       tg.onEvent.offEvent('mainButtonClicked', onSendData);
+  //     };
+  //   }, []);
 
-  useEffect(() => {
-    if (!street || !state) {
-      tg.MainButton.hide();
-    } else {
-      tg.MainButton.show();
-    }
-    // eslint-disable-next-line
-  }, [state, street]);
+  //   useEffect(() => {
+  //     if (!street || !state) {
+  //       tg.MainButton.hide();
+  //     } else {
+  //       tg.MainButton.show();
+  //     }
+  //     // eslint-disable-next-line
+  //   }, [state, street]);
   return (
     <div className="form">
       <h3>Введіть ваші данні</h3>
