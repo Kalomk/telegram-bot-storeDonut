@@ -1,5 +1,5 @@
 import './ItemList.scss';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import ProductItem from '../../ProductItem/ProductItem';
 const products = [
@@ -65,7 +65,7 @@ function getTotalPrice(items = []) {
 }
 const ProductList = () => {
   const [items, setNewitems] = useState([]);
-  const { tg } = useTelegram();
+  const { tg, queryId } = useTelegram();
   const onAdd = (product) => {
     const findProduct = items.find((item) => item.id === product.id);
     let newItem = [];
@@ -80,10 +80,31 @@ const ProductList = () => {
     } else {
       tg.MainButton.show();
       tg.MainButton.setParams({
-        text: `Купити ${getTotalPrice(newItem)}`,
+        text: `Купити ${getTotalPrice(newItem)}грн`,
       });
     }
   };
+  const onSendData = useCallback(() => {
+    const data = {
+      products: items,
+      totalPrice: getTotalPrice(items),
+      queryId,
+    };
+    fetch('http://85.119.146.179:8000/web-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  }, [items]);
+
+  useEffect(() => {
+    tg.onEvent('mainButtonClicked', onSendData);
+    return () => {
+      tg.offEvent('mainButtonClicked', onSendData);
+    };
+  }, [onSendData]);
   return (
     <ul className="product__items">
       {products.map((item) => (
