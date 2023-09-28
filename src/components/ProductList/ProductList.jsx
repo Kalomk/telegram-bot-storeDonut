@@ -2,60 +2,71 @@ import './ItemList.scss';
 import { useState, useCallback, useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import ProductItem from '../../ProductItem/ProductItem';
+import img from './2581706.jpeg';
+
 const products = [
   {
     id: '1',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 12,
+    img,
   },
   {
     id: '2',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 34,
+    img,
   },
   {
     id: '3',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 14,
+    img,
   },
   {
     id: '4',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 34,
+    img,
   },
   {
     id: '5',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 44,
+    img,
   },
   {
     id: '6',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 24,
+    img,
   },
   {
     id: '7',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 124,
+    img,
   },
   {
     id: '8',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 34,
+    img,
   },
   {
     id: '9',
-    title: 'Donatello pizza',
+    title: 'Sneki rybni',
     description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
+    price: 64,
+    img,
   },
 ];
 function getTotalPrice(items = []) {
