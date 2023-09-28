@@ -2,7 +2,7 @@ import './ItemList.scss';
 import { useState, useCallback, useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import ProductItem from '../../ProductItem/ProductItem';
-import img from './2581706.jpeg';
+import img from './fish-44-1024x602.png';
 
 const products = [
   {
