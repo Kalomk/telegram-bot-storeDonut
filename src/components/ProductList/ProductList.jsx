@@ -11,6 +11,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 12,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '2',
@@ -18,6 +19,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '3',
@@ -25,6 +27,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 14,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '4',
@@ -32,6 +35,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '5',
@@ -39,6 +43,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 44,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '6',
@@ -46,6 +51,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 24,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '7',
@@ -53,6 +59,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 124,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '8',
@@ -60,6 +67,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
+    weight: [100, 200, 250],
   },
   {
     id: '9',
@@ -67,12 +75,23 @@ const products = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 64,
     img,
+    weight: [100, 200, 250],
   },
 ];
 function getTotalPrice(items = []) {
   return items.reduce((acc, item) => {
     return (acc += item.price);
   }, 0);
+}
+
+function getTotalWeight(items = [], selectedIndex) {
+  return items.reduce((acc, item) => {
+    return (acc += item.weight[selectedIndex]);
+  }, 0);
+}
+
+function getSelectedIndex(selectedIndex = 0) {
+  return selectedIndex;
 }
 const ProductList = () => {
   const [items, setNewitems] = useState([]);
@@ -89,9 +108,13 @@ const ProductList = () => {
     if (newItem.length === 0) {
       tg.MainButton.hide();
     } else {
+      console.log(`вес: ${getTotalWeight(newItem, getSelectedIndex())} грам`);
       tg.MainButton.show();
       tg.MainButton.setParams({
-        text: `Купити ${getTotalPrice(newItem)}грн`,
+        text: `Всього: ${getTotalPrice(newItem)} грн         ${getTotalWeight(
+          newItem,
+          getSelectedIndex()
+        )} грам`,
       });
     }
   };
@@ -119,7 +142,13 @@ const ProductList = () => {
   return (
     <ul className="product__items">
       {products.map((item) => (
-        <ProductItem key={item.id} product={item} className={'item'} onAdd={onAdd} />
+        <ProductItem
+          selectIndexWeight={getSelectedIndex}
+          key={item.id}
+          product={item}
+          className={'item'}
+          onAdd={onAdd}
+        />
       ))}
     </ul>
   );
