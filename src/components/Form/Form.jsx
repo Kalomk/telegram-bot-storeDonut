@@ -27,7 +27,7 @@ const Form = () => {
     return () => {
       tg.onEvent.offEvent('mainButtonClicked', onSendData);
     };
-  }, []);
+  }, [onSendData]);
 
   useEffect(() => {
     if (!street || !state) {
