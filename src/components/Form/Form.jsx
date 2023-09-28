@@ -22,10 +22,11 @@ const Form = () => {
     };
     tg.sendData(JSON.stringify(data));
   }, [select, state, street]);
+
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
     return () => {
-      tg.onEvent.offEvent('mainButtonClicked', onSendData);
+      tg.offEvent('mainButtonClicked', onSendData);
     };
   }, [onSendData]);
 
