@@ -7,8 +7,8 @@ const ProductItem = ({ product, className, onAdd }) => {
   };
   return (
     <li className={'product ' + className}>
-      <div className="product__title">{product.title}</div>
       <img src={product.img} alt="rybki" className="product__img" />
+      <div className="product__title">{product.title}</div>
       <div className="product__description">{product.description}</div>
       <div className="product__price">
         <span>Вартість:</span> <b>{product.price}</b>
