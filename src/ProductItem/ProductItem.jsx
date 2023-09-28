@@ -18,9 +18,9 @@ const ProductItem = ({ product, className, onAdd, selectIndexWeight }) => {
         <span>Вартість:</span> <b>{product.price}</b>
       </div>
       <ul className="product__weight">
-        {product.weight.map((item, index) => (
-          <li key={item} onClick={() => onIndexWeightSelect(index)}>
-            <Button className="proudct_button"></Button>
+        {product.weight.map((weight, index) => (
+          <li key={weight} onClick={() => onIndexWeightSelect(index)}>
+            <button className="product_button">{weight}</button>
           </li>
         ))}
       </ul>

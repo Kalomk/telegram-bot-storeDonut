@@ -84,17 +84,15 @@ function getTotalPrice(items = []) {
   }, 0);
 }
 
-function getTotalWeight(items = [], selectedIndex) {
+function getTotalWeight(items = [], selectedIndex = 0) {
   return items.reduce((acc, item) => {
     return (acc += item.weight[selectedIndex]);
   }, 0);
 }
 
-function getSelectedIndex(selectedIndex = 0) {
-  return selectedIndex;
-}
 const ProductList = () => {
   const [items, setNewitems] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const { tg, queryId } = useTelegram();
   const onAdd = (product) => {
     const findProduct = items.find((item) => item.id === product.id);
@@ -108,12 +106,12 @@ const ProductList = () => {
     if (newItem.length === 0) {
       tg.MainButton.hide();
     } else {
-      console.log(`вес: ${getTotalWeight(newItem, getSelectedIndex())} грам`);
+      console.log(`вес: ${getTotalWeight(newItem)} грам`);
       tg.MainButton.show();
       tg.MainButton.setParams({
         text: `Всього: ${getTotalPrice(newItem)} грн         ${getTotalWeight(
           newItem,
-          getSelectedIndex()
+          selectedIndex
         )} грам`,
       });
     }
@@ -143,7 +141,7 @@ const ProductList = () => {
     <ul className="product__items">
       {products.map((item) => (
         <ProductItem
-          selectIndexWeight={getSelectedIndex}
+          selectIndexWeight={setSelectedIndex}
           key={item.id}
           product={item}
           className={'item'}
