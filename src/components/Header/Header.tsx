@@ -10,7 +10,7 @@ const Header = () => {
     <header className="header">
       <div className="header__btns">
         {btnsItems.map((item) => (
-          <Button bg__style="bgempty" onClick={onClose}>
+          <Button key={item} bg__style="bgempty" onClick={onClose}>
             {item}
           </Button>
         ))}

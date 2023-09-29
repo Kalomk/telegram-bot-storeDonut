@@ -93,12 +93,6 @@ function getTotalPrice(items: ProductType[]) {
   }, 0);
 }
 
-function getTotalWeight(items: ProductType[], selectedIndex: number) {
-  return items.reduce((acc, item) => {
-    return (acc += item.weight[selectedIndex]);
-  }, 0);
-}
-
 const ProductList = () => {
   const [items, setNewitems] = useState<ProductType[]>([]);
   const { tg, queryId } = useTelegram();
@@ -115,12 +109,13 @@ const ProductList = () => {
     if (newItem.length === 0) {
       tg.MainButton.hide();
     } else {
+      // console.log(getTotalWeight(newItem, selectedIndex));
       tg.MainButton.show();
       tg.MainButton.setParams({
-        text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
-          newItem,
-          selectedIndex
-        )} грам`,
+        // text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
+        //   newItem,
+        //   selectedIndex
+        // )} грам`,
       });
     }
   };

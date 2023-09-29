@@ -1,9 +1,10 @@
 .btn {
-  padding: 10px 15px;
+  padding: 8px 12px;
   outline: none;
   cursor: pointer;
   color: var(--tg-theme-button-text-color);
   border-radius: 12px;
+  font-size: 12px;
 
   &__primary {
     background-color: var(--tg-theme-button-color);
