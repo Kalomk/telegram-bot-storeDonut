@@ -8,16 +8,7 @@ interface ButtonStylesType {
 }
 
 const Button = (props: ButtonType) => {
-  return (
-    <button
-      {...props}
-      className={
-        'btn ' + props.className + props.bg__style === 'primary'
-          ? ' btn__primary '
-          : ' btn__bgempty '
-      }
-    />
-  );
+  return <button {...props} className={'btn ' + props.className + ` btn__${props.bg__style} `} />;
 };
 
 export default Button;

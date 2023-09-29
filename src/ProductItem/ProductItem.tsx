@@ -27,7 +27,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className, onAdd }) 
       <ul className="product__weight">
         {product.weight.map((weight, index) => (
           <li key={index + weight} onClick={() => setSelectedIndex(index)}>
-            <Button bg__style="bgempty" className="product__button">
+            <Button
+              bg__style={index === selectedIndex ? 'primary' : 'bgempty'}
+              className="product__button"
+            >
               {weight}
             </Button>
           </li>

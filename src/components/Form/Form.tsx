@@ -91,7 +91,7 @@ const Form = () => {
       <input
         className="form__street"
         type="text"
-        name="stree"
+        name="street"
         onChange={onHandleChange}
         value={userData.street}
         placeholder="Вулиця"
