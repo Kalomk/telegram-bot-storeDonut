@@ -87,15 +87,28 @@ const products: ProductType[] = [
     weight: [100, 200, 250],
   },
 ];
-function getTotalPrice(items: ProductType[]) {
-  return items.reduce((acc, item) => {
-    return (acc += item.price);
-  }, 0);
-}
 
 const ProductList = () => {
   const [items, setNewitems] = useState<ProductType[]>([]);
+  const [counter, setCounter] = useState<number>(0);
   const { tg, queryId } = useTelegram();
+
+  function getTotalPrice(items: ProductType[]) {
+    return items.reduce((acc, item) => {
+      return (acc += item.price);
+    }, 0);
+  }
+
+  function getTotalWeight(items: ProductType[], selectedIndex: number) {
+    return items.reduce((acc, item) => {
+      console.log(
+        'total: ' + acc,
+        'current: ' + item.weight[selectedIndex],
+        'sel: ' + selectedIndex
+      );
+      return (acc += item.weight[selectedIndex]);
+    }, 0);
+  }
 
   const onAdd = (product: ProductType, selectedIndex: number) => {
     const findProduct = items.find((item) => item.id === product.id);
@@ -109,13 +122,13 @@ const ProductList = () => {
     if (newItem.length === 0) {
       tg.MainButton.hide();
     } else {
-      // console.log(getTotalWeight(newItem, selectedIndex));
+      console.log(getTotalWeight(newItem, selectedIndex));
       tg.MainButton.show();
       tg.MainButton.setParams({
-        // text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
-        //   newItem,
-        //   selectedIndex
-        // )} грам`,
+        text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
+          newItem,
+          selectedIndex
+        )} грам`,
       });
     }
   };
