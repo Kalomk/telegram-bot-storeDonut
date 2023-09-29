@@ -1,5 +1,7 @@
 const useTelegram = () => {
-  const tg = window.Telegram.WebApp;
+  // Access the Telegram property using the type declaration
+  const tg = window?.Telegram.WebApp;
+
   const onClose = () => {
     tg.close();
   };

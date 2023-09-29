@@ -17,12 +17,15 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
+    margin: 7px 0;
   }
   &__button {
-    max-width: 50px;
-    border-radius: 25px;
-    height: 25px;
+    &:active {
+      position: relative;
+      top: 1px;
+    }
   }
+
   &__description {
     font-size: 18px;
   }

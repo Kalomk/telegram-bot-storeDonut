@@ -2,9 +2,18 @@ import './ItemList.scss';
 import { useState, useCallback, useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import ProductItem from '../../ProductItem/ProductItem';
-import img from './fish-44-1024x602.png';
+import img from '../../images/fish-44-1024x602.png';
 
-const products = [
+export interface ProductType {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  img: typeof img;
+  weight: number[];
+}
+
+const products: ProductType[] = [
   {
     id: '1',
     title: 'Sneki rybni',
@@ -78,25 +87,25 @@ const products = [
     weight: [100, 200, 250],
   },
 ];
-function getTotalPrice(items = []) {
+function getTotalPrice(items: ProductType[]) {
   return items.reduce((acc, item) => {
     return (acc += item.price);
   }, 0);
 }
 
-function getTotalWeight(items = [], selectedIndex = 0) {
+function getTotalWeight(items: ProductType[], selectedIndex: number) {
   return items.reduce((acc, item) => {
     return (acc += item.weight[selectedIndex]);
   }, 0);
 }
 
 const ProductList = () => {
-  const [items, setNewitems] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [items, setNewitems] = useState<ProductType[]>([]);
   const { tg, queryId } = useTelegram();
-  const onAdd = (product) => {
+
+  const onAdd = (product: ProductType, selectedIndex: number) => {
     const findProduct = items.find((item) => item.id === product.id);
-    let newItem = [];
+    let newItem: ProductType[] = [];
     if (findProduct) {
       newItem = items.filter((item) => item.id !== product.id);
     } else {
@@ -106,10 +115,9 @@ const ProductList = () => {
     if (newItem.length === 0) {
       tg.MainButton.hide();
     } else {
-      console.log(`вес: ${getTotalWeight(newItem)} грам`);
       tg.MainButton.show();
       tg.MainButton.setParams({
-        text: `Всього: ${getTotalPrice(newItem)} грн         ${getTotalWeight(
+        text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
           newItem,
           selectedIndex
         )} грам`,
@@ -140,13 +148,7 @@ const ProductList = () => {
   return (
     <ul className="product__items">
       {products.map((item) => (
-        <ProductItem
-          selectIndexWeight={setSelectedIndex}
-          key={item.id}
-          product={item}
-          className={'item'}
-          onAdd={onAdd}
-        />
+        <ProductItem key={item.id} product={item} className={'item'} onAdd={onAdd} />
       ))}
     </ul>
   );
