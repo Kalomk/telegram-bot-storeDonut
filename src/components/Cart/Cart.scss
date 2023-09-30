@@ -22,12 +22,7 @@
       transform: translate(0, 10px);
       transition: all 500ms ease-in;
     }
-    &-price {
-      @media (max-width: $breakPoint768) {
-        margin: 15px;
-        gap: 50px;
-      }
-    }
+
     &-remove {
       svg {
         cursor: pointer;

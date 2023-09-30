@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearItems } from '../../slices/cartSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../store';
+import './Cart.scss';
 
 const Cart: React.FC = () => {
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);

@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { removeItems, minusItem, addItems } from '../../slices/cartSlice';
+import './Cart.scss';
 
 type CartItems = {
   title: string;
