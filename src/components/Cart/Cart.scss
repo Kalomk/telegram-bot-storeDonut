@@ -8,11 +8,11 @@
         fill: var(--tg-theme-button-color);
       }
       circle {
-        fill: var(--tg-theme-button-color);
+        fill: var(--tg-theme-button-text-color);
         stroke: var(--tg-theme-button-color);
       }
     }
-    border-bottom: 1px black solid;
+    border-bottom: 1px var(--tg-theme-button-text-color) solid;
 
     &-enter {
       opacity: 0.01;
@@ -185,4 +185,13 @@
   justify-self: center;
   align-items: center;
   gap: 7px;
+  span {
+    color: var(--tg-theme-button-text-color);
+  }
+}
+
+.pay-btn {
+  span {
+    color: var(--tg-theme-button-text-color);
+  }
 }

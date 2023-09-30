@@ -7,7 +7,7 @@ import { changeProductFilter } from '../../slices/filterSlice';
 const Header = () => {
   const { user } = useTelegram();
   const dispatch = useDispatch();
-  const btnsItems = ['Cушена риба', 'Кальмари', 'Снеки'];
+  const btnsItems = ['Всі', 'Cушена риба', 'Кальмари', 'Снеки'];
   return (
     <header className="header">
       <div className="header__btns">
@@ -21,7 +21,6 @@ const Header = () => {
           </Button>
         ))}
       </div>
-      <span className="username">{user?.username}</span>
     </header>
   );
 };

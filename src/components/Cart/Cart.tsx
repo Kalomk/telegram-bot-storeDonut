@@ -8,17 +8,23 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../store';
 import './Cart.scss';
 import Button from '../Button/Buttons';
+import { useEffect } from 'react';
+import useTelegram from '../../hooks/useTelegram';
 
 const Cart: React.FC = () => {
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
+  const { tg } = useTelegram();
 
   const Clear = () => {
     if (window.confirm('Are you sure want to clear all pizzas')) {
       dispatch(clearItems());
     }
   };
+  useEffect(() => {
+    tg.MainButton.hide();
+  }, []);
 
   const element = cartItems.map((item) => {
     return (
@@ -58,7 +64,7 @@ const Cart: React.FC = () => {
               </span>
             </div>
             <TransitionGroup component="div">{element}</TransitionGroup>
-            <div className="cart__bottom-buttons">
+            <div className="cart__bottom-buttons" style={{ marginTop: 10 }}>
               <Button bg__style="primary">
                 <a href="/" className="button button--outline button--add go-back-btn">
                   <img src={arrow} alt="" />
