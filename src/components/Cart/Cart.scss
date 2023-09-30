@@ -3,6 +3,16 @@
   &__item {
     flex-direction: column;
     justify-content: center;
+    svg {
+      path {
+        fill: var(--tg-theme-button-color);
+      }
+      circle {
+        fill: var(--tg-theme-button-color);
+        stroke: var(--tg-theme-button-color);
+      }
+    }
+    border-bottom: 1px black solid;
 
     &-enter {
       opacity: 0.01;
@@ -26,16 +36,6 @@
     &-remove {
       svg {
         cursor: pointer;
-        &:hover {
-          transition: all 0.3s ease-in 0s;
-          circle {
-            fill: red;
-            stroke: red;
-          }
-          path {
-            fill: #fff;
-          }
-        }
       }
     }
   }
@@ -67,19 +67,10 @@
     align-items: center;
     svg {
       cursor: pointer;
-      &:hover {
-        transition: all 0.3s ease-in 0s;
-        circle {
-          fill: var(--tg-theme-button-color);
-        }
-        path {
-          fill: var(--tg-theme-button-text-color);
-        }
-      }
     }
   }
 
-  margin-top: 163px;
+  margin-top: 42px;
   &__top {
     display: flex;
     justify-content: space-between;
@@ -187,4 +178,11 @@
       background: #f7f7f7;
     }
   }
+}
+
+.go-back-btn {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  gap: 7px;
 }

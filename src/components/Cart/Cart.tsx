@@ -7,6 +7,7 @@ import { clearItems } from '../../slices/cartSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../store';
 import './Cart.scss';
+import Button from '../Button/Buttons';
 
 const Cart: React.FC = () => {
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
@@ -45,26 +46,31 @@ const Cart: React.FC = () => {
             <div className="cart__bottom-details">
               <span>
                 {' '}
-                кількість всіх продуктів: <b>{totalCount}</b>{' '}
+                кільсть позицій: <b>{totalCount}</b>{' '}
               </span>
               <span>
                 {' '}
-                кількість в гривнях: <b>{totalPrice}$</b>{' '}
+                сума: <b>{totalPrice} zł</b>
               </span>
               <span>
                 {' '}
-                кількість в граммах: <b>{totalWeight}$</b>{' '}
+                вага замолення: <b>{totalWeight} грам</b>{' '}
               </span>
             </div>
             <TransitionGroup component="div">{element}</TransitionGroup>
             <div className="cart__bottom-buttons">
-              <a href="/" className="button button--outline button--add go-back-btn">
-                <img src={arrow} alt="" />
-                <span>Назад</span>
-              </a>
-              <div className="button pay-btn">
-                <span>Перейти далі</span>
-              </div>
+              <Button bg__style="primary">
+                <a href="/" className="button button--outline button--add go-back-btn">
+                  <img src={arrow} alt="" />
+                  <span>Назад</span>
+                </a>
+              </Button>
+              <Button bg__style="primary" className="button pay-btn">
+                <a href="/form">
+                  {' '}
+                  <span>Перейти далі</span>
+                </a>
+              </Button>
             </div>
           </div>
         </div>

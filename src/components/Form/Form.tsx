@@ -1,19 +1,25 @@
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import './Form.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface UserDataTypes {
   state: string;
   street: string;
-  catPic: undefined | string;
+  catPic: string | undefined; // Change the type to File | null
+  catPicName: string; // To store the selected file name
 }
 
 const Form = () => {
   const [userData, setUserData] = useState<UserDataTypes>({
     state: '',
     street: '',
-    catPic: undefined,
+    catPic: undefined, // Initialize catPic as null
+    catPicName: '', // Initialize catPicName as an empty string
   });
+  const { tg, queryId } = useTelegram();
+  const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
 
   const onHandleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -21,8 +27,13 @@ const Form = () => {
     if (name === 'catPic' && files && files[0]) {
       // Check if the input name is 'catPic' and a file is selected
       try {
-        const base64Data = await encodeBase64(files[0]);
-        setUserData((prev) => ({ ...prev, [name]: base64Data }));
+        const selectedFile = files[0];
+        const base64Data = await encodeBase64(selectedFile);
+        setUserData((prev) => ({
+          ...prev,
+          catPic: base64Data,
+          catPicName: selectedFile.name, // Set the selected file name
+        }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
       }
@@ -47,7 +58,6 @@ const Form = () => {
     });
   };
 
-  const { tg } = useTelegram();
   useEffect(() => {
     tg.MainButton.setParams({
       text: 'відправити данні',
@@ -56,8 +66,19 @@ const Form = () => {
   }, []);
 
   const onSendData = useCallback(() => {
-    tg.sendData(JSON.stringify(userData));
-    // eslint-disable-next-line
+    const data = {
+      products: cartItems,
+      totalPrice: totalPrice,
+      userData,
+      queryId,
+    };
+    fetch('http://85.119.146.179:8000/web-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
   }, [userData]);
 
   useEffect(() => {
@@ -97,12 +118,13 @@ const Form = () => {
         placeholder="Вулиця"
       />
       <input
-        onChange={onHandleChange}
         type="file"
+        accept=""
         name="catPic"
-        value={userData.catPic}
+        onChange={onHandleChange}
         className="form__catPic"
       />
+      {userData.catPicName && <p>Обране фото: {userData.catPicName}</p>}
     </div>
   );
 };

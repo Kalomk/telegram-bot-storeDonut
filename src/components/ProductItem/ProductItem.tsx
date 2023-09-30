@@ -1,4 +1,4 @@
-import { ProductType } from '@/components/ProductList/ProductList';
+import { ProductType } from '../../slices/productsSlice';
 import Button from '../Button/Buttons';
 import './ProductItem.scss';
 import { useState } from 'react';

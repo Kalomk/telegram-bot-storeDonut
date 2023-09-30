@@ -1,49 +1,18 @@
 import './ItemList.scss';
 import useTelegram from '../../hooks/useTelegram';
 import ProductItem from '../ProductItem/ProductItem';
-import img from '../../images/fish-44-1024x602.png';
 import { filteredProducts } from '../../slices/filterSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-export interface ProductType {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  img: typeof img;
-  weight: number[];
-}
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
-  const { tg, queryId } = useTelegram();
+  const { tg } = useTelegram();
   const { totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
   const products = useSelector(filteredProducts);
   const navigate = useNavigate();
-  // const onAdd = (product: ProductType, selectedIndex: number) => {
-  //   const findProduct = items.find((item) => item.id === product.id);
-  //   let newItem: ProductType[] = [];
-  //   if (findProduct) {
-  //     newItem = items.filter((item) => item.id !== product.id);
-  //   } else {
-  //     newItem = [...items, product];
-  //   }
-  //   setNewitems(newItem);
-  //   if (newItem.length === 0) {
-  //     tg.MainButton.hide();
-  //   } else {
-  //     console.log(getTotalWeight(newItem, selectedIndex));
-  //     tg.MainButton.show();
-  //     tg.MainButton.setParams({
-  //       text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
-  //         newItem,
-  //         selectedIndex
-  //       )} грам`,
-  //     });
-  //   }
-  // };
+  const location = useLocation(); // Get the current location
 
   const redirectToCart = () => {
     let path = '/cart';
@@ -58,7 +27,7 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    if (!totalPrice) {
+    if (!totalPrice && location.pathname !== '/cart') {
       tg.MainButton.hide();
     } else {
       tg.MainButton.show();

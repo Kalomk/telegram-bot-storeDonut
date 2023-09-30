@@ -25,6 +25,17 @@
       top: 1px;
     }
   }
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    i {
+      color: var(--tg-theme-button-color);
+      background-color: var(--tg-theme-button-text-color);
+      transition: fill 0.3s ease-in 0s;
+    }
+  }
 
   &__description {
     font-size: 18px;
