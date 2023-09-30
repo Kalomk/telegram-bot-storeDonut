@@ -5,6 +5,7 @@ import useTelegram from './hooks/useTelegram';
 import Header from './components/Header/Header';
 import ProductList from './components/ProductList/ProductList';
 import Form from './components/Form/Form';
+import Cart from './components/Cart/Cart';
 
 function App() {
   const { tg } = useTelegram();
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </div>
   );
