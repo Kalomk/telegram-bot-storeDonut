@@ -108,8 +108,10 @@
   &__bottom-details {
     display: flex;
     justify-content: space-between;
+    gap: 7px;
     span {
       min-width: 50px;
+      padding: 0 5px;
     }
     b {
       color: var(--tg-theme-button-text-color);

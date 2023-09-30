@@ -16,10 +16,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
+    gap: 3px;
     margin: 7px 0;
   }
   &__button {
+    font-size: 8px;
+    width: 35px;
+    text-align: center;
     &:active {
       position: relative;
       top: 1px;
