@@ -1,20 +1,41 @@
 import { ProductType } from '@/components/ProductList/ProductList';
-import Button from '../components/Button/Buttons';
+import Button from '../Button/Buttons';
 import './ProductItem.scss';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { CartItem, addItems } from '../../slices/cartSlice';
 
 interface ProductItemProps {
   product: ProductType;
   className: string;
-  onAdd: (product: ProductType, selectedIndex: number) => void;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ product, className, onAdd }) => {
+const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const dispatch = useDispatch();
+  const completeId = product.id + product.weight[selectedIndex];
+  const cartItem = useSelector((state: RootState) =>
+    state.cart.cartItems.find((item) => item.id === completeId)
+  );
 
-  const onCartAdd = () => {
-    onAdd(product, selectedIndex);
+  const addCount = cartItem ? cartItem.count : null;
+
+  const sendToCart = () => {
+    const info: CartItem = {
+      id: completeId,
+      title: product.title,
+      imageUrl: product.img,
+      price: product.price,
+      weight: product.weight[selectedIndex],
+      count: 0,
+    };
+
+    dispatch(addItems(info));
   };
+
+  const checkWare =
+    addCount === null ? { opacity: 0 } : { opacity: 1, transition: '0.3s ease-in-out 0s ' };
 
   return (
     <li className={'product ' + className}>
@@ -36,8 +57,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className, onAdd }) 
           </li>
         ))}
       </ul>
-      <Button bg__style="primary" className="product__btn" onClick={onCartAdd}>
-        Додати до корзини
+      <Button bg__style="primary" className="product__btn" onClick={sendToCart}>
+        <span>Додати до корзини</span>
+        <i style={checkWare}>{addCount}</i>
       </Button>
     </li>
   );

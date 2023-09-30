@@ -1,8 +1,12 @@
 import './ItemList.scss';
-import { useState, useCallback, useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
-import ProductItem from '../../ProductItem/ProductItem';
+import ProductItem from '../ProductItem/ProductItem';
 import img from '../../images/fish-44-1024x602.png';
+import { filteredProducts } from '../../slices/filterSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface ProductType {
   id: string;
@@ -13,150 +17,61 @@ export interface ProductType {
   weight: number[];
 }
 
-const products: ProductType[] = [
-  {
-    id: '1',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 12,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '2',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 34,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '3',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 14,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '4',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 34,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '5',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 44,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '6',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 24,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '7',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 124,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '8',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 34,
-    img,
-    weight: [100, 200, 250],
-  },
-  {
-    id: '9',
-    title: 'Sneki rybni',
-    description: 'Lorem ipsum dolor sit amet consectetur',
-    price: 64,
-    img,
-    weight: [100, 200, 250],
-  },
-];
-
 const ProductList = () => {
-  const [items, setNewitems] = useState<ProductType[]>([]);
-  const [counter, setCounter] = useState<number>(0);
   const { tg, queryId } = useTelegram();
+  const { totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
+  const products = useSelector(filteredProducts);
+  const navigate = useNavigate();
+  // const onAdd = (product: ProductType, selectedIndex: number) => {
+  //   const findProduct = items.find((item) => item.id === product.id);
+  //   let newItem: ProductType[] = [];
+  //   if (findProduct) {
+  //     newItem = items.filter((item) => item.id !== product.id);
+  //   } else {
+  //     newItem = [...items, product];
+  //   }
+  //   setNewitems(newItem);
+  //   if (newItem.length === 0) {
+  //     tg.MainButton.hide();
+  //   } else {
+  //     console.log(getTotalWeight(newItem, selectedIndex));
+  //     tg.MainButton.show();
+  //     tg.MainButton.setParams({
+  //       text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
+  //         newItem,
+  //         selectedIndex
+  //       )} грам`,
+  //     });
+  //   }
+  // };
 
-  function getTotalPrice(items: ProductType[]) {
-    return items.reduce((acc, item) => {
-      return (acc += item.price);
-    }, 0);
-  }
-
-  function getTotalWeight(items: ProductType[], selectedIndex: number) {
-    return items.reduce((acc, item) => {
-      console.log(
-        'total: ' + acc,
-        'current: ' + item.weight[selectedIndex],
-        'sel: ' + selectedIndex
-      );
-      return (acc += item.weight[selectedIndex]);
-    }, 0);
-  }
-
-  const onAdd = (product: ProductType, selectedIndex: number) => {
-    const findProduct = items.find((item) => item.id === product.id);
-    let newItem: ProductType[] = [];
-    if (findProduct) {
-      newItem = items.filter((item) => item.id !== product.id);
-    } else {
-      newItem = [...items, product];
-    }
-    setNewitems(newItem);
-    if (newItem.length === 0) {
-      tg.MainButton.hide();
-    } else {
-      console.log(getTotalWeight(newItem, selectedIndex));
-      tg.MainButton.show();
-      tg.MainButton.setParams({
-        text: `Всього: ${getTotalPrice(newItem)} грн  ${getTotalWeight(
-          newItem,
-          selectedIndex
-        )} грам`,
-      });
-    }
+  const redirectToCart = () => {
+    let path = '/cart';
+    navigate(path);
   };
-  const onSendData = useCallback(() => {
-    const data = {
-      products: items,
-      totalPrice: getTotalPrice(items),
-      queryId,
-    };
-    fetch('http://85.119.146.179:8000/web-data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-  }, [items]);
 
   useEffect(() => {
-    tg.onEvent('mainButtonClicked', onSendData);
+    tg.onEvent('mainButtonClicked', redirectToCart);
     return () => {
-      tg.offEvent('mainButtonClicked', onSendData);
+      tg.offEvent('mainButtonClicked', redirectToCart);
     };
-  }, [onSendData]);
+  }, []);
+
+  useEffect(() => {
+    if (!totalPrice) {
+      tg.MainButton.hide();
+    } else {
+      tg.MainButton.show();
+      tg.MainButton.setParams({
+        text: `Всього: ${totalPrice} грн  ${totalWeight} грам`,
+      });
+    }
+  }, [totalPrice]);
+
   return (
     <ul className="product__items">
       {products.map((item) => (
-        <ProductItem key={item.id} product={item} className={'item'} onAdd={onAdd} />
+        <ProductItem key={item.id} product={item} className={'item'} />
       ))}
     </ul>
   );
