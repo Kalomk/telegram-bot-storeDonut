@@ -27,7 +27,7 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    if (!totalPrice && location.pathname !== '/cart') {
+    if (!totalPrice && location.pathname === '/cart') {
       tg.MainButton.hide();
     } else {
       tg.MainButton.show();
