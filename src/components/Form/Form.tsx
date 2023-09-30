@@ -69,6 +69,7 @@ const Form = () => {
     const data = {
       products: cartItems,
       totalPrice: totalPrice,
+      totalWeight,
       userData,
       queryId,
     };

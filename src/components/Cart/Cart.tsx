@@ -10,12 +10,14 @@ import './Cart.scss';
 import Button from '../Button/Buttons';
 import { useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
+import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = () => {
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
   const { tg } = useTelegram();
+  const navigate = useNavigate();
 
   const Clear = () => {
     if (window.confirm('Are you sure want to clear all pizzas')) {
@@ -27,6 +29,9 @@ const Cart: React.FC = () => {
   }, []);
 
   const element = cartItems.map((item) => {
+    if (cartItems.length === 0) {
+      navigate('/');
+    }
     return (
       <CSSTransition classNames="cart__item" key={item.id} timeout={500}>
         <CartItem {...item} />
