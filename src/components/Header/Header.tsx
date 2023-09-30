@@ -1,20 +1,20 @@
 import Button from '../Button/Buttons';
 import './Header.scss';
-import useTelegram from '../../hooks/useTelegram';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeProductFilter } from '../../slices/filterSlice';
+import { RootState } from '../../store';
 
 const Header = () => {
-  const { user } = useTelegram();
   const dispatch = useDispatch();
   const btnsItems = ['Всі', 'Cушена риба', 'Кальмари', 'Снеки'];
+  const { activeFilter } = useSelector((state: RootState) => state.filters);
   return (
     <header className="header">
       <div className="header__btns">
         {btnsItems.map((item, index) => (
           <Button
             key={item}
-            bg__style="bgempty"
+            bg__style={activeFilter === index ? 'primary' : 'bgempty'}
             onClick={() => dispatch(changeProductFilter(index))}
           >
             {item}

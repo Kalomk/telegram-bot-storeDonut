@@ -28,10 +28,13 @@ const Cart: React.FC = () => {
     tg.MainButton.hide();
   }, []);
 
-  const element = cartItems.map((item) => {
-    if (cartItems.length === 0) {
+  useEffect(() => {
+    if (!totalPrice) {
       navigate('/');
     }
+  }, [totalPrice]);
+
+  const element = cartItems.map((item) => {
     return (
       <CSSTransition classNames="cart__item" key={item.id} timeout={500}>
         <CartItem {...item} />
@@ -69,7 +72,7 @@ const Cart: React.FC = () => {
               </span>
             </div>
             <TransitionGroup component="div">{element}</TransitionGroup>
-            <div className="cart__bottom-buttons" style={{ marginTop: 10 }}>
+            <div className="cart__bottom-buttons" style={{ margin: '10px 0' }}>
               <Button bg__style="primary">
                 <a href="/" className="button button--outline button--add go-back-btn">
                   <img src={arrow} alt="" />

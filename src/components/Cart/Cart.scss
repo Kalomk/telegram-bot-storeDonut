@@ -108,6 +108,9 @@
   &__bottom-details {
     display: flex;
     justify-content: space-between;
+    span {
+      min-width: 50px;
+    }
     b {
       color: var(--tg-theme-button-text-color);
     }
