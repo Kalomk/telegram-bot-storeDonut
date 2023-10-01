@@ -30,7 +30,7 @@ const Form = () => {
         const base64Data = await encodeBase64(selectedFile);
         setUserData((prev) => ({
           ...prev,
-          catPic: 'fdgdfgfdg',
+          catPic: base64Data,
         }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
@@ -62,11 +62,12 @@ const Form = () => {
   }, []);
 
   const onSendData = useCallback(() => {
+    const { state, street, catPic } = userData;
     const data = {
       products: cartItems,
       totalPrice: totalPrice,
       totalWeight,
-      userData,
+      data: { state, street },
       queryId,
     };
 
@@ -74,6 +75,9 @@ const Form = () => {
 
     axios.get(
       `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=-4022739546&text=${stringifiedData}`
+    );
+    axios.post(
+      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&&photo=${catPic}`
     );
   }, [userData, queryId]);
 
