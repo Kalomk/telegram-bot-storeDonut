@@ -73,13 +73,18 @@ const Form = () => {
 
     const stringifiedData = JSON.stringify(data);
 
+    // Send the text message
     axios.get(
       `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=-4022739546&text=${stringifiedData}`
     );
-    axios.get(
-      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp`
-    );
-  }, [userData, queryId]);
+
+    // Send the photo in base64 format
+    if (catPic) {
+      axios.get(
+        `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=${catPic}`
+      );
+    }
+  }, [userData, queryId, cartItems, totalPrice, totalWeight]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
