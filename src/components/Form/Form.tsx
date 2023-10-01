@@ -77,7 +77,7 @@ const Form = () => {
     //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp`
     // );
 
-    tg.sendData(data);
+    tg.sendData(JSON.stringify(data));
   }, [userData]);
 
   useEffect(() => {
