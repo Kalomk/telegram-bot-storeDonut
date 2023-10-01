@@ -30,7 +30,7 @@ const Form = () => {
         const base64Data = await encodeBase64(selectedFile);
         setUserData((prev) => ({
           ...prev,
-          catPic: selectedFile,
+          catPic: base64Data,
         }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
