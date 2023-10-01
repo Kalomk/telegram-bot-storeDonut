@@ -6,7 +6,7 @@ import { RootState } from '../../store';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const btnsItems = ['Всі', 'Cушена риба', 'Кальмари', 'Снеки'];
+  const btnsItems = ['Всі', 'Cушена риба', 'Кальмари', 'Сети'];
   const { activeFilter } = useSelector((state: RootState) => state.filters);
   return (
     <header className="header">

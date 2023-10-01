@@ -22,7 +22,9 @@
   &__button {
     font-size: 10px;
     width: 38px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:active {
       position: relative;
       top: 1px;

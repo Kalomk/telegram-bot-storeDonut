@@ -7,17 +7,16 @@ import { RootState } from '@/store';
 interface UserDataTypes {
   state: string;
   street: string;
-  catPic: string | undefined; // Change the type to File | null
-  catPicName: string; // To store the selected file name
+  catPic: string | undefined;
 }
 
 const Form = () => {
   const [userData, setUserData] = useState<UserDataTypes>({
     state: '',
     street: '',
-    catPic: undefined, // Initialize catPic as null
-    catPicName: '', // Initialize catPicName as an empty string
+    catPic: undefined,
   });
+  const [includeCatPic, setIncludeCatPic] = useState(false); // State for the checkbox
   const { tg, queryId } = useTelegram();
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
 
@@ -25,20 +24,17 @@ const Form = () => {
     const { name, value, files } = e.target;
 
     if (name === 'catPic' && files && files[0]) {
-      // Check if the input name is 'catPic' and a file is selected
       try {
         const selectedFile = files[0];
         const base64Data = await encodeBase64(selectedFile);
         setUserData((prev) => ({
           ...prev,
           catPic: base64Data,
-          catPicName: selectedFile.name, // Set the selected file name
         }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
       }
     } else {
-      // Handle other input fields here
       setUserData((prev) => ({ ...prev, [name]: value }));
     }
   };
@@ -62,7 +58,6 @@ const Form = () => {
     tg.MainButton.setParams({
       text: 'відправити данні',
     });
-    // eslint-disable-next-line
   }, []);
 
   const onSendData = useCallback(() => {
@@ -73,13 +68,6 @@ const Form = () => {
       userData,
       queryId,
     };
-    // fetch('http://85.119.146.179:8000/web-data', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // });
     tg.sendData(JSON.stringify(data));
   }, [userData]);
 
@@ -88,7 +76,6 @@ const Form = () => {
     return () => {
       tg.offEvent('mainButtonClicked', onSendData);
     };
-    // eslint-disable-next-line
   }, [onSendData]);
 
   useEffect(() => {
@@ -97,7 +84,6 @@ const Form = () => {
     } else {
       tg.MainButton.show();
     }
-    // eslint-disable-next-line
   }, [userData]);
 
   return (
@@ -119,14 +105,25 @@ const Form = () => {
         value={userData.street}
         placeholder="Вулиця"
       />
-      <input
-        type="file"
-        accept=""
-        name="catPic"
-        onChange={onHandleChange}
-        className="form__catPic"
-      />
-      {userData.catPicName && <p>Обране фото: {userData.catPicName}</p>}
+      <label>
+        <input
+          type="checkbox"
+          name="includeCatPic"
+          checked={includeCatPic}
+          onChange={() => setIncludeCatPic(!includeCatPic)}
+        />{' '}
+        Чи є у вас котик?
+      </label>
+      {includeCatPic && (
+        <input
+          type="file"
+          accept=""
+          name="catPic"
+          onChange={onHandleChange}
+          className="form__catPic"
+          placeholder="Просимо вислати фото кота"
+        />
+      )}
     </div>
   );
 };

@@ -52,7 +52,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
               bg__style={index === selectedIndex ? 'primary' : 'bgempty'}
               className="product__button"
             >
-              {weight}
+              <span>{weight}</span>
             </Button>
           </li>
         ))}
