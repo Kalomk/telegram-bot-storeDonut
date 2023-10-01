@@ -85,7 +85,7 @@ const Form = () => {
     //   );
     // }
     tg.sendData(JSON.stringify(data));
-  }, [userData, queryId, cartItems, totalPrice, totalWeight]);
+  }, [userData]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
