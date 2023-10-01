@@ -64,7 +64,8 @@ const Form = () => {
   const onSendData = useCallback(() => {
     const { state, street } = userData;
     const data = {
-      data: { state, street },
+      state,
+      street,
     };
 
     const stringifiedData = JSON.stringify(data);
@@ -77,7 +78,7 @@ const Form = () => {
     // );
 
     tg.sendData(data);
-  }, [userData, queryId, cartItems, totalPrice, totalWeight]);
+  }, [userData]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
