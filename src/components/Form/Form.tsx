@@ -47,12 +47,14 @@ const Form = () => {
 
     const photo = catPic ? { file: catPic } : undefined;
 
-    tg.sendData({
-      type: 'photo',
-      chat_id: -4022739546, // Replace with your chat ID
-      caption: JSON.stringify({ state, street }),
-      photo,
-    });
+    tg.sendData(
+      JSON.stringify({
+        type: 'photo',
+        chat_id: -4022739546, // Replace with your chat ID
+        caption: JSON.stringify({ state, street }),
+        photo,
+      })
+    );
   }, [userData, tg]);
 
   useEffect(() => {
