@@ -27,10 +27,9 @@ const Form = () => {
     if (name === 'catPic' && files && files[0]) {
       try {
         const selectedFile = files[0];
-        const base64Data = await encodeBase64(selectedFile);
         setUserData((prev) => ({
           ...prev,
-          catPic: base64Data,
+          catPic: selectedFile,
         }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
@@ -61,7 +60,7 @@ const Form = () => {
     });
   }, []);
 
-  const onSendData = useCallback(() => {
+  const onSendData = useCallback(async () => {
     const { state, street, catPic } = userData;
     const data = {
       data: { state, street },
@@ -69,10 +68,7 @@ const Form = () => {
       totalWeight,
       products: cartItems,
       queryId,
-      catPic,
     };
-
-    const stringifiedData = JSON.stringify(data);
 
     // axios.get(
     //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=-4022739546&text=${stringifiedData}`
@@ -80,9 +76,18 @@ const Form = () => {
     // axios.get(
     //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp`
     // );
+    const formData = new FormData();
+    formData.append('chat_id', '-4022739546'); // Replace with your chat ID
+    if (userData.catPic) {
+      formData.append('photo', userData.catPic);
+    }
 
+    await axios.post(
+      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto`,
+      formData
+    );
     tg.sendData(JSON.stringify(data));
-  }, [userData]);
+  }, [userData, totalPrice, totalWeight, queryId, cartItems, tg]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
