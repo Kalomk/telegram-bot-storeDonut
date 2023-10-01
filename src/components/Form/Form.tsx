@@ -70,7 +70,7 @@ const Form = () => {
       queryId,
     };
     axios.get(
-      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=692302840`
+      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=692302840&text=piska`
     );
   }, [userData, queryId]);
 
