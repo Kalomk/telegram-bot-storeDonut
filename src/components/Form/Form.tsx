@@ -64,9 +64,6 @@ const Form = () => {
   const onSendData = useCallback(() => {
     const { state, street } = userData;
     const data = {
-      products: cartItems,
-      totalPrice: totalPrice,
-      totalWeight,
       data: { state, street },
     };
 
