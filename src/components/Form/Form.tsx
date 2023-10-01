@@ -52,7 +52,6 @@ const Form = () => {
         type: 'photo',
         chat_id: -4022739546, // Replace with your chat ID
         caption: JSON.stringify({ state, street }),
-        photo,
       })
     );
   }, [userData, tg]);
