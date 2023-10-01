@@ -65,8 +65,8 @@ const Form = () => {
       products: cartItems,
       totalPrice: totalPrice,
       totalWeight,
-      userData,
-      queryId,
+      // userData,
+      // queryId,
     };
     fetch('snacksbot.denkluch8.repl.co/web-data', {
       method: 'POST',
