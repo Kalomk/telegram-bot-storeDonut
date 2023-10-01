@@ -69,8 +69,11 @@ const Form = () => {
       userData,
       queryId,
     };
+
+    const stringifiedData = JSON.stringify(data);
+
     axios.get(
-      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=692302840&text=piska`
+      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=-4022739546&text=${stringifiedData}`
     );
   }, [userData, queryId]);
 
