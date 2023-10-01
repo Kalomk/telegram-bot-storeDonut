@@ -3,6 +3,7 @@ import useTelegram from '../../hooks/useTelegram';
 import './Form.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import axios from 'axios';
 
 interface UserDataTypes {
   state: string;
@@ -65,16 +66,12 @@ const Form = () => {
       products: cartItems,
       totalPrice: totalPrice,
       totalWeight,
-      // userData,
-      // queryId,
+      userData,
+      queryId,
     };
-    fetch('snacksbot.denkluch8.repl.co/web-data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    axios.get(
+      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=692302840`
+    );
   }, [userData, queryId]);
 
   useEffect(() => {
