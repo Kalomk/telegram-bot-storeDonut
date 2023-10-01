@@ -39,21 +39,6 @@ const Form = () => {
     }
   };
 
-  const encodeBase64 = (file: Blob): Promise<any> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          resolve(reader.result);
-        }
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
   useEffect(() => {
     tg.MainButton.setParams({
       text: 'відправити данні',
@@ -78,8 +63,8 @@ const Form = () => {
     // );
     const formData = new FormData();
     formData.append('chat_id', '-4022739546'); // Replace with your chat ID
-    if (userData.catPic) {
-      formData.append('photo', userData.catPic);
+    if (catPic) {
+      formData.append('photo', catPic);
     }
 
     await axios.post(
