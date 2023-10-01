@@ -64,8 +64,8 @@ const Form = () => {
   const onSendData = useCallback(() => {
     const { state, street, catPic } = userData;
     const data = {
-      totalPrice,
-      totalWeight,
+      state,
+      street,
     };
 
     // const stringifiedData = JSON.stringify(data);
