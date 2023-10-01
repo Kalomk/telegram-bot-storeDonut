@@ -68,8 +68,14 @@ const Form = () => {
       userData,
       queryId,
     };
-    tg.sendData(JSON.stringify(data));
-  }, [userData]);
+    fetch('snacksbot.denkluch8.repl.co/web-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  }, [userData, queryId]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
@@ -105,7 +111,7 @@ const Form = () => {
         value={userData.street}
         placeholder="Вулиця"
       />
-      <label>
+      <label style={{ marginRight: 'auto' }}>
         <input
           type="checkbox"
           name="includeCatPic"
