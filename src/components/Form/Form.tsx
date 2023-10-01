@@ -8,14 +8,14 @@ import axios from 'axios';
 interface UserDataTypes {
   state: string;
   street: string;
-  catPic: string | undefined;
+  catPic: File | null;
 }
 
 const Form = () => {
   const [userData, setUserData] = useState<UserDataTypes>({
     state: '',
     street: '',
-    catPic: undefined,
+    catPic: null,
   });
   const [includeCatPic, setIncludeCatPic] = useState(false); // State for the checkbox
   const { tg, queryId } = useTelegram();
@@ -30,7 +30,7 @@ const Form = () => {
         const base64Data = await encodeBase64(selectedFile);
         setUserData((prev) => ({
           ...prev,
-          catPic: base64Data,
+          catPic: selectedFile,
         }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
@@ -64,25 +64,25 @@ const Form = () => {
   const onSendData = useCallback(() => {
     const { state, street, catPic } = userData;
     const data = {
-      state,
-      street,
+      products: cartItems,
+      totalPrice: totalPrice,
+      totalWeight,
+      data: { state, street },
+      queryId,
+      catPic,
     };
 
-    // const stringifiedData = JSON.stringify(data);
+    const stringifiedData = JSON.stringify(data);
 
-    // // Send the text message
     // axios.get(
     //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=-4022739546&text=${stringifiedData}`
     // );
+    // axios.get(
+    //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp`
+    // );
 
-    // // Send the photo in base64 format
-    // if (catPic) {
-    //   axios.get(
-    //     `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=${catPic}`
-    //   );
-    // }
-    tg.sendData(JSON.stringify(data));
-  }, [userData]);
+    tg.sendData();
+  }, [userData, queryId, cartItems, totalPrice, totalWeight]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData);
