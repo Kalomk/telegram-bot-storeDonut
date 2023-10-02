@@ -110,8 +110,8 @@ const Form = () => {
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
+          gap: 10,
+          justifyContent: 'center',
           alignContent: 'center',
         }}
       >
@@ -125,7 +125,7 @@ const Form = () => {
       <input
         className="form__state"
         type="text"
-        name="name"
+        name="userName"
         placeholder="Ім'я"
         onChange={onHandleChange}
         value={userData.userName}
@@ -133,7 +133,7 @@ const Form = () => {
       <input
         className="form__street"
         type="text"
-        name="lastName"
+        name="userLastName"
         onChange={onHandleChange}
         value={userData.userLastName}
         placeholder="Прізвище"
@@ -141,7 +141,7 @@ const Form = () => {
       <input
         className="form__street"
         type="tel"
-        name="lastName"
+        name="phoneNumber"
         onChange={onHandleChange}
         value={userData.phoneNumber}
         placeholder="Номер телефону"
@@ -149,7 +149,7 @@ const Form = () => {
       <input
         className="form__street"
         type="email"
-        name="lastName"
+        name="email"
         onChange={onHandleChange}
         value={userData.email}
         placeholder="Емейл"
@@ -196,7 +196,7 @@ const Form = () => {
             <input
               className="form__street"
               type="text"
-              name="city"
+              name="userCity"
               onChange={onHandleChange}
               value={userData.userCity}
               placeholder="Місто"
@@ -204,7 +204,7 @@ const Form = () => {
             <input
               className="form__street"
               type="text"
-              name="index"
+              name="userIndexCity"
               onChange={onHandleChange}
               value={userData.userIndexCity}
               placeholder="Індекс"

@@ -71,7 +71,7 @@ const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, 
       </div>
       <div className="cart__item-remove">
         <div onClick={Delete} className="cart__item-remove">
-          <img src={trash} alt="" />
+          <img style={{ width: 15, height: 15 }} src={trash} alt="" />
         </div>
       </div>
     </div>
