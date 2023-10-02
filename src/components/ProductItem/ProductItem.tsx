@@ -39,7 +39,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       <img src={product.img} alt="rybki" className="product__img" />
       <div className="product__title">{product.title}</div>
       <div className="product__price">
-        <span>Вартість:</span> <b>{product.price}</b>
+        <span>Вартість:</span> <b>{product.price[selectedIndex]}</b>
       </div>
       <ul className="product__weight">
         {product.weight.map((weight, index) => (
