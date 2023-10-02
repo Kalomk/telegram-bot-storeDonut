@@ -38,7 +38,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
     <li className={'product ' + className}>
       <img src={product.img} alt="rybki" className="product__img" />
       <div className="product__title">{product.title}</div>
-      <div className="product__description">{product.description}</div>
       <div className="product__price">
         <span>Вартість:</span> <b>{product.price}</b>
       </div>

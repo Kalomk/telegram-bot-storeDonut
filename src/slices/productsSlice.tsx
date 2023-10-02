@@ -5,7 +5,6 @@ import img from '../images/fish-44-1024x602.png';
 export interface ProductType {
   id: string;
   title: string;
-  description: string;
   price: number;
   img: typeof img;
   weight: number[];
@@ -18,7 +17,6 @@ const initialState: ProductType[] = [
   {
     id: '1',
     title: 'Ікряник з лосося',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 12,
     img,
     weight: [100, 250, 500, 1000],
@@ -27,7 +25,6 @@ const initialState: ProductType[] = [
   {
     id: '2',
     title: 'Анчоус',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
     weight: [100, 250, 500, 1000],
@@ -36,7 +33,6 @@ const initialState: ProductType[] = [
   {
     id: '3',
     title: 'Янтарна з перцем',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 14,
     img,
     weight: [100, 250, 500, 1000],
@@ -45,7 +41,6 @@ const initialState: ProductType[] = [
   {
     id: '4',
     title: 'Соломка тріски',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
     weight: [100, 250, 500, 1000],
@@ -54,7 +49,6 @@ const initialState: ProductType[] = [
   {
     id: '5',
     title: 'Соломка тріски з перцем',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 44,
     img,
     weight: [100, 250, 500, 1000],
@@ -63,7 +57,6 @@ const initialState: ProductType[] = [
   {
     id: '6',
     title: 'Кальмар по-шанхайськи',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 24,
     img,
     weight: [100, 250, 500, 1000],
@@ -72,7 +65,6 @@ const initialState: ProductType[] = [
   {
     id: '7',
     title: 'Кільця камара',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 124,
     img,
     weight: [100, 250, 500, 1000],
@@ -81,7 +73,6 @@ const initialState: ProductType[] = [
   {
     id: '8',
     title: 'Стружка кальмара',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
     weight: [100, 250, 500, 1000],
@@ -90,7 +81,6 @@ const initialState: ProductType[] = [
   {
     id: '9',
     title: 'Ставридка',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 64,
     img,
     weight: [100, 250, 500, 1000],
@@ -99,7 +89,6 @@ const initialState: ProductType[] = [
   {
     id: '10',
     title: 'Павутинка тунця з перцем',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 64,
     img,
     weight: [100, 250, 500, 1000],
@@ -108,7 +97,6 @@ const initialState: ProductType[] = [
   {
     id: '11',
     title: 'Сет Дегустаційний',
-    description: 'Lorem ipsum dolor sit amet consectetur',
     price: 135,
     img,
     weight: [1000],

@@ -5,9 +5,9 @@
   flex-direction: column;
   padding: 15px;
   &__img {
-    width: 100%;
+    width: 120px;
     background-color: transparent;
-    height: 100px;
+    height: 120px;
   }
   &__weight {
     list-style-type: none;
@@ -54,11 +54,9 @@
     }
   }
 
-  &__description {
-    font-size: 15px;
-  }
   &__title {
     font-size: 20px;
+    min-height: 70px;
   }
   &__price {
     font-size: 12px;
