@@ -62,9 +62,9 @@ const Form = () => {
   }, []);
 
   const onSendData = useCallback(async () => {
-    const { catPic, ...rest } = userData;
+    const { catPic, userName } = userData;
     const data = {
-      data: { ...rest },
+      data: { userName },
       totalPrice,
       totalWeight,
       freeDelivery: totalWeight >= 1000,
