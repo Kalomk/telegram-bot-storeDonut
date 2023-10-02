@@ -42,7 +42,6 @@ const Form = () => {
 
     // Define regular expressions for phone number and email validation
     const phoneNumberRegex = /^[0-9]*$/; // Only allow numbers
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Validate email format
 
     if (name === 'catPic' && files && files[0]) {
       try {
@@ -58,15 +57,6 @@ const Form = () => {
       // Check if the entered value is a valid phone number
       if (phoneNumberRegex.test(value)) {
         setUserData((prev) => ({ ...prev, [name]: value }));
-      } else {
-        // Invalid phone number, do not update the state
-      }
-    } else if (name === 'email') {
-      // Check if the entered value is a valid email address
-      if (emailRegex.test(value)) {
-        setUserData((prev) => ({ ...prev, [name]: value }));
-      } else {
-        // Invalid email address, do not update the state
       }
     } else {
       setUserData((prev) => ({ ...prev, [name]: value }));
@@ -94,12 +84,11 @@ const Form = () => {
     formData.append('chat_id', '-4022739546'); // Replace with your chat ID
     if (catPic) {
       formData.append('photo', catPic);
+      await axios.post(
+        `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto`,
+        formData
+      );
     }
-
-    await axios.post(
-      `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto`,
-      formData
-    );
     tg.sendData(JSON.stringify(data));
   }, [userData, totalPrice, totalWeight, queryId, cartItems, tg]);
 
@@ -173,44 +162,85 @@ const Form = () => {
         value={userData.email}
         placeholder="Емейл"
       />
-      <div
-        style={{
-          marginRight: 'auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-        className="form__address"
-      >
-        {!includeAddress && (
-          <label className="labels">
-            <div>
-              {' '}
+      <>
+        <div
+          style={{
+            marginRight: 'auto',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+          className="form__address"
+        >
+          {!includeAddress && (
+            <label className="labels">
+              <div>
+                {' '}
+                <input
+                  type="checkbox"
+                  name="includeCatPic"
+                  checked={includeCatPic}
+                  onChange={() => setIncludePack(!includePack)}
+                />{' '}
+                <span>Я знаю свій пачкомат</span>
+              </div>
+            </label>
+          )}
+          {!includePack && (
+            <label className="labels">
+              <div>
+                {' '}
+                <input
+                  type="checkbox"
+                  name="includeCatPic"
+                  checked={includeCatPic}
+                  onChange={() => setIncludeAddress(!includeAddress)}
+                />{' '}
+                <span>Визначити пачкомат автоматично</span>
+              </div>
+            </label>
+          )}
+        </div>
+        {includeAddress || includePack ? (
+          <>
+            <input
+              className="form__street"
+              type="text"
+              name="userCity"
+              onChange={onHandleChange}
+              value={userData.userCity}
+              placeholder="Місто"
+            />
+            <input
+              className="form__street"
+              type="text"
+              name="userIndexCity"
+              onChange={onHandleChange}
+              value={userData.userIndexCity}
+              placeholder="Індекс"
+            />
+            {includePack ? (
               <input
-                type="checkbox"
-                name="includeCatPic"
-                checked={includeCatPic}
-                onChange={() => setIncludePack(!includePack)}
-              />{' '}
-              <span>Я знаю свій пачкомат</span>
-            </div>
-          </label>
-        )}
-        {!includePack && (
-          <label className="labels">
-            <div>
-              {' '}
+                className="form__street"
+                type="text"
+                name="addressPack"
+                onChange={onHandleChange}
+                value={userData.addressPack}
+                placeholder="Точна адреса пачкомату"
+              />
+            ) : (
               <input
-                type="checkbox"
-                name="includeCatPic"
-                checked={includeCatPic}
-                onChange={() => setIncludeAddress(!includeAddress)}
-              />{' '}
-              <span>Визначити пачкомат автоматично</span>
-            </div>
-          </label>
-        )}
-      </div>
+                className="form__street"
+                type="text"
+                name="userAddress"
+                onChange={onHandleChange}
+                value={userData.userAddress}
+                placeholder="Ваша адреса"
+              />
+            )}
+          </>
+        ) : null}
+      </>
       <label className="labels" style={{ marginRight: 'auto' }}>
         <div>
           {' '}
@@ -223,45 +253,6 @@ const Form = () => {
           <span>Я маю кицю</span>
         </div>
       </label>
-      {includeAddress || includePack ? (
-        <>
-          <input
-            className="form__street"
-            type="text"
-            name="userCity"
-            onChange={onHandleChange}
-            value={userData.userCity}
-            placeholder="Місто"
-          />
-          <input
-            className="form__street"
-            type="text"
-            name="userIndexCity"
-            onChange={onHandleChange}
-            value={userData.userIndexCity}
-            placeholder="Індекс"
-          />
-          {includePack ? (
-            <input
-              className="form__street"
-              type="text"
-              name="addressPack"
-              onChange={onHandleChange}
-              value={userData.addressPack}
-              placeholder="Точна адреса пачкомату"
-            />
-          ) : (
-            <input
-              className="form__street"
-              type="text"
-              name="userAddress"
-              onChange={onHandleChange}
-              value={userData.userAddress}
-              placeholder="Ваша адреса"
-            />
-          )}
-        </>
-      ) : null}
       {includeCatPic && (
         <label>
           <input
