@@ -5,7 +5,6 @@ import useTelegram from './hooks/useTelegram';
 import ProductList from './components/ProductList/ProductList';
 import Form from './components/Form/Form';
 import Cart from './components/Cart/Cart';
-import ScrollToTop from './components/ScrollToTop/SccrollToTop';
 
 function App() {
   const { tg } = useTelegram();
@@ -17,7 +16,6 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <ScrollToTop />
         <Route path="/" element={<ProductList />} />
         <Route path="/form" element={<Form />} />
         <Route path="/cart" element={<Cart />} />
