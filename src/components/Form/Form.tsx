@@ -31,8 +31,7 @@ const Form = () => {
     catPic: null,
   });
   const [includeCatPic, setIncludeCatPic] = useState(false); // State for the checkbox
-  const [includePack, setIncludePack] = useState(false); // State for the checkboxes
-  const [includeAddress, setIncludeAddress] = useState(false); // State for the checkboxes
+  const [selectAddress, setSelectAddress] = useState<'pack' | 'user'>('pack'); // State for the checkboxes
 
   const { tg, queryId } = useTelegram();
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
@@ -115,21 +114,11 @@ const Form = () => {
 
   return (
     <div className="form">
-      <div
-        style={{
-          display: 'flex',
-          gap: 10,
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}
-      >
-        <a href="/cart" className="button button--outline button--add go-back-btn">
-          <img style={{ width: 25, height: 25 }} src={arrow} alt="" />
-          <span>Кошик</span>
-        </a>
-        <h3>Введіть ваші данні</h3>
-      </div>
-
+      <a href="/cart" className="button button--outline button--add go-back-btn">
+        <img style={{ width: 25, height: 25, marginBottom: 10 }} src={arrow} alt="" />
+        <span>Кошик</span>
+      </a>
+      <h3>Введіть ваші данні</h3>
       <input
         className="form__state"
         type="text"
@@ -162,84 +151,50 @@ const Form = () => {
         value={userData.email}
         placeholder="Емейл"
       />
+      <select
+        value={selectAddress}
+        onChange={(e) => setSelectAddress(e.target.value as 'pack' | 'user')}
+        className={'select'}
+      >
+        <option value={'pack'}>Знаю адресу пачкомату</option>
+        <option value={'user'}>Не знаю адресу пачкомату</option>
+      </select>
       <>
-        <div
-          style={{
-            marginRight: 'auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-          className="form__address"
-        >
-          {!includeAddress && (
-            <label className="labels">
-              <div>
-                {' '}
-                <input
-                  type="checkbox"
-                  name="includeCatPic"
-                  checked={includeCatPic}
-                  onChange={() => setIncludePack(!includePack)}
-                />{' '}
-                <span>Я знаю свій пачкомат</span>
-              </div>
-            </label>
-          )}
-          {!includePack && (
-            <label className="labels">
-              <div>
-                {' '}
-                <input
-                  type="checkbox"
-                  name="includeCatPic"
-                  checked={includeCatPic}
-                  onChange={() => setIncludeAddress(!includeAddress)}
-                />{' '}
-                <span>Визначити пачкомат автоматично</span>
-              </div>
-            </label>
-          )}
-        </div>
-        {includeAddress || includePack ? (
-          <>
-            <input
-              className="form__street"
-              type="text"
-              name="userCity"
-              onChange={onHandleChange}
-              value={userData.userCity}
-              placeholder="Місто"
-            />
-            <input
-              className="form__street"
-              type="text"
-              name="userIndexCity"
-              onChange={onHandleChange}
-              value={userData.userIndexCity}
-              placeholder="Індекс"
-            />
-            {includePack ? (
-              <input
-                className="form__street"
-                type="text"
-                name="addressPack"
-                onChange={onHandleChange}
-                value={userData.addressPack}
-                placeholder="Точна адреса пачкомату"
-              />
-            ) : (
-              <input
-                className="form__street"
-                type="text"
-                name="userAddress"
-                onChange={onHandleChange}
-                value={userData.userAddress}
-                placeholder="Ваша адреса"
-              />
-            )}
-          </>
-        ) : null}
+        <input
+          className="form__street"
+          type="text"
+          name="userCity"
+          onChange={onHandleChange}
+          value={userData.userCity}
+          placeholder="Місто"
+        />
+        <input
+          className="form__street"
+          type="text"
+          name="userIndexCity"
+          onChange={onHandleChange}
+          value={userData.userIndexCity}
+          placeholder="Індекс"
+        />
+        {selectAddress === 'pack' ? (
+          <input
+            className="form__street"
+            type="text"
+            name="addressPack"
+            onChange={onHandleChange}
+            value={userData.addressPack}
+            placeholder="Точна адреса пачкомату"
+          />
+        ) : (
+          <input
+            className="form__street"
+            type="text"
+            name="userAddress"
+            onChange={onHandleChange}
+            value={userData.userAddress}
+            placeholder="Ваша адреса"
+          />
+        )}
       </>
       <label className="labels" style={{ marginRight: 'auto' }}>
         <div>

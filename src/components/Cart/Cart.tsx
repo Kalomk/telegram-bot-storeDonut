@@ -65,7 +65,7 @@ const Cart: React.FC = () => {
             </a>
             <div onClick={Clear} className="cart__clear">
               <img src={trash} alt="trash" />
-              <span>Очистити корзину</span>
+              <span>Очистити кошик</span>
             </div>
           </div>
           <div className="content__items"></div>
@@ -81,7 +81,7 @@ const Cart: React.FC = () => {
               </span>
               <span>
                 {' '}
-                Вага замолення: <b>{totalWeight} грам</b>{' '}
+                Вага замовлення: <b>{totalWeight} грам</b>{' '}
               </span>
             </div>
             <div

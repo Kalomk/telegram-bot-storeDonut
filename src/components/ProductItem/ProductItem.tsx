@@ -34,9 +34,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
     dispatch(addItems(info));
   };
 
-  const checkWare =
-    addCount === null ? { opacity: 0 } : { opacity: 1, transition: '0.3s ease-in-out 0s ' };
-
   return (
     <li className={'product ' + className}>
       <img src={product.img} alt="rybki" className="product__img" />
@@ -61,7 +58,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       </ul>
       <Button bg__style="primary" className="product__btn" onClick={sendToCart}>
         <span>Додати до корзини</span>
-        <i style={checkWare}>{addCount}</i>
+        {addCount && <i>{addCount}</i>}
       </Button>
     </li>
   );
