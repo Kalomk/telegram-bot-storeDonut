@@ -113,9 +113,9 @@ const Form = () => {
   }, [userData]);
 
   return (
-    <>
+    <div className="form-wrapper">
       <a href="/cart" className="button button--outline button--add go-back-btn">
-        <img style={{ width: 25, height: 25, marginBottom: 10 }} src={arrow} alt="" />
+        <img style={{ width: 25, height: 25, marginBottom: 3 }} src={arrow} alt="" />
         <span>Кошик</span>
       </a>
       <div className="form">
@@ -157,8 +157,8 @@ const Form = () => {
           onChange={(e) => setSelectAddress(e.target.value as 'pack' | 'user')}
           className={'select'}
         >
-          <option value={'pack'}>Знаю адресу пачкомату</option>
-          <option value={'user'}>Не знаю адресу пачкомату</option>
+          <option value={'pack'}>Я знаю свій пачкомат</option>
+          <option value={'user'}>Визначити пачкомат автоматично</option>
         </select>
         <>
           <input
@@ -223,7 +223,7 @@ const Form = () => {
           </label>
         )}
       </div>
-    </>
+    </div>
   );
 };
 export default Form;

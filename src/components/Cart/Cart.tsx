@@ -18,7 +18,7 @@ const Cart: React.FC = () => {
   const navigate = useNavigate();
 
   const Clear = () => {
-    if (window.confirm('Are you sure want to clear all products')) {
+    if (window.confirm('Видалити всі товари?')) {
       dispatch(clearItems());
     }
   };

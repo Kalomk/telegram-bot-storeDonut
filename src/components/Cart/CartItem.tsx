@@ -16,7 +16,7 @@ const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, 
   const dispatch = useDispatch();
 
   const Delete = () => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm('Ви впевнені?')) {
       dispatch(removeItems(id));
     }
   };
@@ -68,7 +68,7 @@ const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, 
         <div className="cart__item-price">
           <b>{price * count} zł</b>
         </div>
-        <div className="cart__item-remove">
+        <div style={{ position: 'relative', top: -4 }} className="cart__item-remove">
           <div onClick={Delete} className="cart__item-remove">
             <img style={{ width: 20, height: 20 }} src={trash} alt="" />
           </div>
