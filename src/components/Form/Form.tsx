@@ -67,6 +67,7 @@ const Form = () => {
       data: { rest },
       totalPrice,
       totalWeight,
+      freeDelivery: totalWeight >= 1000,
       products: cartItems,
       queryId,
     };

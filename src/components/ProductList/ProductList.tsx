@@ -43,7 +43,7 @@ const ProductList = () => {
         });
       }
     }
-  }, [totalPrice]);
+  }, [totalPrice, totalWeight]);
 
   return (
     <>
