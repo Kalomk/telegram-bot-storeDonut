@@ -113,115 +113,117 @@ const Form = () => {
   }, [userData]);
 
   return (
-    <div className="form">
+    <>
       <a href="/cart" className="button button--outline button--add go-back-btn">
         <img style={{ width: 25, height: 25, marginBottom: 10 }} src={arrow} alt="" />
         <span>Кошик</span>
       </a>
-      <h3>Введіть ваші данні</h3>
-      <input
-        className="form__state"
-        type="text"
-        name="userName"
-        placeholder="Ім'я"
-        onChange={onHandleChange}
-        value={userData.userName}
-      />
-      <input
-        className="form__street"
-        type="text"
-        name="userLastName"
-        onChange={onHandleChange}
-        value={userData.userLastName}
-        placeholder="Прізвище"
-      />
-      <input
-        className="form__street"
-        type="tel"
-        name="phoneNumber"
-        onChange={onHandleChange}
-        value={userData.phoneNumber}
-        placeholder="Номер телефону"
-      />
-      <input
-        className="form__street"
-        type="email"
-        name="email"
-        onChange={onHandleChange}
-        value={userData.email}
-        placeholder="Емейл"
-      />
-      <select
-        value={selectAddress}
-        onChange={(e) => setSelectAddress(e.target.value as 'pack' | 'user')}
-        className={'select'}
-      >
-        <option value={'pack'}>Знаю адресу пачкомату</option>
-        <option value={'user'}>Не знаю адресу пачкомату</option>
-      </select>
-      <>
+      <div className="form">
+        <h3>Введіть ваші данні</h3>
         <input
-          className="form__street"
+          className="form__state"
           type="text"
-          name="userCity"
+          name="userName"
+          placeholder="Ім'я"
           onChange={onHandleChange}
-          value={userData.userCity}
-          placeholder="Місто"
+          value={userData.userName}
         />
         <input
           className="form__street"
           type="text"
-          name="userIndexCity"
+          name="userLastName"
           onChange={onHandleChange}
-          value={userData.userIndexCity}
-          placeholder="Індекс"
+          value={userData.userLastName}
+          placeholder="Прізвище"
         />
-        {selectAddress === 'pack' ? (
+        <input
+          className="form__street"
+          type="tel"
+          name="phoneNumber"
+          onChange={onHandleChange}
+          value={userData.phoneNumber}
+          placeholder="Номер телефону"
+        />
+        <input
+          className="form__street"
+          type="email"
+          name="email"
+          onChange={onHandleChange}
+          value={userData.email}
+          placeholder="Емейл"
+        />
+        <select
+          value={selectAddress}
+          onChange={(e) => setSelectAddress(e.target.value as 'pack' | 'user')}
+          className={'select'}
+        >
+          <option value={'pack'}>Знаю адресу пачкомату</option>
+          <option value={'user'}>Не знаю адресу пачкомату</option>
+        </select>
+        <>
           <input
             className="form__street"
             type="text"
-            name="addressPack"
+            name="userCity"
             onChange={onHandleChange}
-            value={userData.addressPack}
-            placeholder="Точна адреса пачкомату"
+            value={userData.userCity}
+            placeholder="Місто"
           />
-        ) : (
           <input
             className="form__street"
             type="text"
-            name="userAddress"
+            name="userIndexCity"
             onChange={onHandleChange}
-            value={userData.userAddress}
-            placeholder="Ваша адреса"
+            value={userData.userIndexCity}
+            placeholder="Індекс"
           />
-        )}
-      </>
-      <label className="labels" style={{ marginRight: 'auto' }}>
-        <div>
-          {' '}
-          <input
-            type="checkbox"
-            name="includeCatPic"
-            checked={includeCatPic}
-            onChange={() => setIncludeCatPic(!includeCatPic)}
-          />{' '}
-          <span>Я маю кицю</span>
-        </div>
-      </label>
-      {includeCatPic && (
-        <label>
-          <input
-            type="file"
-            accept=""
-            name="catPic"
-            onChange={onHandleChange}
-            className="form__catPic"
-            placeholder="Просимо вислати фото кота"
-          />
-          <span>( Вишліть фото кота та отримайте подарунок )</span>
+          {selectAddress === 'pack' ? (
+            <input
+              className="form__street"
+              type="text"
+              name="addressPack"
+              onChange={onHandleChange}
+              value={userData.addressPack}
+              placeholder="Точна адреса пачкомату"
+            />
+          ) : (
+            <input
+              className="form__street"
+              type="text"
+              name="userAddress"
+              onChange={onHandleChange}
+              value={userData.userAddress}
+              placeholder="Ваша адреса"
+            />
+          )}
+        </>
+        <label className="labels" style={{ marginRight: 'auto' }}>
+          <div>
+            {' '}
+            <input
+              type="checkbox"
+              name="includeCatPic"
+              checked={includeCatPic}
+              onChange={() => setIncludeCatPic(!includeCatPic)}
+            />{' '}
+            <span>Я маю кицю</span>
+          </div>
         </label>
-      )}
-    </div>
+        {includeCatPic && (
+          <label>
+            <input
+              type="file"
+              accept=""
+              name="catPic"
+              onChange={onHandleChange}
+              className="form__catPic"
+              placeholder="Просимо вислати фото кота"
+            />
+            <span>( Вишліть фото кота та отримайте подарунок )</span>
+          </label>
+        )}
+      </div>
+    </>
   );
 };
 export default Form;
