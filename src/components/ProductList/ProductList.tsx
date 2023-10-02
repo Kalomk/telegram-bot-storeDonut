@@ -34,8 +34,8 @@ const ProductList = () => {
       // Check if the price is above 1000
       if (totalPrice > 1000) {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice} zł   ${totalWeight} грам (Безкоштовна доставка 🎉)`,
-          сolor: '#FFFF00',
+          text: `Всього: ${totalPrice} zł ${totalWeight} грам (Безкоштовна доставка 🎉)`,
+          text_color: '#FFFF00',
         });
       } else {
         tg.MainButton.setParams({

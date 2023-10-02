@@ -29,6 +29,17 @@ const Cart: React.FC = () => {
     });
   }, []);
 
+  const navigateToForm = () => {
+    navigate('/form');
+  };
+
+  useEffect(() => {
+    tg.onEvent('mainButtonClicked', navigateToForm);
+    return () => {
+      tg.offEvent('mainButtonClicked', navigateToForm);
+    };
+  }, []);
+
   useEffect(() => {
     if (!totalPrice) {
       navigate('/');
