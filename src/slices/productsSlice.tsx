@@ -30,7 +30,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 2,
   },
   {
@@ -39,7 +39,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 14,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 2,
   },
   {
@@ -48,7 +48,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 2,
   },
   {
@@ -57,7 +57,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 44,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 3,
   },
   {
@@ -66,7 +66,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 24,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 3,
   },
   {
@@ -75,7 +75,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 124,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 1,
   },
   {
@@ -84,7 +84,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 34,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 3,
   },
   {
@@ -93,7 +93,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 64,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 1,
   },
 ];

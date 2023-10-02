@@ -4,20 +4,36 @@ import './Form.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import axios from 'axios';
+import arrow from '../../images/icons/_Path_.svg';
 
-interface UserDataTypes {
-  state: string;
-  street: string;
+export interface UserDataTypes {
+  userName: string;
+  userLastName: string;
+  phoneNumber: string;
+  email: string;
+  userIndexCity: string;
+  addressPack?: string;
+  userCity: string;
+  userAddress?: string;
   catPic: File | null;
 }
 
 const Form = () => {
   const [userData, setUserData] = useState<UserDataTypes>({
-    state: '',
-    street: '',
+    userName: '',
+    userLastName: '',
+    phoneNumber: '',
+    email: '',
+    userIndexCity: '',
+    addressPack: '',
+    userCity: '',
+    userAddress: '',
     catPic: null,
   });
   const [includeCatPic, setIncludeCatPic] = useState(false); // State for the checkbox
+  const [includePack, setIncludePack] = useState(false); // State for the checkboxes
+  const [includeAddress, setIncludeAddress] = useState(false); // State for the checkboxes
+
   const { tg, queryId } = useTelegram();
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
 
@@ -46,21 +62,15 @@ const Form = () => {
   }, []);
 
   const onSendData = useCallback(async () => {
-    const { state, street, catPic } = userData;
+    const { catPic, ...rest } = userData;
     const data = {
-      data: { state, street },
+      data: { rest },
       totalPrice,
       totalWeight,
       products: cartItems,
       queryId,
     };
 
-    // axios.get(
-    //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendMessage?chat_id=-4022739546&text=${stringifiedData}`
-    // );
-    // axios.get(
-    //   `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto?chat_id=-4022739546&photo=https://platinumlist.net/guide/wp-content/uploads/2023/03/IMG-worlds-of-adventure.webp`
-    // );
     const formData = new FormData();
     formData.append('chat_id', '-4022739546'); // Replace with your chat ID
     if (catPic) {
@@ -82,7 +92,13 @@ const Form = () => {
   }, [onSendData]);
 
   useEffect(() => {
-    if (!userData.state || !userData.street) {
+    if (
+      !userData.userName ||
+      !userData.userLastName ||
+      !userData.phoneNumber ||
+      !userData.email ||
+      !userData.userCity
+    ) {
       tg.MainButton.hide();
     } else {
       tg.MainButton.show();
@@ -91,41 +107,145 @@ const Form = () => {
 
   return (
     <div className="form">
+      <a href="/" className="button button--outline button--add go-back-btn">
+        <img style={{ width: 50, height: 50 }} src={arrow} alt="" />
+        <span>Кошик</span>
+      </a>
       <h3>Введіть ваші данні</h3>
       <input
         className="form__state"
         type="text"
-        name="state"
-        placeholder="Країна"
+        name="name"
+        placeholder="Ім'я"
         onChange={onHandleChange}
-        value={userData.state}
+        value={userData.userName}
       />
       <input
         className="form__street"
         type="text"
-        name="street"
+        name="lastName"
         onChange={onHandleChange}
-        value={userData.street}
-        placeholder="Вулиця"
+        value={userData.userLastName}
+        placeholder="Прізвище"
       />
+      <input
+        className="form__street"
+        type="tel"
+        name="lastName"
+        onChange={onHandleChange}
+        value={userData.phoneNumber}
+        placeholder="Номер телефону"
+      />
+      <input
+        className="form__street"
+        type="email"
+        name="lastName"
+        onChange={onHandleChange}
+        value={userData.email}
+        placeholder="Емейл"
+      />
+      <div
+        style={{
+          marginRight: 'auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+        className="form__address"
+      >
+        {!includeAddress && (
+          <label>
+            <div>
+              {' '}
+              <input
+                type="checkbox"
+                name="includeCatPic"
+                checked={includeCatPic}
+                onChange={() => setIncludePack(!includePack)}
+              />{' '}
+              <span>Я знаю свій пачкомат</span>
+            </div>
+          </label>
+        )}
+        {!includePack && (
+          <label>
+            <div>
+              {' '}
+              <input
+                type="checkbox"
+                name="includeCatPic"
+                checked={includeCatPic}
+                onChange={() => setIncludeAddress(!includeAddress)}
+              />{' '}
+              <span>Визначити пачкомат автоматично</span>
+            </div>
+          </label>
+        )}
+        {includePack ||
+          (includeAddress && (
+            <>
+              <input
+                className="form__street"
+                type="text"
+                name="city"
+                onChange={onHandleChange}
+                value={userData.userCity}
+                placeholder="Місто"
+              />
+              <input
+                className="form__street"
+                type="text"
+                name="index"
+                onChange={onHandleChange}
+                value={userData.userIndexCity}
+                placeholder="Індекс"
+              />
+              {includePack ? (
+                <input
+                  className="form__street"
+                  type="text"
+                  name="addressPack"
+                  onChange={onHandleChange}
+                  value={userData.addressPack}
+                  placeholder="Точна адреса пачкомату"
+                />
+              ) : (
+                <input
+                  className="form__street"
+                  type="text"
+                  name="userAddress"
+                  onChange={onHandleChange}
+                  value={userData.userAddress}
+                  placeholder="Ваша адреса"
+                />
+              )}
+            </>
+          ))}
+      </div>
       <label style={{ marginRight: 'auto' }}>
-        <input
-          type="checkbox"
-          name="includeCatPic"
-          checked={includeCatPic}
-          onChange={() => setIncludeCatPic(!includeCatPic)}
-        />{' '}
-        Чи є у вас котик?
+        <div>
+          {' '}
+          <input
+            type="checkbox"
+            name="includeCatPic"
+            checked={includeCatPic}
+            onChange={() => setIncludeCatPic(!includeCatPic)}
+          />{' '}
+          <span>Я маю кицю</span>
+        </div>
       </label>
       {includeCatPic && (
-        <input
-          type="file"
-          accept=""
-          name="catPic"
-          onChange={onHandleChange}
-          className="form__catPic"
-          placeholder="Просимо вислати фото кота"
-        />
+        <label>
+          <input
+            type="file"
+            accept=""
+            name="catPic"
+            onChange={onHandleChange}
+            className="form__catPic"
+            placeholder="Просимо вислати фото кота"
+          />
+          <span>"(" + Вишліть фото кота та отримайте подарунок + ")"</span>
+        </label>
       )}
     </div>
   );

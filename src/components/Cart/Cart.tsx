@@ -1,5 +1,4 @@
 import trash from '../../images/icons/iconfinder_trash-2_3324927 1.svg';
-import car from '../../images/icons/shopcar.svg';
 import arrow from '../../images/icons/_Path_.svg';
 import CartItem from './CartItem';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +6,6 @@ import { clearItems } from '../../slices/cartSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../store';
 import './Cart.scss';
-import Button from '../Button/Buttons';
 import { useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
@@ -20,12 +18,15 @@ const Cart: React.FC = () => {
   const navigate = useNavigate();
 
   const Clear = () => {
-    if (window.confirm('Are you sure want to clear all pizzas')) {
+    if (window.confirm('Are you sure want to clear all products')) {
       dispatch(clearItems());
     }
   };
+
   useEffect(() => {
-    tg.MainButton.hide();
+    tg.MainButton.setParams({
+      text: 'Оформити замовлення',
+    });
   }, []);
 
   useEffect(() => {
@@ -46,12 +47,12 @@ const Cart: React.FC = () => {
       <div className="content__wrapper">
         <div className="cart">
           <div className="cart__top">
-            <h2 className="content__title">
-              <img src={car} alt="" />
-              Car
-            </h2>
+            <a href="/" className="button button--outline button--add go-back-btn">
+              <img style={{ width: 50, height: 50 }} src={arrow} alt="" />
+              <span>Магазин</span>
+            </a>
             <div onClick={Clear} className="cart__clear">
-              <img src={trash} alt="" />
+              <img src={trash} alt="trash" />
               <span>Очистити корзину</span>
             </div>
           </div>
@@ -60,32 +61,18 @@ const Cart: React.FC = () => {
             <div className="cart__bottom-details">
               <span>
                 {' '}
-                кільсть позицій: <b>{totalCount}</b>{' '}
+                Кільсть позицій: <b>{totalCount}</b>{' '}
               </span>
               <span>
                 {' '}
-                сума: <b>{totalPrice} zł</b>
+                Сума: <b>{totalPrice} zł</b>
               </span>
               <span>
                 {' '}
-                вага замолення: <b>{totalWeight} грам</b>{' '}
+                Вага замолення: <b>{totalWeight} грам</b>{' '}
               </span>
             </div>
             <TransitionGroup component="div">{element}</TransitionGroup>
-            <div className="cart__bottom-buttons" style={{ margin: '10px 0' }}>
-              <Button bg__style="primary">
-                <a href="/" className="button button--outline button--add go-back-btn">
-                  <img src={arrow} alt="" />
-                  <span>Назад</span>
-                </a>
-              </Button>
-              <Button bg__style="primary" className="button pay-btn">
-                <a href="/form">
-                  {' '}
-                  <span>Перейти далі</span>
-                </a>
-              </Button>
-            </div>
           </div>
         </div>
       </div>

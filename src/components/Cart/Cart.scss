@@ -3,6 +3,8 @@
   &__item {
     flex-direction: column;
     justify-content: center;
+    margin-top: 40px;
+
     svg {
       path {
         fill: var(--tg-theme-button-color);
@@ -34,9 +36,7 @@
     }
 
     &-remove {
-      svg {
-        cursor: pointer;
-      }
+      cursor: pointer;
     }
   }
 
@@ -116,7 +116,6 @@
     b {
       color: var(--tg-theme-button-text-color);
     }
-    margin-bottom: 40px;
   }
 
   &__bottom-buttons {

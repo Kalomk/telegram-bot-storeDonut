@@ -31,9 +31,17 @@ const ProductList = () => {
       tg.MainButton.hide();
     } else {
       tg.MainButton.show();
-      tg.MainButton.setParams({
-        text: `Всього: ${totalPrice} грн  ${totalWeight} грам`,
-      });
+      // Check if the price is above 1000
+      if (totalPrice > 1000) {
+        tg.MainButton.setParams({
+          text: `Всього: ${totalPrice} zł   ${totalWeight} грам (Безкоштовна доставка 🎉)`,
+          сolor: 'yellow',
+        });
+      } else {
+        tg.MainButton.setParams({
+          text: `Всього: ${totalPrice} zł   ${totalWeight} грам`,
+        });
+      }
     }
   }, [totalPrice]);
 
