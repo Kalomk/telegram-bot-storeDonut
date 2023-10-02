@@ -5,7 +5,7 @@ import img from '../images/fish-44-1024x602.png';
 export interface ProductType {
   id: string;
   title: string;
-  price: number;
+  price: number[];
   img: typeof img;
   weight: number[];
   category: number;
@@ -17,7 +17,7 @@ const initialState: ProductType[] = [
   {
     id: '1',
     title: 'Ікряник з лосося',
-    price: 12,
+    price: [15, 35, 60, 115],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -25,7 +25,7 @@ const initialState: ProductType[] = [
   {
     id: '2',
     title: 'Анчоус',
-    price: 34,
+    price: [15, 35, 60, 110],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -33,7 +33,7 @@ const initialState: ProductType[] = [
   {
     id: '3',
     title: 'Янтарна з перцем',
-    price: 14,
+    price: [16, 40, 70, 130],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -41,7 +41,7 @@ const initialState: ProductType[] = [
   {
     id: '4',
     title: 'Соломка тріски',
-    price: 34,
+    price: [16, 40, 70, 130],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -49,7 +49,7 @@ const initialState: ProductType[] = [
   {
     id: '5',
     title: 'Соломка тріски з перцем',
-    price: 44,
+    price: [16, 40, 70, 130],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -57,15 +57,15 @@ const initialState: ProductType[] = [
   {
     id: '6',
     title: 'Кальмар по-шанхайськи',
-    price: 24,
+    price: [16, 40, 70, 135],
     img,
     weight: [100, 250, 500, 1000],
     category: 2,
   },
   {
     id: '7',
-    title: 'Кільця камара',
-    price: 124,
+    title: 'Кільця кальмара',
+    price: [16, 40, 75, 145],
     img,
     weight: [100, 250, 500, 1000],
     category: 2,
@@ -73,7 +73,7 @@ const initialState: ProductType[] = [
   {
     id: '8',
     title: 'Стружка кальмара',
-    price: 34,
+    price: [16, 40, 80, 150],
     img,
     weight: [100, 250, 500, 1000],
     category: 2,
@@ -81,7 +81,7 @@ const initialState: ProductType[] = [
   {
     id: '9',
     title: 'Ставридка',
-    price: 64,
+    price: [15, 35, 60, 105],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -89,7 +89,7 @@ const initialState: ProductType[] = [
   {
     id: '10',
     title: 'Павутинка тунця з перцем',
-    price: 64,
+    price: [16, 40, 75, 140],
     img,
     weight: [100, 250, 500, 1000],
     category: 1,
@@ -97,9 +97,9 @@ const initialState: ProductType[] = [
   {
     id: '11',
     title: 'Сет Дегустаційний',
-    price: 135,
+    price: [70, 135],
     img,
-    weight: [1000],
+    weight: [500, 1000],
     category: 3,
   },
 ];

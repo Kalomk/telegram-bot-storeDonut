@@ -26,7 +26,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       id: completeId,
       title: product.title,
       imageUrl: product.img,
-      price: product.price,
+      price: product.price[selectedIndex],
       weight: product.weight[selectedIndex],
       count: 0,
     };
