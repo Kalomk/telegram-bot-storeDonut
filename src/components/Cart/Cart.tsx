@@ -72,7 +72,17 @@ const Cart: React.FC = () => {
                 Вага замолення: <b>{totalWeight} грам</b>{' '}
               </span>
             </div>
-            <TransitionGroup component="div">{element}</TransitionGroup>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignContent: 'center',
+              }}
+            >
+              {' '}
+              <TransitionGroup component="div">{element}</TransitionGroup>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 .product__items {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
 }
