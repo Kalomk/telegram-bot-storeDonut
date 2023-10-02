@@ -37,8 +37,12 @@ const Form = () => {
   const { tg, queryId } = useTelegram();
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
 
-  const onHandleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const onHandleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
+
+    // Define regular expressions for phone number and email validation
+    const phoneNumberRegex = /^[0-9]*$/; // Only allow numbers
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Validate email format
 
     if (name === 'catPic' && files && files[0]) {
       try {
@@ -49,6 +53,20 @@ const Form = () => {
         }));
       } catch (error) {
         console.error('Error encoding file to base64:', error);
+      }
+    } else if (name === 'phoneNumber') {
+      // Check if the entered value is a valid phone number
+      if (phoneNumberRegex.test(value)) {
+        setUserData((prev) => ({ ...prev, [name]: value }));
+      } else {
+        // Invalid phone number, do not update the state
+      }
+    } else if (name === 'email') {
+      // Check if the entered value is a valid email address
+      if (emailRegex.test(value)) {
+        setUserData((prev) => ({ ...prev, [name]: value }));
+      } else {
+        // Invalid email address, do not update the state
       }
     } else {
       setUserData((prev) => ({ ...prev, [name]: value }));
@@ -192,45 +210,6 @@ const Form = () => {
             </div>
           </label>
         )}
-        {includeAddress || includePack ? (
-          <>
-            <input
-              className="form__street"
-              type="text"
-              name="userCity"
-              onChange={onHandleChange}
-              value={userData.userCity}
-              placeholder="Місто"
-            />
-            <input
-              className="form__street"
-              type="text"
-              name="userIndexCity"
-              onChange={onHandleChange}
-              value={userData.userIndexCity}
-              placeholder="Індекс"
-            />
-            {includePack ? (
-              <input
-                className="form__street"
-                type="text"
-                name="addressPack"
-                onChange={onHandleChange}
-                value={userData.addressPack}
-                placeholder="Точна адреса пачкомату"
-              />
-            ) : (
-              <input
-                className="form__street"
-                type="text"
-                name="userAddress"
-                onChange={onHandleChange}
-                value={userData.userAddress}
-                placeholder="Ваша адреса"
-              />
-            )}
-          </>
-        ) : null}
       </div>
       <label className="labels" style={{ marginRight: 'auto' }}>
         <div>
@@ -244,6 +223,45 @@ const Form = () => {
           <span>Я маю кицю</span>
         </div>
       </label>
+      {includeAddress || includePack ? (
+        <>
+          <input
+            className="form__street"
+            type="text"
+            name="userCity"
+            onChange={onHandleChange}
+            value={userData.userCity}
+            placeholder="Місто"
+          />
+          <input
+            className="form__street"
+            type="text"
+            name="userIndexCity"
+            onChange={onHandleChange}
+            value={userData.userIndexCity}
+            placeholder="Індекс"
+          />
+          {includePack ? (
+            <input
+              className="form__street"
+              type="text"
+              name="addressPack"
+              onChange={onHandleChange}
+              value={userData.addressPack}
+              placeholder="Точна адреса пачкомату"
+            />
+          ) : (
+            <input
+              className="form__street"
+              type="text"
+              name="userAddress"
+              onChange={onHandleChange}
+              value={userData.userAddress}
+              placeholder="Ваша адреса"
+            />
+          )}
+        </>
+      ) : null}
       {includeCatPic && (
         <label>
           <input

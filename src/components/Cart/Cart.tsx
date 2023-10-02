@@ -24,6 +24,7 @@ const Cart: React.FC = () => {
   };
 
   useEffect(() => {
+    tg.MainButton.show();
     tg.MainButton.setParams({
       text: 'Оформити замовлення',
     });
