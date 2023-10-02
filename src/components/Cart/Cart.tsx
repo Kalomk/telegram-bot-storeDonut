@@ -59,7 +59,7 @@ const Cart: React.FC = () => {
         <div className="cart">
           <div className="cart__top">
             <a href="/" className="button button--outline button--add go-back-btn">
-              <img style={{ width: 50, height: 50 }} src={arrow} alt="" />
+              <img style={{ width: 25, height: 25 }} src={arrow} alt="" />
               <span>Магазин</span>
             </a>
             <div onClick={Clear} className="cart__clear">

@@ -21,7 +21,7 @@ const initialState: ProductType[] = [
     description: 'Lorem ipsum dolor sit amet consectetur',
     price: 12,
     img,
-    weight: [100, 200, 250, 500],
+    weight: [100, 250, 500, 1000],
     category: 1,
   },
   {

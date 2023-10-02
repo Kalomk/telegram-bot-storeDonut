@@ -107,11 +107,21 @@ const Form = () => {
 
   return (
     <div className="form">
-      <a href="/" className="button button--outline button--add go-back-btn">
-        <img style={{ width: 50, height: 50 }} src={arrow} alt="" />
-        <span>Кошик</span>
-      </a>
-      <h3>Введіть ваші данні</h3>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignContent: 'center',
+        }}
+      >
+        <a href="/cart" className="button button--outline button--add go-back-btn">
+          <img style={{ width: 25, height: 25 }} src={arrow} alt="" />
+          <span>Кошик</span>
+        </a>
+        <h3>Введіть ваші данні</h3>
+      </div>
+
       <input
         className="form__state"
         type="text"
@@ -154,7 +164,7 @@ const Form = () => {
         className="form__address"
       >
         {!includeAddress && (
-          <label>
+          <label className="labels">
             <div>
               {' '}
               <input
@@ -168,7 +178,7 @@ const Form = () => {
           </label>
         )}
         {!includePack && (
-          <label>
+          <label className="labels">
             <div>
               {' '}
               <input
@@ -181,48 +191,47 @@ const Form = () => {
             </div>
           </label>
         )}
-        {includePack ||
-          (includeAddress && (
-            <>
+        {includeAddress || includePack ? (
+          <>
+            <input
+              className="form__street"
+              type="text"
+              name="city"
+              onChange={onHandleChange}
+              value={userData.userCity}
+              placeholder="Місто"
+            />
+            <input
+              className="form__street"
+              type="text"
+              name="index"
+              onChange={onHandleChange}
+              value={userData.userIndexCity}
+              placeholder="Індекс"
+            />
+            {includePack ? (
               <input
                 className="form__street"
                 type="text"
-                name="city"
+                name="addressPack"
                 onChange={onHandleChange}
-                value={userData.userCity}
-                placeholder="Місто"
+                value={userData.addressPack}
+                placeholder="Точна адреса пачкомату"
               />
+            ) : (
               <input
                 className="form__street"
                 type="text"
-                name="index"
+                name="userAddress"
                 onChange={onHandleChange}
-                value={userData.userIndexCity}
-                placeholder="Індекс"
+                value={userData.userAddress}
+                placeholder="Ваша адреса"
               />
-              {includePack ? (
-                <input
-                  className="form__street"
-                  type="text"
-                  name="addressPack"
-                  onChange={onHandleChange}
-                  value={userData.addressPack}
-                  placeholder="Точна адреса пачкомату"
-                />
-              ) : (
-                <input
-                  className="form__street"
-                  type="text"
-                  name="userAddress"
-                  onChange={onHandleChange}
-                  value={userData.userAddress}
-                  placeholder="Ваша адреса"
-                />
-              )}
-            </>
-          ))}
+            )}
+          </>
+        ) : null}
       </div>
-      <label style={{ marginRight: 'auto' }}>
+      <label className="labels" style={{ marginRight: 'auto' }}>
         <div>
           {' '}
           <input
@@ -244,7 +253,7 @@ const Form = () => {
             className="form__catPic"
             placeholder="Просимо вислати фото кота"
           />
-          <span>"(" + Вишліть фото кота та отримайте подарунок + ")"</span>
+          <span>( Вишліть фото кота та отримайте подарунок )</span>
         </label>
       )}
     </div>
