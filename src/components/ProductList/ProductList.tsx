@@ -34,22 +34,16 @@ const ProductList = () => {
       // Check if the price is above 1000
       if (totalWeight >= 1000) {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice} zł ${totalWeight} грам \n \n \n \n \n \n \n(Безкоштовна доставка 🎉)`,
+          text: `Всього: ${totalPrice} zł (Безкоштовна доставка 🎉)`,
           text_color: '#d9dd0b',
-          // Increase the height of the button by modifying the style property
-          style: {
-            height: '60px', // Adjust the height to your desired value
-          },
         });
       } else {
         tg.MainButton.setParams({
           text: `Всього: ${totalPrice} zł   ${totalWeight} грам`,
-          // Reset the style to default
-          style: {}
         });
       }
     }
-  }, [totalPrice, totalWeight]);
+  }, [totalPrice, totalWeight,tg.MainButton]);
 
   return (
     <>
