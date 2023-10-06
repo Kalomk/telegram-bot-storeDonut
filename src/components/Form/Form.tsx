@@ -46,15 +46,16 @@ const Form = () => {
     userLastName: Yup.string().required("Прізвище обов'язкове поле"),
     phoneNumber: Yup.string()
       .matches(/^[0-9]*$/, 'Номер телефону повинен містити лише цифри')
-      .required("Номер телефону обов'язковий"),
+      .required("Номер телефону обов'язковий")
+      .min(9, 'Номер повинен містити 9 символів'),
     email: Yup.string()
       .email('Некоректна адреса електронної пошти')
       .required("Електронна пошта обов'язкове поле"),
     userCity: Yup.string().required("Місто обов'язкове поле"),
-    userIndexCity: Yup.string().required("Індекс міста обов'язковий"),
+    userIndexCity: Yup.number().required("Індекс міста обов'язковий"),
     addressPack: Yup.string().when([], {
       is: () => selectedAddress === 'pack',
-      then: (schema) => schema.min(5).required("Адреса пачкомату обов'язкова"),
+      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').required("Адреса пачкомату обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     userAddress: Yup.string().when([], {
