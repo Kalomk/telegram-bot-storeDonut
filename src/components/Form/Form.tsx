@@ -42,8 +42,8 @@ const Form = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    userName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Ім\'я повинно містити лише латинські літери').required("Ім'я обов'язкове поле"),
-    userLastName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Прізвище повинно містити лише латинські літери').required("Прізвище обов'язкове поле"),
+    userName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Ім\'я повинно містити лише латинські літери').required("Ім'я обов'язкове поле"),
+    userLastName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Прізвище повинно містити лише латинські літери').required("Прізвище обов'язкове поле"),
     phoneNumber: Yup.string()
       .matches(/^[0-9]*$/, 'Номер телефону повинен містити лише цифри')
       .required("Номер телефону обов'язковий")
@@ -51,20 +51,20 @@ const Form = () => {
     email: Yup.string()
       .email('Некоректна адреса електронної пошти')
       .required("Електронна пошта обов'язкове поле"),
-    userCity: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Місто повинно містити лише латинські літери').required("Місто обов'язкове поле"),
+    userCity: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Місто повинно містити лише латинські літери').required("Місто обов'язкове поле"),
     userIndexCity: Yup.number().when([], {
-      is: () => selectedAddress === 'pack' || 'user',
-      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
-      otherwise: (schema) => schema.min(0).notRequired(),
+      is: () => selectedAddress === 'bielsko',
+      then: (schema) => schema.min(0).notRequired()  ,
+      otherwise: (schema) =>schema.min(5,'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
     }),
     addressPack: Yup.string().when([], {
       is: () => selectedAddress === 'pack',
-      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Адреса повинна містити лише латинські літери').required("Адреса пачкомату обов'язкова"),
+      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Адреса повинна містити лише латинські літери').required("Адреса пачкомату обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     userAddress: Yup.string().when([], {
       is: () => selectedAddress === 'user',
-      then: (schema) => schema.min(5).matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Ваша адреса повинна містити лише латинські літери').required("Ваша адреса обов'язкова"),
+      then: (schema) => schema.min(5).matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Ваша адреса повинна містити лише латинські літери').required("Ваша адреса обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     catPic: Yup.mixed().when([], {
@@ -213,7 +213,7 @@ const Form = () => {
           { formik.touched.addressPack && formik.errors.addressPack && <div className="error">{formik.errors.addressPack}</div>}
          </>
         )}
-        {selectedAddress === 'user' && (
+        {(selectedAddress === 'user' || selectedAddress === 'bielsko') && (
          <>
           <input
             className="form__street"
