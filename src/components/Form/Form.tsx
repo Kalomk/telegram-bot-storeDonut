@@ -27,7 +27,7 @@ const Form = () => {
   const { tg, queryId } = useTelegram();
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
-  const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user'>('user');
+  const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
 
   const initialValues = {
     userName: '',
@@ -42,8 +42,8 @@ const Form = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    userName: Yup.string().required("Ім'я обов'язкове поле"),
-    userLastName: Yup.string().required("Прізвище обов'язкове поле"),
+    userName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Ім\'я повинно містити лише латинські літери').required("Ім'я обов'язкове поле"),
+    userLastName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Прізвище повинно містити лише латинські літери').required("Прізвище обов'язкове поле"),
     phoneNumber: Yup.string()
       .matches(/^[0-9]*$/, 'Номер телефону повинен містити лише цифри')
       .required("Номер телефону обов'язковий")
@@ -51,16 +51,20 @@ const Form = () => {
     email: Yup.string()
       .email('Некоректна адреса електронної пошти')
       .required("Електронна пошта обов'язкове поле"),
-    userCity: Yup.string().required("Місто обов'язкове поле"),
-    userIndexCity: Yup.number().required("Індекс міста обов'язковий"),
+    userCity: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Місто повинно містити лише латинські літери').required("Місто обов'язкове поле"),
+    userIndexCity: Yup.number().when([], {
+      is: () => selectedAddress === 'pack' || 'user',
+      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
+      otherwise: (schema) => schema.min(0).notRequired(),
+    }),
     addressPack: Yup.string().when([], {
       is: () => selectedAddress === 'pack',
-      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').required("Адреса пачкомату обов'язкова"),
+      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Адреса повинна містити лише латинські літери').required("Адреса пачкомату обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     userAddress: Yup.string().when([], {
       is: () => selectedAddress === 'user',
-      then: (schema) => schema.min(5).required("Ваша адреса обов'язкова"),
+      then: (schema) => schema.min(5).matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ]*$/, 'Ваша адреса повинна містити лише латинські літери').required("Ваша адреса обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     catPic: Yup.mixed().when([], {
@@ -187,11 +191,12 @@ const Form = () => {
         })}
         <select
           value={selectedAddress}
-          onChange={(e) => setSelectedAddress(e.target.value as 'pack' | 'user')}
+          onChange={(e) => setSelectedAddress(e.target.value as 'pack' | 'user' | 'bielsko')}
           className={'select'}
         >
           <option value={'pack'}>Я знаю свій пачкомат</option>
           <option value={'user'}>Визначити пачкомат автоматично</option>
+          <option value={'bielsko'}>Безкоштовна доставка по м. Бєлсько-Бяла</option>
         </select>
         {selectedAddress === 'pack' && (
          <>
