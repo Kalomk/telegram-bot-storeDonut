@@ -19,6 +19,7 @@ function App() {
         <Route path="/" element={<ProductList />} />
         <Route path="/form" element={<Form />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/sendOrderNumber" element={<Form />} />
       </Routes>
     </div>
   );
