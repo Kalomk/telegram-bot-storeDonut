@@ -42,8 +42,12 @@ const Form = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    userName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Ім\'я повинно містити лише латинські літери').required("Ім'я обов'язкове поле"),
-    userLastName: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Прізвище повинно містити лише латинські літери').required("Прізвище обов'язкове поле"),
+    userName: Yup.string()
+      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, "Ім'я повинно містити лише латинські літери")
+      .required("Ім'я обов'язкове поле"),
+    userLastName: Yup.string()
+      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Прізвище повинно містити лише латинські літери')
+      .required("Прізвище обов'язкове поле"),
     phoneNumber: Yup.string()
       .matches(/^[0-9]*$/, 'Номер телефону повинен містити лише цифри')
       .required("Номер телефону обов'язковий")
@@ -51,20 +55,37 @@ const Form = () => {
     email: Yup.string()
       .email('Некоректна адреса електронної пошти')
       .required("Електронна пошта обов'язкове поле"),
-    userCity: Yup.string().matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Місто повинно містити лише латинські літери').required("Місто обов'язкове поле"),
+    userCity: Yup.string()
+      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Місто повинно містити лише латинські літери')
+      .required("Місто обов'язкове поле"),
     userIndexCity: Yup.number().when([], {
       is: () => selectedAddress === 'bielsko',
-      then: (schema) => schema.min(0).notRequired()  ,
-      otherwise: (schema) =>schema.min(5,'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
+      then: (schema) => schema.min(0).notRequired(),
+      otherwise: (schema) =>
+        schema.min(5, 'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
     }),
     addressPack: Yup.string().when([], {
       is: () => selectedAddress === 'pack',
-      then: (schema) => schema.min(5,'Мінімальна кількість символів 5').matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Адреса повинна містити лише латинські літери').required("Адреса пачкомату обов'язкова"),
+      then: (schema) =>
+        schema
+          .min(5, 'Мінімальна кількість символів 5')
+          .matches(
+            /^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/,
+            'Адреса повинна містити лише латинські літери'
+          )
+          .required("Адреса пачкомату обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     userAddress: Yup.string().when([], {
       is: () => selectedAddress === 'user',
-      then: (schema) => schema.min(5).matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Ваша адреса повинна містити лише латинські літери').required("Ваша адреса обов'язкова"),
+      then: (schema) =>
+        schema
+          .min(5)
+          .matches(
+            /^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/,
+            'Ваша адреса повинна містити лише латинські літери'
+          )
+          .required("Ваша адреса обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     catPic: Yup.mixed().when([], {
@@ -175,16 +196,16 @@ const Form = () => {
           return (
             <React.Fragment key={fieldName}>
               <>
-              <input
-                className="form__street"
-                type={type}
-                name={name}
-                placeholder={label}
-                onChange={onHandleChange}
-                value={value}
-                onBlur={formik.handleBlur} // Add onBlur event handler
-              />
-              {touch && error && <div className="error">{error as string}</div>}
+                <input
+                  className="form__street"
+                  type={type}
+                  name={name}
+                  placeholder={label}
+                  onChange={onHandleChange}
+                  value={value}
+                  onBlur={formik.handleBlur} // Add onBlur event handler
+                />
+                {touch && error && <div className="error">{error as string}</div>}
               </>
             </React.Fragment>
           );
@@ -199,34 +220,34 @@ const Form = () => {
           <option value={'bielsko'}>Безкоштовна доставка по м. Бєлсько-Бяла</option>
         </select>
         {selectedAddress === 'pack' && (
-         <>
-          <input
-            className="form__street"
-            type="text"
-            name="addressPack"
-            onChange={onHandleChange}
-            value={formik.values.addressPack}
-            placeholder="Точна адреса пачкомату"
-            onBlur={formik.handleBlur} // Add onBlur event handler
-
-          />
-          { formik.touched.addressPack && formik.errors.addressPack && <div className="error">{formik.errors.addressPack}</div>}
-         </>
+          <>
+            <input
+              className="form__street"
+              type="text"
+              name="addressPack"
+              onChange={onHandleChange}
+              value={formik.values.addressPack}
+              placeholder="Точна адреса пачкомату"
+              onBlur={formik.handleBlur} // Add onBlur event handler
+            />
+            {formik.touched.addressPack && formik.errors.addressPack && (
+              <div className="error">{formik.errors.addressPack}</div>
+            )}
+          </>
         )}
         {(selectedAddress === 'user' || selectedAddress === 'bielsko') && (
-         <>
-          <input
-            className="form__street"
-            type="text"
-            name="userAddress"
-            onChange={onHandleChange}
-            value={formik.values.userAddress}
-            placeholder="Ваша адреса"
-            onBlur={formik.handleBlur} // Add onBlur event handler
-
-          />
-        {formik.touched.userAddress && <div className="error">{formik.errors.userAddress}</div>}
-         </>
+          <>
+            <input
+              className="form__street"
+              type="text"
+              name="userAddress"
+              onChange={onHandleChange}
+              value={formik.values.userAddress}
+              placeholder="Ваша адреса"
+              onBlur={formik.handleBlur} // Add onBlur event handler
+            />
+            {formik.touched.userAddress && <div className="error">{formik.errors.userAddress}</div>}
+          </>
         )}
         <label className="labels" style={{ marginRight: 'auto' }}>
           <div>
@@ -246,7 +267,7 @@ const Form = () => {
               type="file"
               accept=""
               name="catPic"
-              onChange={() => setIncludeCatPic(!includeCatPic)}
+              onChange={onHandleChange}
               className="form__catPic"
               placeholder="Просимо вислати фото кота"
             />

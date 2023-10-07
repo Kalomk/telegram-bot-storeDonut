@@ -5,6 +5,7 @@ import useTelegram from './hooks/useTelegram';
 import ProductList from './components/ProductList/ProductList';
 import Form from './components/Form/Form';
 import Cart from './components/Cart/Cart';
+import SendForm from './components/SendForm/SendForm';
 
 function App() {
   const { tg } = useTelegram();
@@ -19,7 +20,7 @@ function App() {
         <Route path="/" element={<ProductList />} />
         <Route path="/form" element={<Form />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/sendOrderNumber" element={<Form />} />
+        <Route path="/sendOrderNumber" element={<SendForm />} />
       </Routes>
     </div>
   );

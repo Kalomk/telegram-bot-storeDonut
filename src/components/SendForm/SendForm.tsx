@@ -1,4 +1,4 @@
-import useTelegram from '@/hooks/useTelegram';
+import useTelegram from '../../hooks/useTelegram';
 import React, { useState, useEffect, useCallback } from 'react';
 
 const SendForm = () => {
@@ -65,9 +65,6 @@ const SendForm = () => {
             onChange={handlePackageNumberChange}
             required
           />
-        </div>
-        <div>
-          <button type="submit">Відправити</button>
         </div>
       </form>
     </div>
