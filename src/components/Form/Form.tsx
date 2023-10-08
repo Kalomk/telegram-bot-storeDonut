@@ -268,7 +268,7 @@ const Form = () => {
               type="file"
               accept=""
               name="catPic"
-              onChange={() => setIncludeCatPic(!includeCatPic)}
+              onChange={onHandleChange}
               className="form__catPic"
               placeholder="Просимо вислати фото кота"
             />
