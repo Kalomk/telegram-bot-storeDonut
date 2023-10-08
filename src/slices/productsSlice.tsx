@@ -1,23 +1,12 @@
 // productSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
 import img from '../images/fish-44-1024x602.png';
-import treska_perec from '../images/IMG_2706.JPG';
-import set from '../images/IMG_2703.JPG';
-import treska from '../images/IMG_2708.JPG';
-import pavutynka from '../images/IMG_2709.JPG';
-import ikrianyk from '../images/IMG_2716.JPG';
-import stavrydka from '../images/IMG_2718.JPG';
-import yantarna_z_percem from '../images/IMG_2723.JPG';
-import struzka_kalmar from '../images/IMG_2727.JPG';
-import kilca_kalmaru from '../images/IMG_2732.JPG';
-import anchous from '../images/IMG_2737.JPG';
-import shanhai from '../images/IMG_2740.JPG';
 
 export interface ProductType {
   id: string;
   title: string;
   price: number[];
-  img: typeof img;
+  img: string;
   weight: number[];
   category: number;
 }
@@ -29,7 +18,7 @@ const initialState: ProductType[] = [
     id: '1',
     title: 'Ікряник з лосося',
     price: [15, 35, 60, 115],
-    img: ikrianyk,
+    img: 'https://imagizer.imageshack.com/img924/4245/dSnrVy.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -37,7 +26,7 @@ const initialState: ProductType[] = [
     id: '2',
     title: 'Анчоус',
     price: [15, 35, 60, 110],
-    img: anchous,
+    img: 'https://imagizer.imageshack.com/img924/2086/HPRwwU.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -45,7 +34,7 @@ const initialState: ProductType[] = [
     id: '3',
     title: 'Бурштинова з перцем',
     price: [16, 40, 70, 130],
-    img: yantarna_z_percem,
+    img: 'https://imagizer.imageshack.com/img922/2047/vVuhDm.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -53,7 +42,7 @@ const initialState: ProductType[] = [
     id: '4',
     title: 'Соломка тріски',
     price: [16, 40, 70, 130],
-    img: treska,
+    img: 'https://imagizer.imageshack.com/img924/1908/Fevmgr.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -61,7 +50,7 @@ const initialState: ProductType[] = [
     id: '5',
     title: 'Соломка тріски з перцем',
     price: [16, 40, 70, 130],
-    img: treska_perec,
+    img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -69,7 +58,7 @@ const initialState: ProductType[] = [
     id: '6',
     title: 'Кальмар по-шанхайськи',
     price: [16, 40, 70, 135],
-    img: shanhai,
+    img: 'https://imagizer.imageshack.com/img923/8853/SRweGq.jpg',
     weight: [100, 250, 500, 1000],
     category: 2,
   },
@@ -77,7 +66,7 @@ const initialState: ProductType[] = [
     id: '7',
     title: 'Кільця кальмара',
     price: [16, 40, 75, 145],
-    img: kilca_kalmaru,
+    img: 'https://imagizer.imageshack.com/img924/6471/vT8lba.jpg',
     weight: [100, 250, 500, 1000],
     category: 2,
   },
@@ -85,7 +74,7 @@ const initialState: ProductType[] = [
     id: '8',
     title: 'Стружка кальмара',
     price: [16, 40, 80, 150],
-    img: struzka_kalmar,
+    img: 'https://imagizer.imageshack.com/img924/4177/2rovl5.jpg',
     weight: [100, 250, 500, 1000],
     category: 2,
   },
@@ -93,7 +82,7 @@ const initialState: ProductType[] = [
     id: '9',
     title: 'Ставридка',
     price: [15, 35, 60, 105],
-    img: stavrydka,
+    img: 'https://imagizer.imageshack.com/img923/2121/kntebT.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -101,7 +90,7 @@ const initialState: ProductType[] = [
     id: '10',
     title: 'Павутинка тунця з перцем',
     price: [16, 40, 75, 140],
-    img: pavutynka,
+    img: 'https://imagizer.imageshack.com/img923/7159/0RwhkB.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
@@ -109,7 +98,7 @@ const initialState: ProductType[] = [
     id: '11',
     title: 'Сет Дегустаційний',
     price: [135],
-    img: set,
+    img: 'https://imagizer.imageshack.com/img924/7130/vUivSi.jpg',
     weight: [1000],
     category: 3,
   },
