@@ -104,6 +104,7 @@ const Form = () => {
         data: { ...rest },
         totalPrice,
         totalWeight,
+        isCatExist: !!catPic,
         freeDelivery: totalWeight >= 1000,
         products: cartItems,
         queryId,
@@ -118,9 +119,8 @@ const Form = () => {
           formData
         );
       }
-      tg.sendData(JSON.stringify(data));
+      tg.sendData(data);
       resetForm();
-      dispatch(clearItems());
     },
   });
 
@@ -276,6 +276,9 @@ const Form = () => {
           </label>
         )}
       </div>
+      <button onClick={onSendData} type="submit">
+        Submit
+      </button>
     </div>
   );
 };
