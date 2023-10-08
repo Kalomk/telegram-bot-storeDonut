@@ -148,7 +148,7 @@ const Form = () => {
 
   useEffect(() => {
     tg.MainButton.setParams({
-      text: 'відправити данні',
+      text: 'Відправити данні',
     });
   }, []);
 
@@ -275,7 +275,7 @@ const Form = () => {
             />
             <span>
               Надішліть фото своєї киці та отримайте для неї подарунок (акція діє для замовлень
-              загальною вагою від одного кг){' '}
+              загальною вагою від одного 1 кг){' '}
             </span>
             {formik.errors.catPic && <div className="error">{formik.errors.catPic as string}</div>}
           </label>
