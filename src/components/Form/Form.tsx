@@ -56,7 +56,7 @@ const Form = () => {
       .email('Некоректна адреса електронної пошти')
       .required("Електронна пошта обов'язкове поле"),
     userCity: Yup.string()
-      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Місто повинно містити лише латинські літери')
+      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/, 'Місто повинно містити лише латинські літери')
       .required("Місто обов'язкове поле"),
     userIndexCity: Yup.number().when([], {
       is: () => selectedAddress === 'bielsko',
@@ -70,7 +70,7 @@ const Form = () => {
         schema
           .min(5, 'Мінімальна кількість символів 5')
           .matches(
-            /^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/,
+            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/,
             'Адреса повинна містити лише латинські літери'
           )
           .required("Адреса пачкомату обов'язкова"),
@@ -82,7 +82,7 @@ const Form = () => {
         schema
           .min(5)
           .matches(
-            /^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/,
+            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/,
             'Ваша адреса повинна містити лише латинські літери'
           )
           .required("Ваша адреса обов'язкова"),
@@ -104,7 +104,7 @@ const Form = () => {
         data: { ...rest },
         totalPrice,
         totalWeight,
-        // isCatExist: !!catPic,
+        isCatExist: !!catPic,
         freeDelivery: totalWeight >= 1000,
         products: cartItems,
         queryId,
@@ -119,9 +119,9 @@ const Form = () => {
           formData
         );
       }
-      tg.sendData(data);
-      dispatch(clearItems());
+      tg.sendData(JSON.stringify(data));
       resetForm();
+      dispatch(clearItems());
     },
   });
 
@@ -268,7 +268,7 @@ const Form = () => {
               type="file"
               accept=""
               name="catPic"
-              onChange={onHandleChange}
+              onChange={() => setIncludeCatPic(!includeCatPic)}
               className="form__catPic"
               placeholder="Просимо вислати фото кота"
             />
