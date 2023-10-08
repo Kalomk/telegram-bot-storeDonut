@@ -108,9 +108,9 @@ const initialState: ProductType[] = [
   {
     id: '11',
     title: 'Сет Дегустаційний',
-    price: [70, 135],
+    price: [135],
     img: set,
-    weight: [500, 1000],
+    weight: [1000],
     category: 3,
   },
 ];
