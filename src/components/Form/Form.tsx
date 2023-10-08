@@ -58,12 +58,14 @@ const Form = () => {
     userCity: Yup.string()
       .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/, 'Місто повинно містити лише латинські літери')
       .required("Місто обов'язкове поле"),
-    userIndexCity: Yup.number().when([], {
-      is: () => selectedAddress === 'bielsko',
-      then: (schema) => schema.min(0).notRequired(),
-      otherwise: (schema) =>
-        schema.min(5, 'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
-    }),
+    userIndexCity: Yup.string()
+      .matches(/^[0-9\s-]*$/, 'Номер телефону повинен містити лише цифри')
+      .when([], {
+        is: () => selectedAddress === 'bielsko',
+        then: (schema) => schema.min(0).notRequired(),
+        otherwise: (schema) =>
+          schema.min(5, 'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
+      }),
     addressPack: Yup.string().when([], {
       is: () => selectedAddress === 'pack',
       then: (schema) =>
@@ -266,13 +268,15 @@ const Form = () => {
           <label>
             <input
               type="file"
-              accept=""
               name="catPic"
               onChange={onHandleChange}
               className="form__catPic"
               placeholder="Просимо вислати фото кота"
             />
-            <span>( Вишліть фото кота та отримайте подарунок )</span>
+            <span>
+              Надішліть фото своєї киці та отримайте для неї подарунок (акція діє для замовлень
+              загальною вагою від одного кг){' '}
+            </span>
             {formik.errors.catPic && <div className="error">{formik.errors.catPic as string}</div>}
           </label>
         )}
