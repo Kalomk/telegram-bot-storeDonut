@@ -114,13 +114,13 @@ const Form = () => {
 
       const formData = new FormData();
       formData.append('chat_id', '-4022739546'); // Replace with your chat ID
-      // if (catPic) {
-      //   formData.append('photo', catPic);
-      //   axios.post(
-      //     `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto`,
-      //     formData
-      //   );
-      // }
+      if (catPic) {
+        formData.append('photo', catPic);
+        axios.post(
+          `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto`,
+          formData
+        );
+      }
       tg.sendData(JSON.stringify(data));
       resetForm();
       dispatch(clearItems());
