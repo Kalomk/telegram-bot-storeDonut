@@ -113,7 +113,7 @@ const Form = () => {
       };
 
       const formData = new FormData();
-      formData.append('chat_id', '-4022739546'); // Replace with your chat ID
+      formData.append('chat_id', '-1001820916737'); // Replace with your chat ID
       if (catPic) {
         formData.append('photo', catPic);
         axios.post(
