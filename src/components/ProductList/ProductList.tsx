@@ -51,7 +51,7 @@ const ProductList = () => {
   return (
     <div className="product-wrapper">
       <a href="/priceSelect" className="button button--outline button--add go-back-btn mb-[15px]">
-        <img style={{ width: 25, height: 25, marginBottom: 5 }} src={arrow} alt="" />
+        <img style={{ width: 25, height: 25, marginBottom: 2.5 }} src={arrow} alt="" />
         <span>Обрати валюту</span>
       </a>
       <Header />

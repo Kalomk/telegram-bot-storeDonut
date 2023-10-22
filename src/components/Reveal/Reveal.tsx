@@ -18,7 +18,7 @@ const Reveal = ({ children }: { children: JSX.Element }) => {
       ref={ref}
       initial="hidden"
       animate={mainControls}
-      transition={{ duration: 0.75, delay: 0.45 }}
+      transition={{ duration: 0.55, delay: 0.35 }}
       variants={{
         hidden: { opacity: 0, y: 75 },
         visible: { opacity: 1, y: 0 },
