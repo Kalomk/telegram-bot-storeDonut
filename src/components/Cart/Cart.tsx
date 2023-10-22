@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = () => {
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
+  const { activePrice } = useSelector((state: RootState) => state.activePrice);
   const dispatch = useDispatch();
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
   const { tg } = useTelegram();
@@ -77,7 +78,10 @@ const Cart: React.FC = () => {
               </span>
               <span>
                 {' '}
-                Сума: <b>{totalPrice} zł</b>
+                Сума:{' '}
+                <b>
+                  {totalPrice} {activePrice}
+                </b>
               </span>
               <span>
                 {' '}

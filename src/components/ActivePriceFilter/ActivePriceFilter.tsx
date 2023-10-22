@@ -6,18 +6,25 @@ import './ActivePriceFilter.scss';
 import { changeActivePrice } from '../../slices/priceFilter';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../Reveal/Reveal';
+import useTelegram from '@/hooks/useTelegram';
+import { useEffect } from 'react';
 
 const ActivePriceFilter = () => {
   const dispatch = useDispatch();
   const priceTypes: ['zł', 'eu'] = ['zł', 'eu'];
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
   const navigate = useNavigate();
+  const { tg } = useTelegram();
 
   const changePriceType = (priceType: 'zł' | 'eu') => {
     dispatch(changeActivePrice(priceType));
     dispatch(clearItems());
     navigate('/');
   };
+
+  useEffect(() => {
+    tg.MainButton.hide();
+  }, []);
 
   return (
     <div className="priceFilter">

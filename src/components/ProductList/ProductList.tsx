@@ -39,12 +39,12 @@ const ProductList = () => {
       // Check if the price is above 1000
       if (totalWeight >= 1000) {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice} ${activePrice} (Безкоштовна доставка 🎉)`,
+          text: `Всього: ${totalPrice.toFixed(2)} ${activePrice} (Безкоштовна доставка 🎉)`,
           text_color: '#d9dd0b',
         });
       } else {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice} ${activePrice}   ${totalWeight} грам`,
+          text: `Всього: ${totalPrice.toFixed(2)} ${activePrice}   ${totalWeight} грам`,
         });
       }
     }
@@ -52,7 +52,7 @@ const ProductList = () => {
   return (
     <div className="product-wrapper">
       <a href="/priceSelect" className="button button--outline button--add go-back-btn">
-        <img style={{ width: 25, height: 25, marginBottom: 5 }} src={arrow} alt="" />
+        <img style={{ width: 25, height: 25, marginBottom: 15 }} src={arrow} alt="" />
         <span>Обрати валюту</span>
       </a>
       <Header />
