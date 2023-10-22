@@ -144,6 +144,11 @@ const Form = () => {
         }
       } else {
         formik.setFieldValue(name, value);
+        // If selectedAddress is 'bielsko', set userCity to 'Bielsko'
+        if (selectedAddress === 'bielsko') {
+          formik.setFieldValue('userCity', 'Bielsko-Biala');
+          formik.setFieldValue('userIndexCity', '43-300');
+        }
       }
     }
   };
