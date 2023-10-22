@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import filters from '../slices/filterSlice';
 import cart from '../slices/cartSlice';
 import products from '../slices/productsSlice';
+import activePrice from '../slices/priceFilter';
 
 const store = configureStore({
-  reducer: { filters, cart, products },
+  reducer: { filters, cart, products, activePrice },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   devTools: process.env.NODE_ENV !== 'production',
 });

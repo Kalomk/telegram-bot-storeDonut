@@ -34,9 +34,9 @@ const Form = () => {
     userLastName: '',
     phoneNumber: '',
     email: '',
-    userIndexCity: '',
+    userIndexCity: selectedAddress === 'bielsko' ? '43-300' : '',
     addressPack: '',
-    userCity: '',
+    userCity: selectedAddress === 'bielsko' ? 'Bielsko-Biala' : '',
     userAddress: '',
     catPic: undefined,
   };
@@ -220,7 +220,7 @@ const Form = () => {
         >
           <option value={'pack'}>Я знаю свій пачкомат</option>
           <option value={'user'}>Визначити пачкомат автоматично</option>
-          <option value={'bielsko'}>Безкоштовна доставка по м. Бєлсько-Бяла</option>
+          <option value={'bielsko'}>Безкоштовна доставка по м. Белсько-Бяла</option>
         </select>
         {selectedAddress === 'pack' && (
           <>
