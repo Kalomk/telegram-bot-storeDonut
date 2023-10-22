@@ -28,15 +28,16 @@ const Form = () => {
   const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
+  const { activePrice } = useSelector((state: RootState) => state.activePrice);
 
   const initialValues = {
     userName: '',
     userLastName: '',
     phoneNumber: '',
     email: '',
-    userIndexCity: selectedAddress === 'bielsko' ? '43-300' : '',
+    userIndexCity: '',
     addressPack: '',
-    userCity: selectedAddress === 'bielsko' ? 'Bielsko-Biala' : '',
+    userCity: '',
     userAddress: '',
     catPic: undefined,
   };
@@ -106,6 +107,7 @@ const Form = () => {
         data: { ...rest },
         totalPrice,
         totalWeight,
+        activePrice,
         isCatExist: !!catPic,
         freeDelivery: totalWeight >= 1000,
         products: cartItems,
