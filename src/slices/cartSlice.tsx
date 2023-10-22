@@ -50,6 +50,7 @@ const filtersSlice = createSlice({
 
       state.totalPrice = +calcTotalPrice(state.cartItems);
       state.totalWeight = calcTotalWeight(state.cartItems);
+      state.activePrice = getActivePrice(state.cartItems);
       setItems(state.cartItems, state.totalPrice, state.totalWeight, state.activePrice);
       console.log(state.cartItems);
     },
@@ -57,6 +58,8 @@ const filtersSlice = createSlice({
       state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
       state.totalPrice = +calcTotalPrice(state.cartItems);
       state.totalWeight = calcTotalWeight(state.cartItems);
+      state.activePrice = getActivePrice(state.cartItems);
+
       setItems(state.cartItems, state.totalPrice, state.totalWeight, state.activePrice);
     },
     clearItems: (state) => {
