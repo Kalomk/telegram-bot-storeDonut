@@ -31,6 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       price: prices[Number(product.id)][selectedIndex],
       weight: product.weight[selectedIndex],
       count: 0,
+      activePrice,
     };
 
     dispatch(addItems(info));

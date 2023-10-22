@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-const initialState: { activePrice: 'zł' | 'eu' } = {
+const initialState: { activePrice: 'zł' | '€' } = {
   activePrice: 'zł',
 };
 
@@ -9,7 +9,7 @@ const activePriceFilterSlice = createSlice({
   name: 'activePrice',
   initialState,
   reducers: {
-    changeActivePrice: (state, action: PayloadAction<'zł' | 'eu'>) => {
+    changeActivePrice: (state, action: PayloadAction<'zł' | '€'>) => {
       state.activePrice = action.payload;
     },
   },

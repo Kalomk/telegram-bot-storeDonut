@@ -11,6 +11,7 @@ type CartItems = {
   weight: number;
   count: number;
   id: string;
+  activePrice: 'zł' | '€';
 };
 
 const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, id }) => {
