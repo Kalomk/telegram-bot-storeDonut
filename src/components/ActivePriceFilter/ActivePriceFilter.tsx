@@ -6,7 +6,7 @@ import './ActivePriceFilter.scss';
 import { changeActivePrice } from '../../slices/priceFilter';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../Reveal/Reveal';
-import useTelegram from '@/hooks/useTelegram';
+import useTelegram from '../../hooks/useTelegram';
 import { useEffect } from 'react';
 
 const ActivePriceFilter = () => {
