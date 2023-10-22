@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { getCartFromLs } from '../utils/getCartFromLs';
+
+const { activePrice } = getCartFromLs();
 
 const initialState: { activePrice: 'zł' | '€' } = {
-  activePrice: 'zł',
+  activePrice: activePrice ? activePrice : 'zł',
 };
 
 const activePriceFilterSlice = createSlice({

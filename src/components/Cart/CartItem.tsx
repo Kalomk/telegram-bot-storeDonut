@@ -17,7 +17,7 @@ type CartItems = {
 const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, id }) => {
   const dispatch = useDispatch();
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
-
+  const fixedPrice = (price * count).toFixed(2);
   const Delete = () => {
     if (window.confirm('Ви впевнені?')) {
       dispatch(removeItems(id));
@@ -70,7 +70,7 @@ const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, 
         </div>
         <div className="cart__item-price">
           <b>
-            {price * count} {activePrice}
+            {fixedPrice} {activePrice}
           </b>
         </div>
         <div style={{ position: 'relative', top: -4 }} className="cart__item-remove">

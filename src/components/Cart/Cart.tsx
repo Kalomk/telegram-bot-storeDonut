@@ -11,8 +11,9 @@ import useTelegram from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = () => {
-  const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
-  const { activePrice } = useSelector((state: RootState) => state.activePrice);
+  const { cartItems, totalPrice, totalWeight, activePrice } = useSelector(
+    (state: RootState) => state.cart
+  );
   const dispatch = useDispatch();
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
   const { tg } = useTelegram();

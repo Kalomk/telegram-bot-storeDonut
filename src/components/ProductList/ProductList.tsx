@@ -12,10 +12,9 @@ import arrow from '../../images/icons/_Path_.svg';
 
 const ProductList = () => {
   const { tg } = useTelegram();
-  const { totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
+  const { totalPrice, totalWeight, activePrice } = useSelector((state: RootState) => state.cart);
   const products = useSelector(filteredProducts);
   const navigate = useNavigate();
-  const { activePrice } = useSelector((state: RootState) => state.activePrice);
 
   const redirectToCart = () => {
     let path = '/cart';

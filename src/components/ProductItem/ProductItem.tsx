@@ -22,7 +22,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
   const prices = useSelector(filteredPrice);
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
   const addCount = cartItem ? cartItem.count : null;
-
   const sendToCart = () => {
     const info: CartItem = {
       id: completeId,

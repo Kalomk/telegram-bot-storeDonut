@@ -47,7 +47,7 @@ const ActivePriceFilter = () => {
               <Button
                 bg__style={activePrice === priceType.value ? 'primary' : 'bgempty'}
                 className="product__button"
-                style={{ width: 150, height: 60 }}
+                style={{ width: 100, height: 40 }}
               >
                 <span>{priceType.name}</span>
               </Button>
