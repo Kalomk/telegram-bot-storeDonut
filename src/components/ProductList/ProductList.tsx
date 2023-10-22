@@ -39,12 +39,12 @@ const ProductList = () => {
       // Check if the price is above 1000
       if (totalWeight >= 1000) {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice.toFixed(2)} ${activePrice} (Безкоштовна доставка 🎉)`,
+          text: `Всього: ${totalPrice} ${activePrice} (Безкоштовна доставка 🎉)`,
           text_color: '#d9dd0b',
         });
       } else {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice.toFixed(2)} ${activePrice}   ${totalWeight} грам`,
+          text: `Всього: ${totalPrice} ${activePrice}   ${totalWeight} грам`,
         });
       }
     }

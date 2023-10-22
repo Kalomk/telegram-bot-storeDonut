@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeItems, minusItem, addItems } from '../../slices/cartSlice';
 import './Cart.scss';
 import trash from '../../images/icons/iconfinder_trash-2_3324927 1.svg';
+import { RootState } from '@/store';
 
 type CartItems = {
   title: string;
@@ -14,6 +15,7 @@ type CartItems = {
 
 const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, id }) => {
   const dispatch = useDispatch();
+  const { activePrice } = useSelector((state: RootState) => state.activePrice);
 
   const Delete = () => {
     if (window.confirm('Ви впевнені?')) {
@@ -66,7 +68,9 @@ const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, 
           </svg>
         </div>
         <div className="cart__item-price">
-          <b>{price * count} zł</b>
+          <b>
+            {price * count} {activePrice}
+          </b>
         </div>
         <div style={{ position: 'relative', top: -4 }} className="cart__item-remove">
           <div onClick={Delete} className="cart__item-remove">

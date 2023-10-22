@@ -21,7 +21,7 @@ interface CartSliceState {
 const { cartItems, totalPrice, totalWeight } = getCartFromLs();
 const initialState: CartSliceState = {
   cartItems: cartItems,
-  totalPrice: totalPrice,
+  totalPrice: +totalPrice,
   totalWeight: totalWeight,
 };
 
@@ -43,14 +43,14 @@ const filtersSlice = createSlice({
         state.cartItems.push({ ...action.payload, count: 1 });
       }
 
-      state.totalPrice = calcTotalPrice(state.cartItems);
+      state.totalPrice = +calcTotalPrice(state.cartItems);
       state.totalWeight = calcTotalWeight(state.cartItems);
       setItems(state.cartItems, state.totalPrice, state.totalWeight);
       console.log(state.cartItems);
     },
     removeItems: (state, action: PayloadAction<string>) => {
       state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
-      state.totalPrice = calcTotalPrice(state.cartItems);
+      state.totalPrice = +calcTotalPrice(state.cartItems);
       state.totalWeight = calcTotalWeight(state.cartItems);
       setItems(state.cartItems, state.totalPrice, state.totalWeight);
     },
