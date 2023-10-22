@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { calcTotalPrice } from '../utils/calcTotalPrice';
 import { getCartFromLs } from '../utils/getCartFromLs';
 import { calcTotalWeight } from '../utils/calTotalWeight';
+import { getActivePrice } from '@/utils/getActivePrice';
 
 export type CartItem = {
   title: string;
@@ -62,7 +63,6 @@ const filtersSlice = createSlice({
       state.cartItems = [];
       state.totalPrice = 0;
       state.totalWeight = 0;
-      state.activePrice = 'zł';
       localStorage.setItem('cart', JSON.stringify(state.cartItems.map((item) => item)));
       localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice));
       localStorage.setItem('totalWeight', JSON.stringify(state.totalWeight));
