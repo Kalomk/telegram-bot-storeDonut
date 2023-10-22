@@ -66,7 +66,6 @@ const filtersSlice = createSlice({
       localStorage.setItem('cart', JSON.stringify(state.cartItems.map((item) => item)));
       localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice));
       localStorage.setItem('totalWeight', JSON.stringify(state.totalWeight));
-      localStorage.setItem('activePrice', state.activePrice);
     },
     minusItem: (state, action: PayloadAction<string>) => {
       const findItem = state.cartItems.find((item) => item.id === action.payload);
