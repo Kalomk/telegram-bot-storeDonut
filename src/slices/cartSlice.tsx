@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { calcTotalPrice } from '../utils/calcTotalPrice';
 import { getCartFromLs } from '../utils/getCartFromLs';
 import { calcTotalWeight } from '../utils/calTotalWeight';
-import { getActivePrice } from '@/utils/getActivePrice';
+import { getActivePrice } from '../utils/getActivePrice';
 
 export type CartItem = {
   title: string;
