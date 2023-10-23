@@ -80,7 +80,7 @@ const Form = () => {
       otherwise: (schema) => schema.min(0).notRequired(),
     }),
     userAddress: Yup.string().when([], {
-      is: () => selectedAddress === 'user',
+      is: () => selectedAddress === 'user' || selectedAddress === 'bielsko',
       then: (schema) =>
         schema
           .min(5)
@@ -129,9 +129,19 @@ const Form = () => {
     },
   });
 
-  const onHandleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
+  const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedAddress(e.target.value as 'pack' | 'user' | 'bielsko');
+    // If selectedAddress is 'bielsko', set userCity to 'Bielsko'
+    if (e.target.value === 'bielsko') {
+      formik.setFieldValue('userCity', 'Bielsko-Biala');
+      formik.setFieldValue('userIndexCity', '43-300');
+    } else {
+      formik.setFieldValue('userCity', '');
+      formik.setFieldValue('userIndexCity', '');
+    }
+  };
+
+  const onHandleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target) {
       const { name, value } = e.target;
 
@@ -144,11 +154,6 @@ const Form = () => {
         }
       } else {
         formik.setFieldValue(name, value);
-        // If selectedAddress is 'bielsko', set userCity to 'Bielsko'
-        if (selectedAddress === 'bielsko') {
-          formik.setFieldValue('userCity', 'Bielsko-Biala');
-          formik.setFieldValue('userIndexCity', '43-300');
-        }
       }
     }
   };
@@ -198,7 +203,7 @@ const Form = () => {
       </a>
       <div className="form">
         <h3>Введіть ваші данні</h3>
-        {inputFields.map(({ name, label, type }) => {
+        {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
           const value = formik.values[fieldName];
           const error = formik.errors[fieldName];
@@ -220,11 +225,7 @@ const Form = () => {
             </React.Fragment>
           );
         })}
-        <select
-          value={selectedAddress}
-          onChange={(e) => setSelectedAddress(e.target.value as 'pack' | 'user' | 'bielsko')}
-          className={'select'}
-        >
+        <select value={selectedAddress} onChange={(e) => onSelectChange(e)} className={'select'}>
           <option value={'pack'}>Я знаю свій пачкомат</option>
           <option value={'user'}>Визначити пачкомат автоматично</option>
           <option value={'bielsko'}>Безкоштовна доставка по м. Белсько-Бяла</option>
@@ -259,6 +260,28 @@ const Form = () => {
             {formik.touched.userAddress && <div className="error">{formik.errors.userAddress}</div>}
           </>
         )}
+        {inputFields.slice(4).map(({ name, label, type }) => {
+          const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
+          const value = formik.values[fieldName];
+          const error = formik.errors[fieldName];
+          const touch = formik.touched[fieldName];
+          return (
+            <React.Fragment key={fieldName}>
+              <>
+                <input
+                  className="form__street"
+                  type={type}
+                  name={name}
+                  placeholder={label}
+                  onChange={onHandleChange}
+                  value={value}
+                  onBlur={formik.handleBlur} // Add onBlur event handler
+                />
+                {touch && error && <div className="error">{error as string}</div>}
+              </>
+            </React.Fragment>
+          );
+        })}
         <label className="labels" style={{ marginRight: 'auto' }}>
           <div>
             {' '}
