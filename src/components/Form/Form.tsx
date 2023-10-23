@@ -225,7 +225,12 @@ const Form = () => {
             </React.Fragment>
           );
         })}
-        <select value={selectedAddress} onChange={(e) => onSelectChange(e)} className={'select'}>
+        <select
+          disabled={formik.values.addressPack !== '' || formik.values.userAddress !== ''}
+          value={selectedAddress}
+          onChange={(e) => onSelectChange(e)}
+          className={'select'}
+        >
           <option value={'pack'}>Я знаю свій пачкомат</option>
           <option value={'user'}>Визначити пачкомат автоматично</option>
           <option value={'bielsko'}>Безкоштовна доставка по м. Белсько-Бяла</option>
