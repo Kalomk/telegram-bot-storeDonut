@@ -20,8 +20,18 @@
     margin: 7px 0;
   }
   &__desc {
-    &.hide {
-      display: none;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease-in-out;
+    &.open {
+      max-height: 200px;
+      opacity: 1; /* Adjust the desired max height */
+    }
+  }
+  .product-desc-wrapper {
+    span {
+      cursor: pointer;
     }
   }
   &__button {
