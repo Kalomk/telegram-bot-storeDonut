@@ -214,6 +214,16 @@ const initialState: ProductType[] = [
     weight: [700],
     category: 1,
   },
+  {
+    id: '18',
+    title: 'Сет XXL',
+    price: { zł: [235], '€': calculatePriceInEuro([235]) },
+    img: 'https://imagizer.imageshack.com/img923/7237/4viKiT.jpg',
+    description:
+      'Стружка кальмара 200г, Кальмар с кунжутом «По-Шанхайськи» 200г, Павутиння кальмара з червоним перцем 200г, Смужки перуанського кальмара 200г, Кільця кальмара 200г',
+    weight: [2500],
+    category: 3,
+  },
 ];
 
 // Create a slice with only the initial state
