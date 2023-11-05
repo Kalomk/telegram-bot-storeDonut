@@ -47,11 +47,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       <img src={product.img} alt="rybki" className="product__img" />
       <div className="product__title">{product.title}</div>
       {product.description && (
-        <ul onClick={swapDescShow} className={`product__desc ${isDescShow ? '' : ' hide'}`}>
-          {product.description.split(',').map((desc) => (
-            <li>{desc}</li>
-          ))}
-        </ul>
+        <div className="product-desc-wrapper">
+          <span>Опис...</span>
+          <ul onClick={swapDescShow} className={`product__desc ${isDescShow ? '' : ' hide'}`}>
+            {product.description.split(',').map((desc) => (
+              <li>{desc}</li>
+            ))}
+          </ul>
+        </div>
       )}
       <div className="product__price">
         <span>Вартість:</span>{' '}
