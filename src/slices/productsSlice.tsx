@@ -6,7 +6,7 @@ export interface ProductType {
   title: string;
   price: { zł: number[]; '€': number[] };
   img: string;
-  weight: number[];
+  weight: number[] | string[];
   category: number;
 }
 
@@ -186,6 +186,28 @@ const initialState: ProductType[] = [
     img: 'https://imagizer.imageshack.com/img922/1011/2aKEFs.jpg',
     weight: [100, 250, 500, 1000],
     category: 2,
+  },
+  {
+    id: '16',
+    title: 'Тарань малосольна',
+    price: {
+      zł: [30, 55],
+      '€': calculatePriceInEuro([30, 55]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/6467/qEq5cZ.jpg',
+    weight: [500, 1000],
+    category: 1,
+  },
+  {
+    id: '17',
+    title: 'Лящ копчений 1шт',
+    price: {
+      zł: [28],
+      '€': calculatePriceInEuro([28]),
+    },
+    img: 'https://imagizer.imageshack.com/img924/2947/J9qigd.jpg',
+    weight: ['600/700'],
+    category: 1,
   },
 ];
 
