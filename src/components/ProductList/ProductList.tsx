@@ -46,7 +46,7 @@ const ProductList = () => {
         });
       } else {
         tg.MainButton.setParams({
-          text: `Всього: ${totalPrice} ${activePrice}   ${totalWeight} грам`,
+          text: `Всього: ${totalPrice} ${activePrice} Доставка: +17 zł`,
         });
       }
     }

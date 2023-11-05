@@ -18,6 +18,7 @@ const Cart: React.FC = () => {
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
   const { tg } = useTelegram();
   const navigate = useNavigate();
+  const totalPriceWithDeliveryPrice = totalPrice + 17;
 
   const Clear = () => {
     if (window.confirm('Видалити всі товари?')) {
@@ -81,7 +82,9 @@ const Cart: React.FC = () => {
                 {' '}
                 Сума:{' '}
                 <b>
-                  {totalPrice} {activePrice}
+                  {activePrice === 'zł' && totalPrice < 100
+                    ? ` ${totalPriceWithDeliveryPrice} ${activePrice}`
+                    : `${totalPrice} ${activePrice}`}
                 </b>
               </span>
               <span>
