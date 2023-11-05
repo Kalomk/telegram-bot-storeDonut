@@ -7,6 +7,7 @@ export interface ProductType {
   price: { zł: number[]; '€': number[] };
   img: string;
   weight: number[];
+  description?: string;
   category: number;
 }
 
@@ -132,6 +133,8 @@ const initialState: ProductType[] = [
     title: 'Сет Дегустаційний',
     price: { zł: [135], '€': [30] },
     img: 'https://imagizer.imageshack.com/img924/7130/vUivSi.jpg',
+    description:
+      'Стружка кальмара 200г, Кальмар с кунжутом «По-Шанхайськи» 200г, Павутиння кальмара з червоним перцем 200г, Смужки перуанського кальмара 200г, Кільця кальмара 200г',
     weight: [1000],
     category: 3,
   },
@@ -140,6 +143,8 @@ const initialState: ProductType[] = [
     title: 'Сет Кальмар',
     price: { zł: [135], '€': [30] },
     img: 'https://imagizer.imageshack.com/img922/1213/N9ZIjG.jpg',
+    description:
+      'Стружка кальмара 200г, Кальмар с кунжутом «По-Шанхайськи» 200г, Павутиння кальмара з червоним перцем 200г, Смужки перуанського кальмара 200г, Кільця кальмара 200г',
     weight: [1000],
     category: 3,
   },
