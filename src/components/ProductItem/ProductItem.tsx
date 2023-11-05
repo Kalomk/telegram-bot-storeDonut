@@ -48,8 +48,8 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       <div className="product__title">{product.title}</div>
       {product.description && (
         <div className="product-desc-wrapper">
-          <span>Опис...</span>
-          <ul onClick={swapDescShow} className={`product__desc ${isDescShow ? '' : ' hide'}`}>
+          <span onClick={swapDescShow}>Опис...</span>
+          <ul className={`product__desc ${isDescShow ? '' : ' hide'}`}>
             {product.description.split(',').map((desc) => (
               <li>{desc}</li>
             ))}
