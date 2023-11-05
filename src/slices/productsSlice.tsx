@@ -177,7 +177,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '14',
+    id: '15',
     title: 'Павутиння кальмара з перцем',
     price: {
       zł: [16, 40, 75, 140],
