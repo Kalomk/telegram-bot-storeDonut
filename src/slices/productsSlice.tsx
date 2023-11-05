@@ -12,13 +12,16 @@ export interface ProductType {
 
 // Define the initial state based on your array of products
 
+const calculatePriceInEuro = (arr: number[]) =>
+  arr.map((price) => Number((price / 4.5).toFixed(2)));
+
 const initialState: ProductType[] = [
   {
     id: '0',
     title: 'Ікряник з лосося',
     price: {
       zł: [15, 35, 60, 115],
-      '€': [3.3, 7.7, 13.3, 25.5],
+      '€': calculatePriceInEuro([15, 35, 60, 115]),
     },
     img: 'https://imagizer.imageshack.com/img924/4245/dSnrVy.jpg',
     weight: [100, 250, 500, 1000],
@@ -29,7 +32,7 @@ const initialState: ProductType[] = [
     title: 'Анчоус',
     price: {
       zł: [15, 35, 60, 110],
-      '€': [3.3, 7.7, 13.3, 24.4],
+      '€': calculatePriceInEuro([15, 35, 60, 110]),
     },
     img: 'https://imagizer.imageshack.com/img924/2086/HPRwwU.jpg',
     weight: [100, 250, 500, 1000],
@@ -40,7 +43,7 @@ const initialState: ProductType[] = [
     title: 'Бурштинова з перцем',
     price: {
       zł: [16, 40, 70, 130],
-      '€': [3.5, 8.8, 15.5, 28.8],
+      '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
     img: 'https://imagizer.imageshack.com/img922/2047/vVuhDm.jpg',
     weight: [100, 250, 500, 1000],
@@ -51,7 +54,7 @@ const initialState: ProductType[] = [
     title: 'Соломка тріски',
     price: {
       zł: [16, 40, 70, 130],
-      '€': [3.5, 8.8, 15.5, 28.8],
+      '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
     img: 'https://imagizer.imageshack.com/img924/1908/Fevmgr.jpg',
     weight: [100, 250, 500, 1000],
@@ -62,7 +65,7 @@ const initialState: ProductType[] = [
     title: 'Соломка тріски з перцем',
     price: {
       zł: [16, 40, 70, 130],
-      '€': [3.5, 8.8, 15.5, 28.8],
+      '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
     img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
     weight: [100, 250, 500, 1000],
@@ -73,7 +76,7 @@ const initialState: ProductType[] = [
     title: 'Кальмар по-шанхайськи',
     price: {
       zł: [16, 40, 70, 135],
-      '€': [3.5, 8.8, 15.5, 30],
+      '€': calculatePriceInEuro([16, 40, 70, 135]),
     },
     img: 'https://imagizer.imageshack.com/img923/8853/SRweGq.jpg',
     weight: [100, 250, 500, 1000],
@@ -84,7 +87,7 @@ const initialState: ProductType[] = [
     title: 'Кільця кальмара',
     price: {
       zł: [16, 40, 75, 145],
-      '€': [3.5, 8.8, 16.6, 32.2],
+      '€': calculatePriceInEuro([16, 40, 75, 145]),
     },
     img: 'https://imagizer.imageshack.com/img924/6471/vT8lba.jpg',
     weight: [100, 250, 500, 1000],
@@ -95,7 +98,7 @@ const initialState: ProductType[] = [
     title: 'Стружка кальмара',
     price: {
       zł: [16, 40, 80, 150],
-      '€': [3.5, 8.8, 17.7, 33.3],
+      '€': calculatePriceInEuro([16, 40, 80, 150]),
     },
     img: 'https://imagizer.imageshack.com/img924/4177/2rovl5.jpg',
     weight: [100, 250, 500, 1000],
@@ -106,7 +109,7 @@ const initialState: ProductType[] = [
     title: 'Ставридка',
     price: {
       zł: [15, 35, 60, 105],
-      '€': [3.3, 7.7, 13.3, 23.3],
+      '€': calculatePriceInEuro([15, 35, 60, 105]),
     },
     img: 'https://imagizer.imageshack.com/img923/2121/kntebT.jpg',
     weight: [100, 250, 500, 1000],
@@ -117,12 +120,13 @@ const initialState: ProductType[] = [
     title: 'Павутинка тунця з перцем',
     price: {
       zł: [16, 40, 75, 140],
-      '€': [3.5, 8.8, 16.6, 31.1],
+      '€': calculatePriceInEuro([16, 40, 75, 140]),
     },
     img: 'https://imagizer.imageshack.com/img923/7159/0RwhkB.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
+
   {
     id: '10',
     title: 'Сет Дегустаційний',
@@ -130,6 +134,58 @@ const initialState: ProductType[] = [
     img: 'https://imagizer.imageshack.com/img924/7130/vUivSi.jpg',
     weight: [1000],
     category: 3,
+  },
+  {
+    id: '11',
+    title: 'Сет Кальмар',
+    price: { zł: [135], '€': [30] },
+    img: 'https://imagizer.imageshack.com/img922/1213/N9ZIjG.jpg',
+    weight: [1000],
+    category: 3,
+  },
+  {
+    id: '12',
+    title: 'Філе тріски',
+    price: {
+      zł: [15, 35, 65, 120],
+      '€': calculatePriceInEuro([15, 35, 65, 120]),
+    },
+    img: 'https://imagizer.imageshack.com/img923/5699/upv1yh.jpg',
+    weight: [100, 250, 500, 1000],
+    category: 1,
+  },
+  {
+    id: '13',
+    title: 'Соломка тунця',
+    price: {
+      zł: [15, 35, 65, 120],
+      '€': calculatePriceInEuro([15, 35, 65, 120]),
+    },
+    img: 'https://imagizer.imageshack.com/img923/2519/oHrl15.jpg',
+    weight: [100, 250, 500, 1000],
+    category: 1,
+  },
+  {
+    id: '14',
+    title: 'Смужки перуанського кальмара',
+    price: {
+      zł: [16, 40, 75, 140],
+      '€': calculatePriceInEuro([16, 40, 75, 140]),
+    },
+    img: 'https://imagizer.imageshack.com/img924/1719/eIXwWO.jpg',
+    weight: [100, 250, 500, 1000],
+    category: 2,
+  },
+  {
+    id: '14',
+    title: 'Павутиння кальмара з перцем',
+    price: {
+      zł: [16, 40, 75, 140],
+      '€': calculatePriceInEuro([16, 40, 75, 140]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/1011/2aKEFs.jpg',
+    weight: [100, 250, 500, 1000],
+    category: 2,
   },
 ];
 
