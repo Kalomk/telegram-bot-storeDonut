@@ -109,7 +109,8 @@ const Form = () => {
         totalWeight,
         activePrice,
         isCatExist: !!catPic,
-        freeDelivery: totalWeight >= 1000,
+        freeDelivery:
+          (activePrice === 'zł' && totalPrice >= 100) || (activePrice === '€' && totalPrice >= 150),
         products: cartItems,
         queryId,
       };
