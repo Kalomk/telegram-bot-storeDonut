@@ -6,7 +6,7 @@ export interface ProductType {
   title: string;
   price: { zł: number[]; '€': number[] };
   img: string;
-  weight: number[] | string[];
+  weight: number[];
   category: number;
 }
 
@@ -206,7 +206,7 @@ const initialState: ProductType[] = [
       '€': calculatePriceInEuro([28]),
     },
     img: 'https://imagizer.imageshack.com/img924/2947/J9qigd.jpg',
-    weight: ['600/700'],
+    weight: [700],
     category: 1,
   },
 ];
