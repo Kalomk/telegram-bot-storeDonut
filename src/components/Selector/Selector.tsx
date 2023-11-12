@@ -2,40 +2,61 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearItems } from '../../slices/cartSlice';
 import { RootState } from '@/store';
 import Button from '../Button/Buttons';
-import './ActivePriceFilter.scss';
+import './Selector.scss';
 import { changeActivePrice } from '../../slices/priceFilter';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../Reveal/Reveal';
 import useTelegram from '../../hooks/useTelegram';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import CountrySelector, { Countries } from '../CountrySelector/CountrySelector';
 
 interface PriceTypeType {
   value: 'zł' | '€';
   name: string;
 }
 
-const ActivePriceFilter = () => {
+const Selector = () => {
   const dispatch = useDispatch();
   const priceTypes: PriceTypeType[] = [
     { value: 'zł', name: 'В злотих' },
     { value: '€', name: 'В євро' },
   ];
+  const [selectedCountry, setSelectedCountry] = useState<Countries | ''>('');
+
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
+
   const navigate = useNavigate();
   const { tg } = useTelegram();
 
   const changePriceType = (priceType: 'zł' | '€') => {
     dispatch(changeActivePrice(priceType));
     dispatch(clearItems());
-    navigate('/');
+  };
+
+  const redirectToShop = () => {
+    let path = '/';
+    navigate(path);
   };
 
   useEffect(() => {
-    tg.MainButton.hide();
+    tg.onEvent('mainButtonClicked', redirectToShop);
+    return () => {
+      tg.offEvent('mainButtonClicked', redirectToShop);
+    };
   }, []);
 
+  useEffect(() => {
+    tg.MainButton.setParams({
+      text: 'Перейти в магазин',
+    });
+  }, []);
+
+  useEffect(() => {
+    selectedCountry !== '' ? tg.MainButton.show() : tg.MainButton.hide();
+  }, [selectedCountry, tg.MainButton]);
+
   return (
-    <div className="priceFilter">
+    <div className="selector">
       <Reveal>
         <h3 className="mb-[30px]">В якій валюті бажаєте бачити ціни</h3>
       </Reveal>
@@ -55,8 +76,9 @@ const ActivePriceFilter = () => {
           </Reveal>
         ))}
       </ul>
+      <CountrySelector selected={selectedCountry} onSelect={setSelectedCountry} />
     </div>
   );
 };
 
-export default ActivePriceFilter;
+export default Selector;

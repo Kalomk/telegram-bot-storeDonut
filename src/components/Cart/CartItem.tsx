@@ -3,6 +3,7 @@ import { removeItems, minusItem, addItems } from '../../slices/cartSlice';
 import './Cart.scss';
 import trash from '../../images/icons/iconfinder_trash-2_3324927 1.svg';
 import { RootState } from '@/store';
+import { Countries } from '../CountrySelector/CountrySelector';
 
 type CartItems = {
   title: string;

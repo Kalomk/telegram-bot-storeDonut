@@ -3,7 +3,7 @@ import './Header.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeProductFilter } from '../../slices/filterSlice';
 import { RootState } from '../../store';
-import ActivePriceFilter from '../ActivePriceFilter/ActivePriceFilter';
+import ActivePriceFilter from '../Selector/Selector';
 
 const Header = () => {
   const dispatch = useDispatch();

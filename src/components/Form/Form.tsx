@@ -59,14 +59,6 @@ const Form = () => {
     userCity: Yup.string()
       .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/, 'Місто повинно містити лише латинські літери')
       .required("Місто обов'язкове поле"),
-    userIndexCity: Yup.string()
-      .matches(/^[0-9\s-]*$/, 'Номер телефону повинен містити лише цифри')
-      .when([], {
-        is: () => selectedAddress === 'bielsko',
-        then: (schema) => schema.min(0).notRequired(),
-        otherwise: (schema) =>
-          schema.min(5, 'Мінімальна кількість символів 5').required("Індекс міста обов'язковий"),
-      }),
     addressPack: Yup.string().when([], {
       is: () => selectedAddress === 'pack',
       then: (schema) =>

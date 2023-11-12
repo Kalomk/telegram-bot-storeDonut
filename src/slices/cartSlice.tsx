@@ -3,6 +3,7 @@ import { calcTotalPrice } from '../utils/calcTotalPrice';
 import { getCartFromLs } from '../utils/getCartFromLs';
 import { calcTotalWeight } from '../utils/calTotalWeight';
 import { getActivePrice } from '../utils/getActivePrice';
+import { Countries } from '@/components/CountrySelector/CountrySelector';
 
 export type CartItem = {
   title: string;
