@@ -194,34 +194,12 @@ const initialState: ProductType[] = [
   },
   {
     id: '16',
-    title: 'Тарань малосольна',
-    price: {
-      zł: [30, 55],
-      '€': calculatePriceInEuro([30, 55]),
-    },
-    img: 'https://imagizer.imageshack.com/img922/6467/qEq5cZ.jpg',
-    weight: [500, 1000],
-    category: 1,
-  },
-  {
-    id: '17',
-    title: 'Лящ копчений 1шт',
-    price: {
-      zł: [28],
-      '€': calculatePriceInEuro([28]),
-    },
-    img: 'https://imagizer.imageshack.com/img924/2947/J9qigd.jpg',
-    weight: [700],
-    category: 1,
-  },
-  {
-    id: '18',
-    title: 'Сет XXL',
-    price: { zł: [235], '€': calculatePriceInEuro([235]) },
-    img: 'https://imagizer.imageshack.com/img923/7237/4viKiT.jpg',
+    title: 'Сет Рибний',
+    price: { zł: [125], '€': [28] },
+    img: 'https://imagizer.imageshack.com/img922/7360/xJQY7p.jpg', // Replace with the actual image URL
     description:
-      'Лящ домашнього копчення 1 шт (600-700г),Тарань малосольна 500г,Стружка кальмара 100г,Кільця кальмара 100г,Смуги перуанського кальмара 100г,Павутиння кальмара з перцем 100г,Кальмар по-шанхайськи 100г,Філе тріски 100г,Бурштинова з перцем 100г,Ставридка 100г,Анчоус 100г,Соломка тріски 100г,Соломка тріски з перцем 100г,Соломка тунця 100г,Павутиння тунця з перцем 100г,Палички з мʼяса лосося 100г',
-    weight: [2500],
+      'Анчоус 150г, Ставридка 150г, Бурштинова з перцем 100г, Філе тріски 100г, Соломка тунця 100г, Соломка тріски 100г, Соломка тріски з перцем 100г, Рибне павутиння з тунця з перцем 100г, Палички з мʼяса лосося 100г',
+    weight: [1000],
     category: 3,
   },
 ];
