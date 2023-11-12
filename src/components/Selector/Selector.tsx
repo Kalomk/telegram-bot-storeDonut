@@ -30,11 +30,11 @@ const Selector = () => {
 
   const changePriceType = (priceType: 'zł' | '€') => {
     dispatch(changeActivePrice(priceType));
-    dispatch(clearItems());
   };
 
   const redirectToShop = () => {
     let path = '/';
+    dispatch(clearItems());
     navigate(path);
   };
 
@@ -76,7 +76,9 @@ const Selector = () => {
           </Reveal>
         ))}
       </ul>
-      <CountrySelector selected={selectedCountry} onSelect={setSelectedCountry} />
+      <Reveal>
+        <CountrySelector selected={selectedCountry} onSelect={setSelectedCountry} />
+      </Reveal>{' '}
     </div>
   );
 };

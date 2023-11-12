@@ -121,12 +121,17 @@ const ProductList = () => {
           text: `Всього: ${totalPrice} ${activePrice} (Безкоштовна доставка 🎉)`,
           text_color: '#d9dd0b',
         });
+        localStorage.setItem('freeShip', true.toString());
       } else {
         tg.MainButton.setParams({
           text: `Всього: ${totalPrice} ${activePrice} ${
             activePrice === 'zł' ? `Доставка: ${shipPrice.pl} zł` : `Доставка: ${shipPrice.eu} €`
           }`,
         });
+        localStorage.setItem(
+          'shipPrice',
+          activePrice === 'zł' ? shipPrice.pl.toString() : shipPrice.eu.toString()
+        );
       }
     }
   }, [

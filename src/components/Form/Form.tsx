@@ -14,6 +14,7 @@ export interface UserDataTypes {
   userLastName: string;
   phoneNumber: string;
   email: string;
+  rightShipPrice: number;
   userIndexCity: string;
   addressPack?: string;
   userCity: string;
@@ -30,11 +31,17 @@ const Form = () => {
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
 
+  const shipPrice = localStorage.getItem('shipPrice');
+
+  const freeShip = localStorage.getItem('freeShip');
+  const rightFreeShip = freeShip === 'true' ? true : false;
+
   const initialValues = {
     userName: '',
     userLastName: '',
     phoneNumber: '',
     email: '',
+    rightShipPrice: 0,
     userIndexCity: '',
     addressPack: '',
     userCity: '',
@@ -100,9 +107,9 @@ const Form = () => {
         totalPrice,
         totalWeight,
         activePrice,
+        rightShipPrice: rightFreeShip ? 0 : shipPrice,
         isCatExist: !!catPic,
-        freeDelivery:
-          (activePrice === 'zł' && totalPrice >= 100) || (activePrice === '€' && totalPrice >= 150),
+        freeDelivery: rightFreeShip,
         products: cartItems,
         queryId,
       };
