@@ -169,14 +169,16 @@ const Form = () => {
   };
 
   useEffect(() => {
-    const country = getCountryByIndex(activeCountry);
-
-    setCountryToData(country);
-
     tg.MainButton.setParams({
       text: 'Відправити данні',
     });
   }, []);
+
+  useEffect(() => {
+    const country = getCountryByIndex(activeCountry);
+
+    setCountryToData(country);
+  }, [activeCountry, getCountryByIndex]);
 
   const onSendData = useCallback(() => {
     formik.handleSubmit();
