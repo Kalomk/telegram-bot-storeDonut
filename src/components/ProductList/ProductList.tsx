@@ -27,6 +27,9 @@ const ProductList = () => {
   const activeCoutryFromLS = localStorage.getItem('activeCountry');
   const rightCountryGroup = activeCoutryFromLS ? +activeCoutryFromLS : activeCountry;
 
+  const currentCoutryFromLS = localStorage.getItem('currentCountry');
+  const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
+
   const redirectToCart = () => {
     let path = '/cart';
     navigate(path);
@@ -142,6 +145,7 @@ const ProductList = () => {
     activeCountry,
     calculateShip,
     rightCountryGroup,
+    rightCurrentCountry,
   ]);
   return (
     <div className="product-wrapper">

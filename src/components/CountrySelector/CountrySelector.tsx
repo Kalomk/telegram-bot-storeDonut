@@ -77,6 +77,7 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelect, selected })
 
     onSelect(selectedValue);
     localStorage.setItem('activeCountry', currentCountryGroupIndex.toString());
+    localStorage.setItem('currentCountry', selectedValue);
   };
 
   return (

@@ -6,19 +6,18 @@ import { clearItems } from '../../slices/cartSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../store';
 import './Cart.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = () => {
-  const { cartItems, totalPrice, totalWeight, activePrice } = useSelector(
-    (state: RootState) => state.cart
-  );
+  const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
   const { tg } = useTelegram();
   const navigate = useNavigate();
-  const totalPriceWithDeliveryPrice = totalPrice + 17;
+
+  const [priceWithShip, setPricewithShip] = useState<number>(0);
 
   const Clear = () => {
     if (window.confirm('Видалити всі товари?')) {
@@ -45,6 +44,10 @@ const Cart: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const currentPriceWithShip = localStorage.getItem('shipPrice');
+
+    setPricewithShip(+currentPriceWithShip! + totalPrice);
+
     if (!totalPrice) {
       navigate('/');
     }
@@ -80,12 +83,7 @@ const Cart: React.FC = () => {
               </span>
               <span>
                 {' '}
-                Сума:{' '}
-                <b>
-                  {activePrice === 'zł' && totalPrice < 100
-                    ? ` ${totalPriceWithDeliveryPrice} ${activePrice}`
-                    : `${totalPrice} ${activePrice}`}
-                </b>
+                Сума: <b>{priceWithShip}</b>
               </span>
               <span>
                 {' '}

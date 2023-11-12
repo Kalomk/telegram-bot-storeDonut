@@ -30,6 +30,7 @@ const Selector = () => {
 
   const changePriceType = (priceType: 'zł' | '€') => {
     dispatch(changeActivePrice(priceType));
+    redirectToShop();
   };
 
   const redirectToShop = () => {
