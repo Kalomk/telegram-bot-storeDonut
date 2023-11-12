@@ -8,6 +8,7 @@ import axios from 'axios';
 import arrow from '../../images/icons/_Path_.svg';
 import { clearItems } from '../../slices/cartSlice';
 import * as Yup from 'yup';
+import { Countries } from '../CountrySelector/CountrySelector';
 
 export interface UserDataTypes {
   userName: string;
@@ -30,6 +31,14 @@ const Form = () => {
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
+  const { activeCountry } = useSelector((state: RootState) => state.activeCountry);
+  const [countryToData, setCountryToData] = useState<Countries | undefined>(undefined);
+
+  const getCountryByIndex = useCallback((index: number): Countries | undefined => {
+    const keys = Object.keys(Countries).filter((key) => isNaN(Number(key)));
+    const countryName = keys[index];
+    return Countries[countryName as keyof typeof Countries];
+  }, []);
 
   const shipPrice = localStorage.getItem('shipPrice');
 
@@ -107,6 +116,7 @@ const Form = () => {
         totalPrice,
         totalWeight,
         activePrice,
+        countryToData,
         rightShipPrice: rightFreeShip ? 0 : shipPrice,
         isCatExist: !!catPic,
         freeDelivery: rightFreeShip,
@@ -159,6 +169,10 @@ const Form = () => {
   };
 
   useEffect(() => {
+    const country = getCountryByIndex(activeCountry);
+
+    setCountryToData(country);
+
     tg.MainButton.setParams({
       text: 'Відправити данні',
     });
