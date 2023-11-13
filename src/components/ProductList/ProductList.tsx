@@ -52,8 +52,8 @@ const ProductList = () => {
         return { under3: { eu: 4, pl: 17 }, upper3: { eu: 6, pl: 19 }, free: { eu: 28, pl: 125 } };
       case '1':
         return {
-          under3: { eu: 5, pl: 5 },
-          upper3: { eu: 8, pl: 8 },
+          under3: { eu: 5, pl: calculateZloty(5) },
+          upper3: { eu: 8, pl: calculateZloty(8) },
           free: { eu: 80, pl: calculateZloty(80) },
         };
       case '2':
