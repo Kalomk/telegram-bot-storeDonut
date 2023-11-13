@@ -135,6 +135,7 @@ const ProductList = () => {
           'shipPrice',
           activePrice === 'zł' ? shipPrice.pl.toString() : shipPrice.eu.toString()
         );
+        localStorage.removeItem('freeShip');
       }
     }
   }, [
