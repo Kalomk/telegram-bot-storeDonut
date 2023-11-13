@@ -46,9 +46,9 @@ const Cart: React.FC = () => {
   useEffect(() => {
     const currentPriceWithShip = localStorage.getItem('shipPrice');
     const freeShip = localStorage.getItem('freeShip');
-    const rightCurrentPrice = freeShip ? currentPriceWithShip : 0;
+    const rightCurrentShipPrice = freeShip ? 0 : currentPriceWithShip;
 
-    setPricewithShip(+(+rightCurrentPrice! + totalPrice).toFixed(2));
+    setPricewithShip(+(+rightCurrentShipPrice! + totalPrice).toFixed(2));
 
     if (!totalPrice) {
       navigate('/');
