@@ -11,7 +11,7 @@ import Reveal from '../Reveal/Reveal';
 import arrow from '../../images/icons/_Path_.svg';
 
 const ProductList = () => {
-  const { tg,user,chatId } = useTelegram();
+  const { tg } = useTelegram();
   const { totalPrice, totalWeight, activePrice, isFreeShip, shipPrice } = useSelector(
     (state: RootState) => state.cart
   );
@@ -27,7 +27,6 @@ const ProductList = () => {
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', redirectToCart);
-    console.log(tg)
     return () => {
       tg.offEvent('mainButtonClicked', redirectToCart);
     };

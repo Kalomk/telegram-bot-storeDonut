@@ -24,7 +24,7 @@ export interface UserDataTypes {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg} = useTelegram();
+  const { tg,user} = useTelegram();
   const { cartItems, totalPrice, totalWeight,shipPrice,isFreeShip } = useSelector((state: RootState) => state.cart);
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
@@ -204,7 +204,7 @@ const Form = () => {
         <span>Кошик</span>
       </a>
       <div className="form">
-        <h3>Введіть ваші данні</h3>
+        <h3>Введіть ваші данні {JSON.stringify(user)}</h3>
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
           const value = formik.values[fieldName];
