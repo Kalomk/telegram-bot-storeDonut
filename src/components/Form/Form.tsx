@@ -204,7 +204,7 @@ const Form = () => {
         <span>Кошик</span>
       </a>
       <div className="form">
-        <h3>Введіть ваші данні {'initData' + tg.initData}</h3>
+        <h3>Введіть ваші данні </h3>
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
           const value = formik.values[fieldName];
