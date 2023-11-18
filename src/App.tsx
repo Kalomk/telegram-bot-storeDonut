@@ -7,6 +7,7 @@ import Form from './components/Form/Form';
 import Cart from './components/Cart/Cart';
 import SendForm from './components/SendForm/SendForm';
 import Selector from './components/Selector/Selector';
+import PrevOrders from './components/PrevOrders/PrevOrders';
 
 function App() {
   const { tg } = useTelegram();
@@ -23,6 +24,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/sendOrderNumber" element={<SendForm />} />
         <Route path="/priceSelect" element={<Selector />} />
+        <Route path="/prevOrders" element={<PrevOrders />} />
       </Routes>
     </div>
   );
