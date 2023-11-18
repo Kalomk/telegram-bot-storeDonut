@@ -56,7 +56,7 @@ const ProductList = () => {
     <div className="product-wrapper">
       <a href="/priceSelect" className="button button--outline button--add go-back-btn mb-[15px]">
         <img style={{ width: 25, height: 25, marginBottom: 2.5 }} src={arrow} alt="" />
-        <span>Валюта та країна</span>
+        <span>Валюта та країна user:{user?.username}</span>
       </a>
       <Header />
       <ul className="product__items">
