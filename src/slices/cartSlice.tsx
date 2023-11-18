@@ -3,7 +3,7 @@ import { calcTotalPrice } from '../utils/calcTotalPrice';
 import { getCartFromLs } from '../utils/getCartFromLs';
 import { calcTotalWeight } from '../utils/calTotalWeight';
 import { getActivePrice } from '../utils/getActivePrice';
-import { Countries } from '@/components/CountrySelector/CountrySelector';
+import { calculateShip } from '../utils/calcShipPrice';
 
 export type CartItem = {
   title: string;
@@ -20,21 +20,34 @@ interface CartSliceState {
   totalWeight: number;
   cartItems: CartItem[];
   activePrice: 'zł' | '€';
+  shipPrice: number;
+  isFreeShip: boolean;
 }
 
-const { cartItems, totalPrice, totalWeight, activePrice } = getCartFromLs();
+const { cartItems, totalPrice, totalWeight, activePrice, isFreeShip, shipPrice } = getCartFromLs();
 const initialState: CartSliceState = {
   cartItems: cartItems,
   totalPrice: +totalPrice,
   totalWeight: totalWeight,
-  activePrice: activePrice!,
+  activePrice: activePrice,
+  shipPrice,
+  isFreeShip,
 };
 
-const setItems = (cart: any, totalPrice: number, totalWeight: number, activePrice: 'zł' | '€') => {
+const setItems = (
+  cart: any,
+  totalPrice: number,
+  totalWeight: number,
+  activePrice: 'zł' | '€',
+  shipPrice: number,
+  isFreeShip: boolean
+) => {
   localStorage.setItem('cart', JSON.stringify(cart.map((item: CartItem) => item)));
   localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
   localStorage.setItem('totalWeight', JSON.stringify(totalWeight));
   localStorage.setItem('activePrice', activePrice);
+  localStorage.setItem('shipPrice', shipPrice.toString());
+  localStorage.setItem('isFreeShip', isFreeShip.toString());
 };
 
 const filtersSlice = createSlice({
@@ -48,34 +61,89 @@ const filtersSlice = createSlice({
       } else {
         state.cartItems.push({ ...action.payload, count: 1 });
       }
+      const totalPrice = calcTotalPrice(state.cartItems);
+      const activePrice = getActivePrice(state.cartItems);
+      const totalWeight = calcTotalWeight(state.cartItems);
 
-      state.totalPrice = +calcTotalPrice(state.cartItems);
-      state.totalWeight = calcTotalWeight(state.cartItems);
-      state.activePrice = getActivePrice(state.cartItems);
-      setItems(state.cartItems, state.totalPrice, state.totalWeight, state.activePrice);
+      state.totalPrice = +totalPrice;
+      state.totalWeight = totalWeight;
+      state.activePrice = activePrice;
+      state.shipPrice = calculateShip(+totalPrice, activePrice, totalWeight).shipPrice;
+      state.isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight).freeShip;
+
+      setItems(
+        state.cartItems,
+        state.totalPrice,
+        state.totalWeight,
+        state.activePrice,
+        state.shipPrice,
+        state.isFreeShip
+      );
       console.log(state.cartItems);
     },
     removeItems: (state, action: PayloadAction<string>) => {
-      state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
-      state.totalPrice = +calcTotalPrice(state.cartItems);
-      state.totalWeight = calcTotalWeight(state.cartItems);
-      state.activePrice = getActivePrice(state.cartItems);
+      const totalPrice = calcTotalPrice(state.cartItems);
+      const activePrice = getActivePrice(state.cartItems);
+      const totalWeight = calcTotalWeight(state.cartItems);
 
-      setItems(state.cartItems, state.totalPrice, state.totalWeight, state.activePrice);
+      state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
+      state.totalPrice = +totalPrice;
+      state.totalWeight = totalWeight;
+      state.activePrice = activePrice;
+      state.shipPrice = calculateShip(+totalPrice, activePrice, totalWeight).shipPrice;
+      state.isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight).freeShip;
+
+      setItems(
+        state.cartItems,
+        state.totalPrice,
+        state.totalWeight,
+        state.activePrice,
+        state.shipPrice,
+        state.isFreeShip
+      );
     },
     clearItems: (state) => {
       state.cartItems = [];
       state.totalPrice = 0;
       state.totalWeight = 0;
+      state.isFreeShip = false;
       localStorage.setItem('cart', JSON.stringify(state.cartItems.map((item) => item)));
       localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice));
       localStorage.setItem('totalWeight', JSON.stringify(state.totalWeight));
+      localStorage.setItem('isFreeShip', JSON.stringify(state.isFreeShip));
     },
     minusItem: (state, action: PayloadAction<string>) => {
       const findItem = state.cartItems.find((item) => item.id === action.payload);
+
       if (findItem) {
+        // Decrement the count of the found item
         findItem.count--;
-        setItems(state.cartItems, state.totalPrice, state.totalWeight, state.activePrice);
+
+        // Update the state with the modified cartItems array
+        state.cartItems = state.cartItems.map((item) =>
+          item.id === action.payload ? findItem : item
+        );
+
+        const totalPrice = calcTotalPrice(state.cartItems);
+        const activePrice = getActivePrice(state.cartItems);
+        const totalWeight = calcTotalWeight(state.cartItems);
+
+        // Recalculate total price, total weight, active price, etc.
+        state.totalPrice = +totalPrice;
+        state.totalWeight = totalWeight;
+        state.activePrice = activePrice;
+        state.shipPrice = calculateShip(+totalPrice, activePrice, totalWeight).shipPrice;
+        state.isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight).freeShip;
+
+        // Update other state properties as needed
+        setItems(
+          state.cartItems,
+          state.totalPrice,
+          state.totalWeight,
+          state.activePrice,
+          state.shipPrice,
+          state.isFreeShip
+        );
       }
     },
   },

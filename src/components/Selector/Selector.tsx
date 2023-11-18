@@ -34,7 +34,6 @@ const Selector = () => {
 
   const redirectToShop = () => {
     let path = '/';
-    localStorage.removeItem('freeShip');
     dispatch(clearItems());
     navigate(path);
   };

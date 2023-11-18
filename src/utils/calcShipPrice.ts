@@ -7,14 +7,11 @@ interface ShipPriceType {
 const activeCoutryFromLS = localStorage.getItem('activeCountry');
 const rightCountryGroup = activeCoutryFromLS ? activeCoutryFromLS : '0';
 
-const currentCoutryFromLS = localStorage.getItem('currentCountry');
-const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
-
 const calculateZloty = (value: number) => {
   return parseFloat((value * 4.5).toString());
 };
 
-export const calculateShip = (activeCountry: string): ShipPriceType => {
+const selectShipGroup = (activeCountry: string): ShipPriceType => {
   switch (activeCountry) {
     case '0':
       return { under3: { eu: 4, pl: 17 }, upper3: { eu: 6, pl: 19 }, free: { eu: 28, pl: 125 } };
@@ -73,4 +70,20 @@ export const calculateShip = (activeCountry: string): ShipPriceType => {
         free: { eu: 340, pl: calculateZloty(340) },
       };
   }
+};
+
+export const calculateShip = (totalPrice: number, activePrice: 'zł' | '€', totalWeight: number) => {
+  const shipPrice = selectShipGroup(rightCountryGroup)[totalWeight >= 3000 ? 'upper3' : 'under3'];
+  const freeShip = selectShipGroup(rightCountryGroup).free;
+
+  const rightShipPrice = activePrice === 'zł' ? shipPrice.pl : shipPrice.eu;
+
+  const isRightFreeShip =
+    (activePrice === 'zł' && totalPrice >= freeShip.pl) ||
+    (activePrice === '€' && totalPrice >= freeShip.eu);
+
+  return {
+    shipPrice: isRightFreeShip ? 0 : rightShipPrice,
+    freeShip: isRightFreeShip,
+  };
 };

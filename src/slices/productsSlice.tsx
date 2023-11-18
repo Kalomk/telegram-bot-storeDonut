@@ -43,8 +43,8 @@ const initialState: ProductType[] = [
     id: '2',
     title: 'Бурштинова з перцем',
     price: {
-      zł: [16, 40, 70, 130],
-      '€': calculatePriceInEuro([16, 40, 70, 130]),
+      zł: [16, 40, 70, 140],
+      '€': calculatePriceInEuro([16, 40, 70, 140]),
     },
     img: 'https://imagizer.imageshack.com/img922/2047/vVuhDm.jpg',
     weight: [100, 250, 500, 1000],

@@ -6,24 +6,29 @@ import { clearItems } from '../../slices/cartSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { RootState } from '../../store';
 import './Cart.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import useTelegram from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
 
 const Cart: React.FC = () => {
-  const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
+  const { cartItems, totalPrice, totalWeight, shipPrice } = useSelector(
+    (state: RootState) => state.cart
+  );
   const dispatch = useDispatch();
   const totalCount = cartItems.reduce((sum: number, item: any) => sum + item.count, 0);
   const { tg } = useTelegram();
   const navigate = useNavigate();
-
-  const [priceWithShip, setPricewithShip] = useState<number>(0);
 
   const Clear = () => {
     if (window.confirm('Видалити всі товари?')) {
       dispatch(clearItems());
     }
   };
+
+  const calcPriceWithShip = useCallback(
+    (totalPrice: number, shipPrice: number) => totalPrice + shipPrice,
+    [totalPrice, shipPrice]
+  );
 
   useEffect(() => {
     tg.MainButton.show();
@@ -44,12 +49,6 @@ const Cart: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const currentPriceWithShip = localStorage.getItem('shipPrice');
-    const freeShip = localStorage.getItem('freeShip');
-    const rightCurrentShipPrice = freeShip ? 0 : currentPriceWithShip;
-
-    setPricewithShip(+(+rightCurrentShipPrice! + totalPrice).toFixed(2));
-
     if (!totalPrice) {
       navigate('/');
     }
@@ -85,7 +84,7 @@ const Cart: React.FC = () => {
               </span>
               <span>
                 {' '}
-                Сума: <b>{priceWithShip}</b>
+                Сума: <b>{calcPriceWithShip(totalPrice, shipPrice)}</b>
               </span>
               <span>
                 {' '}

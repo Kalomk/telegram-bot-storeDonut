@@ -24,8 +24,8 @@ export interface UserDataTypes {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, queryId } = useTelegram();
-  const { cartItems, totalPrice, totalWeight } = useSelector((state: RootState) => state.cart);
+  const { tg, queryId,chatId } = useTelegram();
+  const { cartItems, totalPrice, totalWeight,shipPrice,isFreeShip } = useSelector((state: RootState) => state.cart);
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
@@ -34,10 +34,6 @@ const Form = () => {
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
 
-  const shipPrice = localStorage.getItem('shipPrice');
-
-  const freeShip = localStorage.getItem('freeShip');
-  const rightFreeShip = freeShip === 'true' ? true : false;
 
   const initialValues = {
     userName: '',
@@ -111,11 +107,12 @@ const Form = () => {
         totalWeight,
         activePrice,
         rightCurrentCountry,
-        rightShipPrice: rightFreeShip ? 0 : shipPrice,
+        rightShipPrice: shipPrice,
         isCatExist: !!catPic,
-        freeDelivery: rightFreeShip,
+        freeDelivery: isFreeShip,
         products: cartItems,
         queryId,
+        chatId
       };
 
       const formData = new FormData();
