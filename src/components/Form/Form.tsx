@@ -111,7 +111,7 @@ const Form = () => {
         isCatExist: !!catPic,
         freeDelivery: isFreeShip,
         products: cartItems,
-        user
+        userFromWeb:user
       };
 
       const formData = new FormData();
