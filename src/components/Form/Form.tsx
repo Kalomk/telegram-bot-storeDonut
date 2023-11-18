@@ -112,7 +112,7 @@ const Form = () => {
         freeDelivery: isFreeShip,
         products: cartItems,
         queryId,
-        chatId
+        idFromWeb:chatId
       };
 
       const formData = new FormData();
