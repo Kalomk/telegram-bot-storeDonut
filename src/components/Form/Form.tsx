@@ -24,7 +24,7 @@ export interface UserDataTypes {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, queryId,chatId } = useTelegram();
+  const { tg, queryId,chatId,user } = useTelegram();
   const { cartItems, totalPrice, totalWeight,shipPrice,isFreeShip } = useSelector((state: RootState) => state.cart);
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
@@ -112,6 +112,7 @@ const Form = () => {
         freeDelivery: isFreeShip,
         products: cartItems,
         queryId,
+        user,
         idFromWeb:chatId
       };
 
