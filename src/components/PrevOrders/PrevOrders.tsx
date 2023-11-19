@@ -4,11 +4,14 @@ import useTelegram from '../../hooks/useTelegram';
 
 const PrevOrders = () => {
 
-    const [orders,setOrders] = useState('')
+    const [orders,setOrders] = useState('None')
 
     useEffect(() => {
         const fetchOrders = async () => {
-            await fetch('http://localhost:8000/userInfo',{method:'POST',body:JSON.stringify(tg.initDataUnsafe.id)}).then((orders) => orders.json()).then((jsonOrder) => setOrders(jsonOrder))
+        try{    await fetch('http://localhost:8000/userInfo',{method:'POST',body:JSON.stringify(tg.initDataUnsafe.id)}).then((orders) => orders.json()).then((jsonOrder) => setOrders(jsonOrder))}
+        catch(e){
+            console.log(e)
+        }
         }
 
      fetchOrders()
