@@ -4,7 +4,7 @@ import useTelegram from '../../hooks/useTelegram';
 
 const PrevOrders = () => {
 
-    const [orders,setOrders] = useState(undefined)
+    const [orders,setOrders] = useState('')
 
     useEffect(() => {
         const fetchOrders = async () => {
