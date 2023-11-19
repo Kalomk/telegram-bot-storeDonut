@@ -3,17 +3,8 @@ import { removeItems, minusItem, addItems } from '../../slices/cartSlice';
 import './Cart.scss';
 import trash from '../../images/icons/iconfinder_trash-2_3324927 1.svg';
 import { RootState } from '@/store';
-import { Countries } from '../CountrySelector/CountrySelector';
+import { CartItem as CartItems } from '../../slices/cartSlice';
 
-type CartItems = {
-  title: string;
-  imageUrl: string;
-  price: number;
-  weight: number;
-  count: number;
-  id: string;
-  activePrice: 'zł' | '€';
-};
 
 const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, id }) => {
   const dispatch = useDispatch();

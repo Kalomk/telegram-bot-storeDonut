@@ -3,6 +3,7 @@ import { CartItem } from '../slices/cartSlice';
 import { calcTotalWeight } from './calTotalWeight';
 import { getActivePrice } from './getActivePrice';
 import { calculateShip } from './calcShipPrice';
+import { getActiveCountryGroup } from './getActiveCountryGroup';
 
 export const getCartFromLs = () => {
   const data = localStorage.getItem('cart');
@@ -10,8 +11,9 @@ export const getCartFromLs = () => {
   const totalPrice = calcTotalPrice(res);
   const totalWeight = calcTotalWeight(res);
   const activePrice = getActivePrice(res);
-  const shipPrice = +calculateShip(+totalPrice, activePrice, totalWeight).shipPrice;
-  const isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight).freeShip;
+  const activeCountry = getActiveCountryGroup(res)
+  const shipPrice = +calculateShip(+totalPrice, activePrice, totalWeight,activeCountry).shipPrice;
+  const isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight,activeCountry).freeShip;
 
   return {
     cartItems: res as CartItem[],
@@ -20,5 +22,6 @@ export const getCartFromLs = () => {
     activePrice,
     shipPrice,
     isFreeShip,
+    activeCountry
   };
 };

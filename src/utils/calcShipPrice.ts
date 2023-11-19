@@ -4,8 +4,6 @@ interface ShipPriceType {
   free: { eu: number; pl: number };
 }
 
-const activeCoutryFromLS = localStorage.getItem('activeCountry');
-const rightCountryGroup = activeCoutryFromLS ? activeCoutryFromLS : '0';
 
 const calculateZloty = (value: number) => {
   return parseFloat((value * 4.5).toString());
@@ -72,9 +70,9 @@ const selectShipGroup = (activeCountry: string): ShipPriceType => {
   }
 };
 
-export const calculateShip = (totalPrice: number, activePrice: 'zł' | '€', totalWeight: number) => {
-  const shipPrice = selectShipGroup(rightCountryGroup)[totalWeight >= 3000 ? 'upper3' : 'under3'];
-  const freeShip = selectShipGroup(rightCountryGroup).free;
+export const calculateShip = (totalPrice: number, activePrice: 'zł' | '€', totalWeight: number,activeCountryGroup:string) => {
+  const shipPrice = selectShipGroup(activeCountryGroup)[totalWeight >= 3000 ? 'upper3' : 'under3'];
+  const freeShip = selectShipGroup(activeCountryGroup).free;
 
   const rightShipPrice = activePrice === 'zł' ? shipPrice.pl : shipPrice.eu;
 

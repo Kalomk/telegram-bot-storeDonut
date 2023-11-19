@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: { activeCountry: number } = {
-  activeCountry: 0,
+const activeCoutryFromLS = localStorage.getItem('activeCountry');
+const rightCountryGroup = activeCoutryFromLS ? activeCoutryFromLS : '0';
+
+
+const initialState: { activeCountry: string } = {
+  activeCountry: rightCountryGroup,
 };
 
 const activeCountryFilterSlice = createSlice({
   name: 'activeCountry',
   initialState,
   reducers: {
-    changeActiveCountry: (state, action: PayloadAction<number>) => {
+    changeActiveCountry: (state, action: PayloadAction<string>) => {
       state.activeCountry = action.payload;
     },
   },

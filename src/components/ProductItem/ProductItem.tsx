@@ -23,6 +23,8 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
   );
   const prices = useSelector(filteredPrice);
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
+  const { activeCountry } = useSelector((state: RootState) => state.activeCountry);
+
   const addCount = cartItem ? cartItem.count : null;
   const sendToCart = () => {
     const info: CartItem = {
@@ -33,6 +35,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       weight: product.weight[selectedIndex],
       count: 0,
       activePrice,
+      activeCountry
     };
 
     dispatch(addItems(info));

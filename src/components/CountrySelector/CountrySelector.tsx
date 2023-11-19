@@ -48,26 +48,26 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelect, selected })
 
     const index = findIndexByValue(selectedValue);
 
-    const switchCountry = (index: number): number => {
+    const switchCountry = (index: number): string => {
       switch (true) {
         case index > 0 && index < 5:
-          return 1;
+          return "1";
         case index >= 5 && index < 12:
-          return 2;
+          return "2";
         case index === 12 || index === 13:
-          return 3;
+          return "3";
         case index >= 14 && index < 19:
-          return 4;
+          return "4";
         case index >= 19 && index < 22:
-          return 5;
+          return "5";
         case index === 22:
-          return 6;
+          return "6";
         case index === 23:
-          return 7;
+          return "7";
         case index === 24:
-          return 8;
+          return "8";
         default:
-          return 0;
+          return "0";
       }
     };
 
