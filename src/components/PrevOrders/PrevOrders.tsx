@@ -8,7 +8,7 @@ const PrevOrders = () => {
 
     useEffect(() => {
         const fetchOrders = async () => {
-        try{    await fetch('http://localhost:8000/userInfo',{method:'POST',body:JSON.stringify(tg.initDataUnsafe.id)}).then((orders) => orders.json()).then((jsonOrder) => setOrders(jsonOrder))}
+        try{    await fetch('https://633211c53ea4956cfb6c6c0f.mockapi.io/items').then((orders) => orders.json()).then((jsonOrder) => setOrders(jsonOrder))}
         catch(e){
             console.log(e)
         }
