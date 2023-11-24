@@ -5,7 +5,6 @@ import trash from '../../images/icons/iconfinder_trash-2_3324927 1.svg';
 import { RootState } from '@/store';
 import { CartItem as CartItems } from '../../slices/cartSlice';
 
-
 const CartItem: React.FC<CartItems> = ({ title, imageUrl, price, weight, count, id }) => {
   const dispatch = useDispatch();
   const { activePrice } = useSelector((state: RootState) => state.activePrice);

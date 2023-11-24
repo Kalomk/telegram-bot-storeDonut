@@ -8,6 +8,8 @@ import axios from 'axios';
 import arrow from '../../images/icons/_Path_.svg';
 import { clearItems } from '../../slices/cartSlice';
 import * as Yup from 'yup';
+import { Order } from '../PrevOrders/PrevOrders';
+import Button from '../Button/Buttons';
 
 export interface UserDataTypes {
   userName: string;
@@ -24,8 +26,10 @@ export interface UserDataTypes {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg,user} = useTelegram();
-  const { cartItems, totalPrice, totalWeight,shipPrice,isFreeShip } = useSelector((state: RootState) => state.cart);
+  const { tg, user } = useTelegram();
+  const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
+    (state: RootState) => state.cart
+  );
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
@@ -33,7 +37,6 @@ const Form = () => {
 
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
-
 
   const initialValues = {
     userName: '',
@@ -111,7 +114,7 @@ const Form = () => {
         isCatExist: !!catPic,
         freeDelivery: isFreeShip,
         products: cartItems,
-        userFromWeb:user
+        userFromWeb: user,
       };
 
       const formData = new FormData();
@@ -198,6 +201,34 @@ const Form = () => {
     { name: 'userIndexCity', label: 'Індекс', type: 'text' },
   ];
 
+  const getLastOrderInfo = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/lastOrder', {
+        chatId: 692302840,
+      });
+
+      const jsonedOrder = response.data as Order;
+
+      // Set individual form field values using formik's setFieldValue method
+      inputFields.forEach((field) => {
+        formik.setFieldValue(field.name, jsonedOrder[field.name as keyof Order] || '');
+      });
+
+      // Set selectedAddress based on jsonedOrder values
+      if (jsonedOrder.addressPack === 'нема') {
+        setSelectedAddress('user');
+        formik.setFieldValue('userAddress', jsonedOrder.userAddress);
+      } else if (jsonedOrder.userAddress === 'нема') {
+        setSelectedAddress('pack');
+        formik.setFieldValue('addressPack', jsonedOrder.addressPack);
+      } else {
+        // Set a default value if neither addressPack nor userAddress is 'нема'
+        setSelectedAddress('bielsko');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="form-wrapper">
       <a href="/cart" className="button button--outline button--add go-back-btn">
@@ -206,6 +237,9 @@ const Form = () => {
       </a>
       <div className="form">
         <h3>Введіть ваші данні </h3>
+        <Button bg__style={'primary'} onClick={getLastOrderInfo}>
+          Повторити замовлення
+        </Button>
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
           const value = formik.values[fieldName];

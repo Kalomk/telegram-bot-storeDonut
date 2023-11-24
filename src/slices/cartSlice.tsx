@@ -14,7 +14,7 @@ export type CartItem = {
   id: string | string;
   count: number;
   activePrice: 'zł' | '€';
-  activeCountry: string
+  activeCountry: string;
 };
 
 interface CartSliceState {
@@ -24,10 +24,11 @@ interface CartSliceState {
   activePrice: 'zł' | '€';
   shipPrice: number;
   isFreeShip: boolean;
-  activeCountry: string
+  activeCountry: string;
 }
 
-const { cartItems, totalPrice, totalWeight, activePrice, isFreeShip, shipPrice,activeCountry } = getCartFromLs();
+const { cartItems, totalPrice, totalWeight, activePrice, isFreeShip, shipPrice, activeCountry } =
+  getCartFromLs();
 const initialState: CartSliceState = {
   cartItems: cartItems,
   totalPrice: +totalPrice,
@@ -45,7 +46,7 @@ const setItems = (
   activePrice: 'zł' | '€',
   shipPrice: number,
   isFreeShip: boolean,
-  activeCountryGroup:string
+  activeCountryGroup: string
 ) => {
   localStorage.setItem('cart', JSON.stringify(cart.map((item: CartItem) => item)));
   localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
@@ -53,8 +54,7 @@ const setItems = (
   localStorage.setItem('activePrice', activePrice);
   localStorage.setItem('shipPrice', shipPrice.toString());
   localStorage.setItem('isFreeShip', isFreeShip.toString());
-  localStorage.setItem('activeCountry',activeCountryGroup );
-
+  localStorage.setItem('activeCountry', activeCountryGroup);
 };
 
 const filtersSlice = createSlice({
@@ -71,14 +71,24 @@ const filtersSlice = createSlice({
       const totalPrice = calcTotalPrice(state.cartItems);
       const activePrice = getActivePrice(state.cartItems);
       const totalWeight = calcTotalWeight(state.cartItems);
-      const activeCountry = getActiveCountryGroup(state.cartItems)
+      const activeCountry = getActiveCountryGroup(state.cartItems);
 
       state.totalPrice = +totalPrice;
       state.totalWeight = totalWeight;
       state.activePrice = activePrice;
-      state.activeCountry = activeCountry
-      state.shipPrice = calculateShip(+totalPrice, activePrice, totalWeight, activeCountry).shipPrice;
-      state.isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight, activeCountry).freeShip;
+      state.activeCountry = activeCountry;
+      state.shipPrice = calculateShip(
+        +totalPrice,
+        activePrice,
+        totalWeight,
+        activeCountry
+      ).shipPrice;
+      state.isFreeShip = calculateShip(
+        +totalPrice,
+        activePrice,
+        totalWeight,
+        activeCountry
+      ).freeShip;
 
       setItems(
         state.cartItems,
@@ -94,15 +104,25 @@ const filtersSlice = createSlice({
       const totalPrice = calcTotalPrice(state.cartItems);
       const activePrice = getActivePrice(state.cartItems);
       const totalWeight = calcTotalWeight(state.cartItems);
-      const activeCountry = getActiveCountryGroup(state.cartItems)
+      const activeCountry = getActiveCountryGroup(state.cartItems);
 
       state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
       state.totalPrice = +totalPrice;
       state.totalWeight = totalWeight;
       state.activePrice = activePrice;
-      state.activeCountry = activeCountry
-      state.shipPrice = calculateShip(+totalPrice, activePrice, totalWeight, activeCountry).shipPrice;
-      state.isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight, activeCountry).freeShip;
+      state.activeCountry = activeCountry;
+      state.shipPrice = calculateShip(
+        +totalPrice,
+        activePrice,
+        totalWeight,
+        activeCountry
+      ).shipPrice;
+      state.isFreeShip = calculateShip(
+        +totalPrice,
+        activePrice,
+        totalWeight,
+        activeCountry
+      ).freeShip;
       setItems(
         state.cartItems,
         state.totalPrice,
@@ -122,7 +142,6 @@ const filtersSlice = createSlice({
       localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice));
       localStorage.setItem('totalWeight', JSON.stringify(state.totalWeight));
       localStorage.setItem('isFreeShip', JSON.stringify(state.isFreeShip));
-
     },
     minusItem: (state, action: PayloadAction<string>) => {
       const findItem = state.cartItems.find((item) => item.id === action.payload);
@@ -139,14 +158,24 @@ const filtersSlice = createSlice({
         const totalPrice = calcTotalPrice(state.cartItems);
         const activePrice = getActivePrice(state.cartItems);
         const totalWeight = calcTotalWeight(state.cartItems);
-        const activeCountry = getActiveCountryGroup(state.cartItems)
+        const activeCountry = getActiveCountryGroup(state.cartItems);
 
         // Recalculate total price, total weight, active price, etc.
         state.totalPrice = +totalPrice;
         state.totalWeight = totalWeight;
         state.activePrice = activePrice;
-        state.shipPrice = calculateShip(+totalPrice, activePrice, totalWeight, activeCountry).shipPrice;
-        state.isFreeShip = calculateShip(+totalPrice, activePrice, totalWeight, activeCountry).freeShip;
+        state.shipPrice = calculateShip(
+          +totalPrice,
+          activePrice,
+          totalWeight,
+          activeCountry
+        ).shipPrice;
+        state.isFreeShip = calculateShip(
+          +totalPrice,
+          activePrice,
+          totalWeight,
+          activeCountry
+        ).freeShip;
 
         // Update other state properties as needed
         setItems(
