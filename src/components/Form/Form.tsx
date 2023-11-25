@@ -80,7 +80,7 @@ const Form = () => {
         freeDelivery: isFreeShip,
         products: cartItems,
         userFromWeb: user,
-        chatId: 692302840,
+        chatId: chatId,
       };
 
       axios.post('http://localhost:8000/webData', data).then(() => {
@@ -154,7 +154,6 @@ const Form = () => {
       <a href="/cart" className="button">
         <img style={{ width: 25, height: 25, marginBottom: 3 }} src={arrow} alt="" />
         <span>Кошик</span>
-        <span>{chatId}</span>
       </a>
       <div className="form">
         <h3>Введіть ваші данні </h3>

@@ -44,8 +44,7 @@ export type Order = {
 };
 
 const PrevOrders = () => {
-  const { tg } = useTelegram();
-  const chatId = tg?.initDataUnsafe?.id;
+  const { tg, chatId } = useTelegram();
   const [orders, setOrders] = useState<Order[]>([]);
   const [openTabMap, setOpenTabMap] = useState<{ [itemId: number]: boolean }>({});
   const [openProductMenuMap, setOpenProductMenuMap] = useState<{ [itemId: number]: boolean }>({});
