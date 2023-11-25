@@ -40,11 +40,10 @@ interface FormData {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, user } = useTelegram();
+  const { tg, user, chatId } = useTelegram();
   const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
     (state: RootState) => state.cart
   );
-  const chatId = tg?.initDataUnsafe?.id;
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
@@ -275,7 +274,6 @@ const Form = () => {
           </label>
         )}
       </div>
-      <button onClick={onSendData}>click</button>
     </div>
   );
 };
