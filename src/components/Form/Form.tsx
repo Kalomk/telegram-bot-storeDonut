@@ -156,6 +156,7 @@ const Form = () => {
         <img style={{ width: 25, height: 25, marginBottom: 3 }} src={arrow} alt="" />
         <span>Кошик</span>
         <span>{chatId}</span>
+        <span>{user}</span>
       </a>
       <div className="form">
         <h3>Введіть ваші данні </h3>
