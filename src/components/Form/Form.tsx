@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import axios from 'axios';
 import arrow from '../../images/icons/_Path_.svg';
-import { clearItems } from '../../slices/cartSlice';
-import * as Yup from 'yup';
-import { Order } from '../PrevOrders/PrevOrders';
+import { CartItem, clearItems } from '../../slices/cartSlice';
 import Button from '../Button/Buttons';
+import { getValidationSchema, inputFields } from './validationSchema';
+import { getLastOrderInfo } from '../../serverFunc';
 
 export interface UserDataTypes {
   userName: string;
@@ -20,7 +20,21 @@ export interface UserDataTypes {
   addressPack?: string;
   userCity: string;
   userAddress?: string;
-  catPic: File | undefined | any;
+  catPic?: File | undefined | any;
+}
+
+interface FormData {
+  data: UserDataTypes;
+  totalPrice: number;
+  totalWeight: number;
+  activePrice: string;
+  rightCurrentCountry: string;
+  rightShipPrice: number;
+  isCatExist: boolean;
+  freeDelivery: boolean;
+  products: CartItem[]; // Assuming OrderItem is another type/interface
+  userFromWeb: string;
+  chatId: number; // Assuming UserType is another type/interface
 }
 
 const Form = () => {
@@ -30,6 +44,7 @@ const Form = () => {
   const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
     (state: RootState) => state.cart
   );
+  const chatId = tg?.initDataUnsafe?.id;
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
@@ -37,6 +52,7 @@ const Form = () => {
 
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
+  const validationSchema = getValidationSchema(selectedAddress, includeCatPic);
 
   const initialValues = {
     userName: '',
@@ -50,86 +66,28 @@ const Form = () => {
     catPic: undefined,
   };
 
-  const validationSchema = Yup.object().shape({
-    userName: Yup.string()
-      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, "Ім'я повинно містити лише латинські літери")
-      .required("Ім'я обов'язкове поле"),
-    userLastName: Yup.string()
-      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s]*$/, 'Прізвище повинно містити лише латинські літери')
-      .required("Прізвище обов'язкове поле"),
-    phoneNumber: Yup.string()
-      .matches(/^[0-9]*$/, 'Номер телефону повинен містити лише цифри')
-      .required("Номер телефону обов'язковий")
-      .min(9, 'Номер повинен містити 9 символів'),
-    email: Yup.string()
-      .email('Некоректна адреса електронної пошти')
-      .required("Електронна пошта обов'язкове поле"),
-    userCity: Yup.string()
-      .matches(/^[a-zA-ZęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/, 'Місто повинно містити лише латинські літери')
-      .required("Місто обов'язкове поле"),
-    userIndexCity: Yup.string().required('Ви повинні ввести індекс'),
-    addressPack: Yup.string().when([], {
-      is: () => selectedAddress === 'pack',
-      then: (schema) =>
-        schema
-          .min(5, 'Мінімальна кількість символів 5')
-          .matches(
-            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/,
-            'Адреса повинна містити лише латинські літери'
-          )
-          .required("Адреса пачкомату обов'язкова"),
-      otherwise: (schema) => schema.min(0).notRequired(),
-    }),
-    userAddress: Yup.string().when([], {
-      is: () => selectedAddress === 'user' || selectedAddress === 'bielsko',
-      then: (schema) =>
-        schema
-          .min(5)
-          .matches(
-            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/,
-            'Ваша адреса повинна містити лише латинські літери'
-          )
-          .required("Ваша адреса обов'язкова"),
-      otherwise: (schema) => schema.min(0).notRequired(),
-    }),
-    catPic: Yup.mixed().when([], {
-      is: () => includeCatPic,
-      then: (schema) => schema.required('Вишліть фото кота'),
-      otherwise: (schema) => schema.notRequired(),
-    }),
-  });
-
   const formik = useFormik<UserDataTypes>({
     initialValues,
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      const { catPic, ...rest } = values;
-      const data = {
-        data: { ...rest },
+      const data: FormData = {
+        data: values,
         totalPrice,
         totalWeight,
         activePrice,
         rightCurrentCountry,
         rightShipPrice: shipPrice,
-        isCatExist: !!catPic,
+        isCatExist: !!values.catPic,
         freeDelivery: isFreeShip,
         products: cartItems,
         userFromWeb: user,
+        chatId: 692302840,
       };
 
-      const formData = new FormData();
-      formData.append('chat_id', '-1001820916737'); // Replace with your chat ID
-      if (catPic) {
-        formData.append('photo', catPic);
-        axios.post(
-          `https://api.telegram.org/bot6478934801:AAEAhngq9JoXrGjHlYJQzSgPW_5AEZHwQI4/sendPhoto`,
-          formData
-        );
-      }
-      tg.sendData(JSON.stringify(data));
-
-      resetForm();
-      dispatch(clearItems());
+      axios.post('http://localhost:8000/webData', data).then(() => {
+        resetForm();
+        dispatch(clearItems());
+      });
     },
   });
 
@@ -145,7 +103,7 @@ const Form = () => {
     }
   };
 
-  const onHandleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onHandleChange = async (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target) {
       const { name, value } = e.target;
 
@@ -192,52 +150,16 @@ const Form = () => {
     });
   }, [formik.values]);
 
-  const inputFields = [
-    { name: 'userName', label: "Ім'я", type: 'text' },
-    { name: 'userLastName', label: 'Прізвище', type: 'text' },
-    { name: 'phoneNumber', label: 'Номер телефону', type: 'tel' },
-    { name: 'email', label: 'Емейл', type: 'email' },
-    { name: 'userCity', label: 'Місто', type: 'text' },
-    { name: 'userIndexCity', label: 'Індекс', type: 'text' },
-  ];
-
-  const getLastOrderInfo = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/lastOrder', {
-        chatId: 692302840,
-      });
-
-      const jsonedOrder = response.data as Order;
-
-      // Set individual form field values using formik's setFieldValue method
-      inputFields.forEach((field) => {
-        formik.setFieldValue(field.name, jsonedOrder[field.name as keyof Order] || '');
-      });
-
-      // Set selectedAddress based on jsonedOrder values
-      if (jsonedOrder.addressPack === 'нема') {
-        setSelectedAddress('user');
-        formik.setFieldValue('userAddress', jsonedOrder.userAddress);
-      } else if (jsonedOrder.userAddress === 'нема') {
-        setSelectedAddress('pack');
-        formik.setFieldValue('addressPack', jsonedOrder.addressPack);
-      } else {
-        // Set a default value if neither addressPack nor userAddress is 'нема'
-        setSelectedAddress('bielsko');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className="form-wrapper">
-      <a href="/cart" className="button button--outline button--add go-back-btn">
+      <a href="/cart" className="button">
         <img style={{ width: 25, height: 25, marginBottom: 3 }} src={arrow} alt="" />
         <span>Кошик</span>
+        <span>{chatId}</span>
       </a>
       <div className="form">
         <h3>Введіть ваші данні </h3>
-        <Button bg__style={'primary'} onClick={getLastOrderInfo}>
+        <Button bg__style={'primary'} onClick={() => getLastOrderInfo(formik, setSelectedAddress)}>
           Повторити замовлення
         </Button>
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
@@ -353,6 +275,7 @@ const Form = () => {
           </label>
         )}
       </div>
+      <button onClick={onSendData}>click</button>
     </div>
   );
 };
