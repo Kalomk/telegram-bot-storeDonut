@@ -19,7 +19,7 @@ const useTelegram = () => {
     onClose,
     user: tg.initDataUnsafe?.user,
     queryId: tg.initDataUnsafe?.query_id,
-    chatId: tg.initDataUnsafe?.id,
+    chatId: tg.initDataUnsafe?.user?.id,
     onToggleButton,
   };
 };
