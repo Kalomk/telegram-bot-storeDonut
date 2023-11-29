@@ -4,8 +4,8 @@ import { inputFields } from '../components/Form/validationSchema';
 
 export const getLastDataFromDB = async (): Promise<Order | []> => {
   try {
-    const response = await axios.post('http://localhost:8000/lastOrder', {
-      chatId: 692302840,
+    const response = await axios.post('https://snakicz-bot.net/lastOrder', {
+      chatId: '692302840',
     });
     const jsonedOrder = response.data as Order;
     return jsonedOrder;
