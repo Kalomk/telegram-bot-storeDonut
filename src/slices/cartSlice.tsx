@@ -100,6 +100,41 @@ const filtersSlice = createSlice({
         state.activeCountry
       );
     },
+    addPrevItems: (state, action: PayloadAction<CartItem>) => {
+      state.cartItems.push({ ...action.payload });
+
+      const totalPrice = calcTotalPrice(state.cartItems);
+      const activePrice = getActivePrice(state.cartItems);
+      const totalWeight = calcTotalWeight(state.cartItems);
+      const activeCountry = getActiveCountryGroup(state.cartItems);
+
+      state.totalPrice = +totalPrice;
+      state.totalWeight = totalWeight;
+      state.activePrice = activePrice;
+      state.activeCountry = activeCountry;
+      state.shipPrice = calculateShip(
+        +totalPrice,
+        activePrice,
+        totalWeight,
+        activeCountry
+      ).shipPrice;
+      state.isFreeShip = calculateShip(
+        +totalPrice,
+        activePrice,
+        totalWeight,
+        activeCountry
+      ).freeShip;
+
+      setItems(
+        state.cartItems,
+        state.totalPrice,
+        state.totalWeight,
+        state.activePrice,
+        state.shipPrice,
+        state.isFreeShip,
+        state.activeCountry
+      );
+    },
     removeItems: (state, action: PayloadAction<string>) => {
       const totalPrice = calcTotalPrice(state.cartItems);
       const activePrice = getActivePrice(state.cartItems);
@@ -194,4 +229,4 @@ const filtersSlice = createSlice({
 
 const { actions, reducer } = filtersSlice;
 export default reducer;
-export const { addItems, removeItems, clearItems, minusItem } = actions;
+export const { addItems, removeItems, clearItems, minusItem, addPrevItems } = actions;

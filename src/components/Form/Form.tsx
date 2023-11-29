@@ -9,7 +9,8 @@ import arrow from '../../images/icons/_Path_.svg';
 import { CartItem, clearItems } from '../../slices/cartSlice';
 import Button from '../Button/Buttons';
 import { getValidationSchema, inputFields } from './validationSchema';
-import { getLastOrderInfo } from '../../serverFunc';
+import { getLastDataFromDB, getLastOrderInfo } from '../../serverFunc';
+import { Order } from '../PrevOrders/PrevOrders';
 
 export interface UserDataTypes {
   userName: string;
@@ -23,7 +24,7 @@ export interface UserDataTypes {
   catPic?: File | undefined | any;
 }
 
-interface FormData {
+export interface FormData {
   data: UserDataTypes;
   totalPrice: number;
   totalWeight: number;
@@ -34,7 +35,7 @@ interface FormData {
   freeDelivery: boolean;
   products: CartItem[]; // Assuming OrderItem is another type/interface
   userFromWeb: string;
-  chatId: number; // Assuming UserType is another type/interface
+  chatId: string; // Assuming UserType is another type/interface
 }
 
 const Form = () => {
@@ -47,7 +48,8 @@ const Form = () => {
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
-  const { activeCountry } = useSelector((state: RootState) => state.activeCountry);
+
+  const [prevOrderInfo, setPrevOrderInfo] = useState<Order | []>([]);
 
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
@@ -79,14 +81,17 @@ const Form = () => {
         isCatExist: !!values.catPic,
         freeDelivery: isFreeShip,
         products: cartItems,
-        userFromWeb: user,
-        chatId: chatId,
+        userFromWeb: user?.username,
+        chatId: '692302840',
       };
 
-      axios.post('http://localhost:8000/webData', data).then(() => {
+      const sendingData = async () => {
         resetForm();
         dispatch(clearItems());
-      });
+        await axios.post('https://snakicz-bot.net/webData', data);
+      };
+
+      sendingData();
     },
   });
 
@@ -125,8 +130,6 @@ const Form = () => {
     });
   }, []);
 
-  useEffect(() => {}, [activeCountry, rightCurrentCountry]);
-
   const onSendData = useCallback(() => {
     formik.handleSubmit();
   }, [formik]);
@@ -149,6 +152,10 @@ const Form = () => {
     });
   }, [formik.values]);
 
+  useEffect(() => {
+    getLastDataFromDB().then((order) => setPrevOrderInfo(order));
+  }, []);
+
   return (
     <div className="form-wrapper">
       <a href="/cart" className="button">
@@ -157,9 +164,14 @@ const Form = () => {
       </a>
       <div className="form">
         <h3>Введіть ваші данні </h3>
-        <Button bg__style={'primary'} onClick={() => getLastOrderInfo(formik, setSelectedAddress)}>
-          Повторити замовлення
-        </Button>
+        {!Array.isArray(prevOrderInfo) && (
+          <Button
+            bg__style={'primary'}
+            onClick={() => getLastOrderInfo(formik, prevOrderInfo, setSelectedAddress)}
+          >
+            Повторити замовлення
+          </Button>
+        )}
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
           const value = formik.values[fieldName];
@@ -273,6 +285,7 @@ const Form = () => {
           </label>
         )}
       </div>
+      <button onClick={onSendData}>click</button>
     </div>
   );
 };

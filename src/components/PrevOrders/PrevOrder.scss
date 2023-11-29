@@ -66,6 +66,9 @@
     &.open {
       max-height: 300px;
       opacity: 1; /* Adjust the desired max height */
+      .order-items {
+        max-height: 100%;
+      }
     }
   }
 }
