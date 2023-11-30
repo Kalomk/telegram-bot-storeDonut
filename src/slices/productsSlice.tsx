@@ -61,19 +61,8 @@ const initialState: ProductType[] = [
     weight: [100, 250, 500, 1000],
     category: 1,
   },
-  // {
-  //   id: '4',
-  //   title: 'Соломка тріски з перцем',
-  //   price: {
-  //     zł: [16, 40, 70, 130],
-  //     '€': calculatePriceInEuro([16, 40, 70, 130]),
-  //   },
-  //   img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
-  //   weight: [100, 250, 500, 1000],
-  //   category: 1,
-  // },
   {
-    id: '5',
+    id: '4',
     title: 'Кальмар по-шанхайськи',
     price: {
       zł: [16, 40, 70, 135],
@@ -84,7 +73,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '6',
+    id: '5',
     title: 'Кільця кальмара',
     price: {
       zł: [16, 40, 75, 145],
@@ -95,7 +84,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '7',
+    id: '6',
     title: 'Стружка кальмара',
     price: {
       zł: [16, 40, 80, 150],
@@ -106,7 +95,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '8',
+    id: '7',
     title: 'Ставридка',
     price: {
       zł: [15, 35, 60, 105],
@@ -117,7 +106,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '9',
+    id: '8',
     title: 'Павутинка тунця з перцем',
     price: {
       zł: [16, 40, 75, 140],
@@ -129,7 +118,7 @@ const initialState: ProductType[] = [
   },
 
   {
-    id: '10',
+    id: '9',
     title: 'Сет Дегустаційний',
     price: { zł: [135], '€': [30] },
     img: 'https://imagizer.imageshack.com/img924/7130/vUivSi.jpg',
@@ -139,7 +128,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '11',
+    id: '10',
     title: 'Сет Кальмар',
     price: { zł: [135], '€': [30] },
     img: 'https://imagizer.imageshack.com/img922/1213/N9ZIjG.jpg',
@@ -149,7 +138,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '12',
+    id: '11',
     title: 'Філе тріски',
     price: {
       zł: [15, 35, 65, 120],
@@ -160,7 +149,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '13',
+    id: '12',
     title: 'Соломка тунця',
     price: {
       zł: [15, 35, 65, 120],
@@ -171,7 +160,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '14',
+    id: '13',
     title: 'Смужки перуанського кальмара',
     price: {
       zł: [16, 40, 75, 140],
@@ -182,7 +171,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '15',
+    id: '14',
     title: 'Павутиння кальмара з перцем',
     price: {
       zł: [16, 40, 75, 140],
@@ -193,7 +182,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '16',
+    id: '15',
     title: 'Сет Рибний',
     price: { zł: [125], '€': [28] },
     img: 'https://imagizer.imageshack.com/img922/7360/xJQY7p.jpg', // Replace with the actual image URL
