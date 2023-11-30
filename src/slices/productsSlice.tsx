@@ -61,17 +61,17 @@ const initialState: ProductType[] = [
     weight: [100, 250, 500, 1000],
     category: 1,
   },
-  {
-    id: '4',
-    title: 'Соломка тріски з перцем',
-    price: {
-      zł: [16, 40, 70, 130],
-      '€': calculatePriceInEuro([16, 40, 70, 130]),
-    },
-    img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
-    weight: [100, 250, 500, 1000],
-    category: 1,
-  },
+  // {
+  //   id: '4',
+  //   title: 'Соломка тріски з перцем',
+  //   price: {
+  //     zł: [16, 40, 70, 130],
+  //     '€': calculatePriceInEuro([16, 40, 70, 130]),
+  //   },
+  //   img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
+  //   weight: [100, 250, 500, 1000],
+  //   category: 1,
+  // },
   {
     id: '5',
     title: 'Кальмар по-шанхайськи',
