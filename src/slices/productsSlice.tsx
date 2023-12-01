@@ -52,12 +52,12 @@ const initialState: ProductType[] = [
   },
   {
     id: '3',
-    title: 'Соломка тріски',
+    title: 'Соломка тріски з перцем',
     price: {
       zł: [16, 40, 70, 130],
       '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
-    img: 'https://imagizer.imageshack.com/img924/1908/Fevmgr.jpg',
+    img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
     weight: [100, 250, 500, 1000],
     category: 1,
   },
