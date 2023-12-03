@@ -7,6 +7,8 @@ import useTelegram from '../../hooks/useTelegram';
 import { RootState } from '@/store';
 import './PrevOrder.scss';
 import { useNavigate } from 'react-router-dom';
+import useGetData from '../../hooks/useGetData';
+import { fetchOrders } from '../../fetchFunc';
 
 type OrderItem = {
   id: string;
@@ -44,9 +46,14 @@ export type Order = {
   userId: number;
 };
 
+const ORDER_STATUS_MAP = {
+  true: { color: 'yellow', text: 'Так' },
+  false: { color: 'red', text: 'Ні' },
+};
+
 const PrevOrders = () => {
   const { tg, chatId } = useTelegram();
-  const [orders, setOrders] = useState<Order[]>([]);
+  const { data, isLoading } = useGetData(() => fetchOrders(chatId));
   const [orderToSend, setOrderToSend] = useState<Order | null>(null);
   const [openTabMap, setOpenTabMap] = useState<{ [itemId: number]: boolean }>({});
   const [openProductMenuMap, setOpenProductMenuMap] = useState<{ [itemId: number]: boolean }>({});
@@ -65,22 +72,6 @@ const PrevOrders = () => {
     tg.MainButton.show();
   }, [tg.MainButton]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.post('https://snakicz-bot.net/userInfo', {
-          chatId: '692302840',
-        });
-
-        setOrders(response.data);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      }
-    };
-
-    fetchOrders();
-  }, []);
-
   const changeActiveItem = (id: number) => {
     setOpenTabMap((prevIds) => ({
       [id]: !prevIds[id],
@@ -89,18 +80,12 @@ const PrevOrders = () => {
 
   useEffect(() => {
     const isEmpty = Object.keys(openProductMenuMap).length === 0;
+    const buttonText = isEmpty ? 'Не повторювати замовлення' : 'Повторити замовлення';
 
-    if (isEmpty) {
-      tg.MainButton.setParams({
-        text: `Не повторювати замовлення`,
-      });
-    } else {
-      tg.MainButton.setParams({
-        text: `Повторити замовлення`,
-      });
-      console.log(orderToSend);
-    }
-  }, [setOpenProductMenuMap, tg.MainButton, openProductMenuMap]);
+    tg.MainButton.setParams({
+      text: buttonText,
+    });
+  }, [setOpenProductMenuMap, tg.MainButton, openProductMenuMap, orderToSend]);
 
   const onSendData = useCallback(() => {
     if (orderToSend) {
@@ -116,11 +101,11 @@ const PrevOrders = () => {
         freeDelivery: isFreeShip,
         products: cartItems,
         userFromWeb: userNickname,
-        chatId: '692302840',
+        chatId,
       } as unknown as FormData;
-      axios.post('https://snakicz-bot.net/webData', data).then(() => {
-        dispatch(clearItems());
-      });
+
+      dispatch(clearItems());
+      axios.post('https://snakicz-bot.net/webData', data);
       return;
     }
     navigate('/');
@@ -150,6 +135,7 @@ const PrevOrders = () => {
     setOpenProductMenuMap(() => ({
       [id]: true,
     }));
+
     if (!isItemChangeClick.current) {
       dispatch(clearItems());
       items.forEach((item) => dispatch(addPrevItems(item)));
@@ -159,90 +145,83 @@ const PrevOrders = () => {
     isItemChangeClick.current = false;
   };
 
-  return (
-    <div className="prevOrders">
-      <div>
-        {orders.map((order) => {
-          const orderItemsData = JSON.parse(order.orderItems as unknown as string) as OrderItem[];
-          const date = new Date(order.createdAt);
-          const options = {
-            weekday: undefined, // omit the weekday
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            timeZoneName: 'short',
-          };
-          const currentOrderId = openProductMenuMap[order.id];
-          const formattedDate = date.toLocaleString(
-            'default',
-            options as Intl.DateTimeFormatOptions
-          );
-          return (
-            <div
-              onClick={
-                currentOrderId ? undefined : () => addToCartItems(orderItemsData, order.id, order)
-              }
-              key={order.id}
-              className={`order-container ${currentOrderId ? ' selected' : ''}`}
-            >
-              <div className="order-wrapper">
-                <div className="order-wrapper__container">
-                  <div className="order-wrapper__orderInfo">
-                    <div className="order-wrapper__imgs">
-                      {orderItemsData.slice(0, 4).map((item) => (
-                        <img key={item.imageUrl} src={item.imageUrl} alt="img" />
-                      ))}
-                    </div>
-                    <div>
-                      <p>{`Замовник: ${order.userName} ${order.userLastName}`}</p>
-                      <p>{`Номер замовлення: ${order.orderNumber}`}</p>
-                    </div>
-                  </div>
-                  <div className="order-wrapper__sumData">
-                    <span>Заказ від: {formattedDate}</span>
-                    <span>
-                      Загальна ціна:{' '}
-                      {`${currentOrderId ? totalPrice + shipPrice : order.totalPrice} ${
-                        currentOrderId ? activePrice : order.activePrice
-                      }`}
-                    </span>
-                    <p>
-                      {' '}
-                      безкоштовна доставка:{' '}
-                      <span style={order.freeDelivery ? { color: 'yellow' } : { color: 'red' }}>
-                        {order.freeDelivery ? 'Так' : 'Ні'}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              {currentOrderId ? (
-                <div className="order-items">
-                  <span onClick={() => changeActiveItem(order.id)}>
-                    {!openTabMap[order.id] ? 'Показати список товарів ▼' : 'Згорнути список ▲'}
-                  </span>
-                  {cartItems.map((item) => (
-                    <div
-                      key={item.id}
-                      className={`order-item ${openTabMap[order.id] ? ' open ' : ''}`}
-                    >
-                      <CartItem {...item} />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div>Натисніть, щоб редагувати замовлення</div>
-              )}
+  const renderOrderItems = (order: Order) => {
+    return (
+      <div className="order-items">
+        <span onClick={() => changeActiveItem(order.id)}>
+          {!openTabMap[order.id] ? 'Показати список товарів ▼' : 'Згорнути список ▲'}
+        </span>
+        {openTabMap[order.id] &&
+          cartItems.map((item) => (
+            <div key={item.id} className={`order-item ${openTabMap[order.id] ? ' open ' : ''}`}>
+              <CartItem {...item} />
             </div>
-          );
-        })}
+          ))}
       </div>
-      <button onClick={onSendData}>click</button>
-    </div>
-  );
+    );
+  };
+
+  const renderOrder = (order: Order) => {
+    const currentOrderId = openProductMenuMap[order.id];
+    const checkRightTotalPrice = currentOrderId ? totalPrice + shipPrice : order.totalPrice;
+    const checkRightActivePrice = currentOrderId ? activePrice : order.activePrice;
+    const checkRightIsFreeShip = (currentOrderId ? isFreeShip : order.freeDelivery).toString();
+    const orderItemsData = JSON.parse(order.orderItems as unknown as string) as OrderItem[];
+
+    const date = new Date(order.createdAt);
+    const options = {
+      weekday: undefined, // omit the weekday
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short',
+    };
+    const formattedDate = date.toLocaleString('default', options as Intl.DateTimeFormatOptions);
+
+    return (
+      <div
+        onClick={currentOrderId ? undefined : () => addToCartItems(orderItemsData, order.id, order)}
+        key={order.id}
+        className={`order-container ${currentOrderId ? ' selected' : ''}`}
+      >
+        <div className="order-wrapper">
+          <div className="order-wrapper__container">
+            <div className="order-wrapper__orderInfo">
+              <div>
+                <p>{`Замовник: ${order.userName} ${order.userLastName}`}</p>
+                <p>{`Номер замовлення: ${order.orderNumber}`}</p>
+              </div>
+            </div>
+            <div className="order-wrapper__sumData">
+              <span>Заказ від: {formattedDate}</span>
+              <span>Загальна ціна: {`${checkRightTotalPrice} ${checkRightActivePrice}`}</span>
+              <p>
+                {' '}
+                безкоштовна доставка:{' '}
+                <span
+                  style={{
+                    color:
+                      ORDER_STATUS_MAP[checkRightIsFreeShip as keyof typeof ORDER_STATUS_MAP].color,
+                  }}
+                >
+                  {ORDER_STATUS_MAP[checkRightIsFreeShip as keyof typeof ORDER_STATUS_MAP].text}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        {currentOrderId ? renderOrderItems(order) : <div>Натисніть, щоб редагувати замовлення</div>}
+      </div>
+    );
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  return <div className="prevOrders">{data.map((order) => renderOrder(order))}</div>;
 };
 
 export default PrevOrders;

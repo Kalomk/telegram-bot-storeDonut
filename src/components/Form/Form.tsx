@@ -9,8 +9,8 @@ import arrow from '../../images/icons/_Path_.svg';
 import { CartItem, clearItems } from '../../slices/cartSlice';
 import Button from '../Button/Buttons';
 import { getValidationSchema, inputFields } from './validationSchema';
-import { getLastDataFromDB, getLastOrderInfo } from '../../serverFunc';
-import { Order } from '../PrevOrders/PrevOrders';
+import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
+import useGetData from '../../hooks/useGetData';
 
 export interface UserDataTypes {
   userName: string;
@@ -48,9 +48,7 @@ const Form = () => {
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
-
-  const [prevOrderInfo, setPrevOrderInfo] = useState<Order | []>([]);
-
+  const { data, isLoading } = useGetData(() => getLastDataFromDB(chatId));
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
   const validationSchema = getValidationSchema(selectedAddress, includeCatPic);
@@ -152,10 +150,6 @@ const Form = () => {
     });
   }, [formik.values]);
 
-  useEffect(() => {
-    getLastDataFromDB().then((order) => setPrevOrderInfo(order));
-  }, []);
-
   return (
     <div className="form-wrapper">
       <a href="/cart" className="button">
@@ -164,14 +158,17 @@ const Form = () => {
       </a>
       <div className="form">
         <h3>Введіть ваші данні </h3>
-        {!Array.isArray(prevOrderInfo) && (
-          <Button
-            bg__style={'primary'}
-            onClick={() => getLastOrderInfo(formik, prevOrderInfo, setSelectedAddress)}
-          >
-            Повторити замовлення
-          </Button>
-        )}
+        {!Array.isArray(data) &&
+          (!isLoading ? (
+            <Button
+              bg__style={'primary'}
+              onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
+            >
+              Повторити замовлення
+            </Button>
+          ) : (
+            <div>Loading...</div>
+          ))}
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
           const value = formik.values[fieldName];

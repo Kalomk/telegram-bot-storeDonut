@@ -2,15 +2,26 @@ import axios from 'axios';
 import { Order } from '../components/PrevOrders/PrevOrders';
 import { inputFields } from '../components/Form/validationSchema';
 
-export const getLastDataFromDB = async (): Promise<Order | []> => {
+export const getLastDataFromDB = async (chatId: string): Promise<Order | []> => {
   try {
     const response = await axios.post('https://snakicz-bot.net/lastOrder', {
-      chatId: '692302840',
+      chatId,
     });
     const jsonedOrder = response.data as Order;
     return jsonedOrder;
   } catch (e) {
     console.log(e);
+    return [];
+  }
+};
+export const fetchOrders = async (chatId: string): Promise<Order[] | []> => {
+  try {
+    const response = await axios.post('https://snakicz-bot.net/userInfo', {
+      chatId,
+    });
+    return response.data as Order[];
+  } catch (error) {
+    console.error('Error fetching orders:', error);
     return [];
   }
 };
