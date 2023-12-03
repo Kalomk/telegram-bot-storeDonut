@@ -191,6 +191,17 @@ const initialState: ProductType[] = [
     weight: [1000],
     category: 3,
   },
+  {
+    id: '16',
+    title: 'Стружка краба',
+    price: {
+      zł: [16, 40, 75, 140],
+      '€': calculatePriceInEuro([16, 40, 75, 140]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/6339/EnYerH.jpg', // Replace with the actual image URL
+    weight: [100, 250, 500, 1000],
+    category: 2,
+  },
 ];
 
 // Create a slice with only the initial state
