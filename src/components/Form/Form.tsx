@@ -41,7 +41,7 @@ export interface FormData {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, user, chatId } = useTelegram();
+  const { tg, user, chatId, onClose } = useTelegram();
   const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
     (state: RootState) => state.cart
   );
@@ -80,7 +80,7 @@ const Form = () => {
         freeDelivery: isFreeShip,
         products: cartItems,
         userFromWeb: user?.username,
-        chatId: '692302840',
+        chatId,
       };
 
       const sendingData = async () => {
@@ -88,7 +88,7 @@ const Form = () => {
         dispatch(clearItems());
         await axios.post('https://snakicz-bot.net/webData', data);
       };
-
+      onClose();
       sendingData();
     },
   });

@@ -52,7 +52,7 @@ const ORDER_STATUS_MAP = {
 };
 
 const PrevOrders = () => {
-  const { tg, chatId } = useTelegram();
+  const { tg, chatId, onClose } = useTelegram();
   const { data, isLoading } = useGetData(() => fetchOrders(chatId));
   const [orderToSend, setOrderToSend] = useState<Order | null>(null);
   const [openTabMap, setOpenTabMap] = useState<{ [itemId: number]: boolean }>({});
@@ -104,6 +104,7 @@ const PrevOrders = () => {
         chatId,
       } as unknown as FormData;
 
+      onClose();
       dispatch(clearItems());
       axios.post('https://snakicz-bot.net/webData', data);
       return;
@@ -121,6 +122,7 @@ const PrevOrders = () => {
     shipPrice,
     totalPrice,
     totalWeight,
+    onClose,
   ]);
 
   useEffect(() => {
