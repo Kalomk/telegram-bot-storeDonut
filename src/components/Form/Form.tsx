@@ -11,6 +11,7 @@ import Button from '../Button/Buttons';
 import { getValidationSchema, inputFields } from './validationSchema';
 import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
 import useGetData from '../../hooks/useGetData';
+import Loader from '../Loader/Loader';
 
 export interface UserDataTypes {
   userName: string;
@@ -167,7 +168,7 @@ const Form = () => {
               Повторити замовлення
             </Button>
           ) : (
-            <div>Loading...</div>
+            <Loader />
           ))}
         {inputFields.slice(0, 4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'

@@ -19,7 +19,7 @@ const activePriceFilterSlice = createSlice({
 });
 
 export const filteredPrice = createSelector(
-  (state: RootState) => state.products,
+  (state: RootState) => state.products.entities,
   (state: RootState) => state.activePrice.activePrice,
   (products, activePrice) => {
     return products.map((item) => item.price[activePrice]);

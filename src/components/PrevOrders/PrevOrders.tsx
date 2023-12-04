@@ -9,6 +9,7 @@ import './PrevOrder.scss';
 import { useNavigate } from 'react-router-dom';
 import useGetData from '../../hooks/useGetData';
 import { fetchOrders } from '../../fetchFunc';
+import Loader from '../Loader/Loader';
 
 type OrderItem = {
   id: string;
@@ -221,7 +222,7 @@ const PrevOrders = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
   return <div className="prevOrders">{data.map((order) => renderOrder(order))}</div>;
 };

@@ -16,7 +16,7 @@ const filtersSlice = createSlice({
 });
 
 export const filteredProducts = createSelector(
-  (state: RootState) => state.products,
+  (state: RootState) => state.products.entities,
   (state: RootState) => state.filters.activeFilter,
   (products, filter) => {
     if (filter > 0) {

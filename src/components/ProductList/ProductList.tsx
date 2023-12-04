@@ -9,6 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Reveal from '../Reveal/Reveal';
 import arrow from '../../images/icons/_Path_.svg';
+import { useDispatch } from 'react-redux';
+import { fetchProduct } from '../../slices/productsSlice';
+import { AnyAction } from 'redux';
+import Loader from '../Loader/Loader';
 
 const ProductList = () => {
   const { tg } = useTelegram();
@@ -16,14 +20,20 @@ const ProductList = () => {
     (state: RootState) => state.cart
   );
   const { activeCountry } = useSelector((state: RootState) => state.activeCountry);
+  const status = useSelector((state: RootState) => state.products.loading);
 
   const products = useSelector(filteredProducts);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const redirectToCart = () => {
     let path = '/cart';
     navigate(path);
   };
+
+  useEffect(() => {
+    dispatch(fetchProduct() as unknown as AnyAction);
+  }, [dispatch]);
 
   useEffect(() => {
     tg.onEvent('mainButtonClicked', redirectToCart);
@@ -59,11 +69,15 @@ const ProductList = () => {
       </a>
       <Header />
       <ul className="product__items">
-        {products.map((item) => (
-          <Reveal key={item.id}>
-            <ProductItem product={item} className={'item'} />
-          </Reveal>
-        ))}
+        {status === 'pending' ? (
+          <Loader />
+        ) : (
+          products.map((item) => (
+            <Reveal key={item.id}>
+              <ProductItem product={item} className={'item'} />
+            </Reveal>
+          ))
+        )}
       </ul>
     </div>
   );
