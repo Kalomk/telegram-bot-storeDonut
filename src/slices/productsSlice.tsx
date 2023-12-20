@@ -9,9 +9,10 @@ export interface ProductType {
   img: string;
   weight: number[];
   description?: string;
+  totalProductWeight: number;
+  isEnable: boolean;
   category: number;
 }
-
 interface ProductSliceType {
   entities: ProductType[] | [];
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
@@ -24,8 +25,7 @@ const initialState = {
 
 // Define the initial state based on your array of products
 export const fetchProduct = createAsyncThunk<ProductType[]>('product/fetchProduct', async () => {
-  const response = (await axios.get(`https://633211c53ea4956cfb6c6c0f.mockapi.io/productList`))
-    .data;
+  const response = (await axios.get(`https://snakicz-bot.net/getProducts`)).data;
   return response;
 });
 
