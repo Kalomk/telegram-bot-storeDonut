@@ -85,17 +85,6 @@ const initialState: ProductType[] = [
   },
   {
     id: '6',
-    title: 'Стружка кальмара',
-    price: {
-      zł: [16, 40, 80, 150],
-      '€': calculatePriceInEuro([16, 40, 80, 150]),
-    },
-    img: 'https://imagizer.imageshack.com/img924/4177/2rovl5.jpg',
-    weight: [100, 250, 500, 1000],
-    category: 2,
-  },
-  {
-    id: '7',
     title: 'Ставридка',
     price: {
       zł: [15, 35, 60, 105],
@@ -106,7 +95,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '8',
+    id: '7',
     title: 'Павутинка тунця з перцем',
     price: {
       zł: [16, 40, 75, 140],
@@ -118,7 +107,7 @@ const initialState: ProductType[] = [
   },
 
   {
-    id: '9',
+    id: '8',
     title: 'Сет Дегустаційний',
     price: { zł: [135], '€': [30] },
     img: 'https://imagizer.imageshack.com/img924/7130/vUivSi.jpg',
@@ -128,7 +117,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '10',
+    id: '9',
     title: 'Сет Кальмар',
     price: { zł: [135], '€': [30] },
     img: 'https://imagizer.imageshack.com/img922/1213/N9ZIjG.jpg',
@@ -138,7 +127,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '11',
+    id: '10',
     title: 'Філе тріски',
     price: {
       zł: [15, 35, 65, 120],
@@ -149,7 +138,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '12',
+    id: '11',
     title: 'Соломка тунця',
     price: {
       zł: [15, 35, 65, 120],
@@ -160,7 +149,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '13',
+    id: '12',
     title: 'Смужки перуанського кальмара',
     price: {
       zł: [16, 40, 75, 140],
@@ -171,7 +160,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '14',
+    id: '13',
     title: 'Павутиння кальмара з перцем',
     price: {
       zł: [16, 40, 75, 140],
@@ -182,7 +171,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '15',
+    id: '14',
     title: 'Сет Рибний',
     price: { zł: [125], '€': [28] },
     img: 'https://imagizer.imageshack.com/img922/7360/xJQY7p.jpg', // Replace with the actual image URL
@@ -192,7 +181,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '16',
+    id: '15',
     title: 'Стружка краба',
     price: {
       zł: [16, 40, 75, 140],
