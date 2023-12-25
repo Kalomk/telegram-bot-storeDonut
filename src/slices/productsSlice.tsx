@@ -191,6 +191,28 @@ const initialState: ProductType[] = [
     weight: [100, 250, 500, 1000],
     category: 2,
   },
+  {
+    id: '16',
+    title: 'Соломка тріски',
+    price: {
+      zł: [16, 40, 70, 130],
+      '€': calculatePriceInEuro([16, 40, 70, 130]),
+    },
+    img: 'https://imagizer.imageshack.com/img924/1908/Fevmgr.jpg',
+    weight: [100, 250, 500, 1000],
+    category: 1,
+  },
+  {
+    id: '17',
+    title: 'Стружка кальмара',
+    price: {
+      zł: [16, 40, 70, 130],
+      '€': calculatePriceInEuro([16, 40, 70, 130]),
+    },
+    img: 'https://imagizer.imageshack.com/img924/4177/2rovl5.jpg',
+    weight: [100, 250, 500, 1000],
+    category: 1,
+  },
 ];
 
 // Create a slice with only the initial state
