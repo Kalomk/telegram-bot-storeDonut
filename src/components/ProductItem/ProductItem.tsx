@@ -22,20 +22,20 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
     state.cart.cartItems.find((item) => item.id === completeId)
   );
   const prices = useSelector(filteredPrice);
+  console.log(prices);
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
   const { activeCountry } = useSelector((state: RootState) => state.activeCountry);
-
   const addCount = cartItem ? cartItem.count : null;
   const sendToCart = () => {
     const info: CartItem = {
       id: completeId,
       title: product.title,
       imageUrl: product.img,
-      price: prices[Number(product.id)][selectedIndex],
+      price: prices[selectedIndex],
       weight: product.weight[selectedIndex],
       count: 0,
       activePrice,
-      activeCountry
+      activeCountry,
     };
 
     dispatch(addItems(info));
@@ -62,7 +62,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       <div className="product__price">
         <span>Вартість:</span>{' '}
         <b>
-          {prices[Number(product.id)][selectedIndex]} {activePrice}{' '}
+          {prices[selectedIndex]} {activePrice}{' '}
         </b>
       </div>
       <ul className="product__weight">

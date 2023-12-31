@@ -5,7 +5,7 @@ import axios from 'axios';
 export interface ProductType {
   id: string;
   title: string;
-  price: { zł: number[]; '€': number[] };
+  price: { zł: { [key: string]: number }; '€': { [key: string]: number } };
   img: string;
   weight: number[];
   description?: string;
