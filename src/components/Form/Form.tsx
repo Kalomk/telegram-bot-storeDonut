@@ -12,6 +12,7 @@ import { getValidationSchema, inputFields } from './validationSchema';
 import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
 import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
+import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
 
 export interface UserDataTypes {
   userName: string;
@@ -53,7 +54,6 @@ const Form = () => {
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
   const validationSchema = getValidationSchema(selectedAddress, includeCatPic);
-
   const initialValues = {
     userName: '',
     userLastName: '',
@@ -65,7 +65,6 @@ const Form = () => {
     userAddress: '',
     catPic: undefined,
   };
-
   const formik = useFormik<UserDataTypes>({
     initialValues,
     validationSchema,
@@ -93,13 +92,19 @@ const Form = () => {
       sendingData();
     },
   });
+  const setBielskoValues = useFormikAutoFill<UserDataTypes>({
+    provider: formik,
+    builder: ({ userCity, userIndexCity }) => {
+      userCity.setValue('Bielsko-Biala');
+      userIndexCity.setValue('43-300');
+    },
+  });
 
   const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedAddress(e.target.value as 'pack' | 'user' | 'bielsko');
     // If selectedAddress is 'bielsko', set userCity to 'Bielsko'
     if (e.target.value === 'bielsko') {
-      formik.setFieldValue('userCity', 'Bielsko-Biala');
-      formik.setFieldValue('userIndexCity', '43-300');
+      setBielskoValues();
     } else {
       formik.setFieldValue('userCity', '');
       formik.setFieldValue('userIndexCity', '');
