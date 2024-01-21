@@ -6,39 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import axios from 'axios';
 import arrow from '../../images/icons/_Path_.svg';
-import { CartItem, clearItems } from '../../slices/cartSlice';
+import { clearItems } from '../../slices/cartSlice';
 import Button from '../Button/Buttons';
 import { getValidationSchema, inputFields } from './validationSchema';
 import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
 import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
 import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
-
-export interface UserDataTypes {
-  userName: string;
-  userLastName: string;
-  phoneNumber: string;
-  email: string;
-  userIndexCity: string;
-  addressPack?: string;
-  userCity: string;
-  userAddress?: string;
-  catPic?: File | undefined | any;
-}
-
-export interface FormData {
-  data: UserDataTypes;
-  totalPrice: number;
-  totalWeight: number;
-  activePrice: string;
-  rightCurrentCountry: string;
-  rightShipPrice: number;
-  isCatExist: boolean;
-  freeDelivery: boolean;
-  products: CartItem[]; // Assuming OrderItem is another type/interface
-  userFromWeb: string;
-  chatId: string; // Assuming UserType is another type/interface
-}
+import { FormData, UserDataTypes } from 'snakicz';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -65,6 +40,7 @@ const Form = () => {
     userAddress: '',
     catPic: undefined,
   };
+
   const formik = useFormik<UserDataTypes>({
     initialValues,
     validationSchema,
