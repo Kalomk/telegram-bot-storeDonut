@@ -32,7 +32,7 @@ const initialState: ProductType[] = [
     id: '1',
     title: 'Анчоус',
     price: {
-      zł: [15, 35, 60, 110],
+      zł: [15, 35, 65, 110],
       '€': calculatePriceInEuro([15, 35, 60, 110]),
     },
     img: 'https://imagizer.imageshack.com/img924/2086/HPRwwU.jpg',
@@ -43,7 +43,7 @@ const initialState: ProductType[] = [
     id: '2',
     title: 'Бурштинова з перцем',
     price: {
-      zł: [16, 40, 70, 140],
+      zł: [16, 40, 75, 140],
       '€': calculatePriceInEuro([16, 40, 70, 140]),
     },
     img: 'https://imagizer.imageshack.com/img922/2047/vVuhDm.jpg',
@@ -76,7 +76,7 @@ const initialState: ProductType[] = [
     id: '5',
     title: 'Кільця кальмара',
     price: {
-      zł: [16, 40, 75, 145],
+      zł: [16, 40, 80, 150],
       '€': calculatePriceInEuro([16, 40, 75, 145]),
     },
     img: 'https://imagizer.imageshack.com/img924/6471/vT8lba.jpg',
@@ -206,7 +206,7 @@ const initialState: ProductType[] = [
     id: '17',
     title: 'Стружка кальмара',
     price: {
-      zł: [16, 40, 70, 130],
+      zł: [16, 40, 80, 150],
       '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
     img: 'https://imagizer.imageshack.com/img924/4177/2rovl5.jpg',
