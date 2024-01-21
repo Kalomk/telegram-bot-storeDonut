@@ -54,7 +54,7 @@ const initialState: ProductType[] = [
     id: '3',
     title: 'Соломка тріски з перцем',
     price: {
-      zł: [16, 40, 70, 130],
+      zł: [16, 40, 75, 130],
       '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
     img: 'https://imagizer.imageshack.com/img922/1299/uW554T.jpg',
@@ -184,7 +184,7 @@ const initialState: ProductType[] = [
     id: '15',
     title: 'Стружка краба',
     price: {
-      zł: [16, 40, 75, 140],
+      zł: [16, 40, 75, 145],
       '€': calculatePriceInEuro([16, 40, 75, 140]),
     },
     img: 'https://imagizer.imageshack.com/img922/6339/EnYerH.jpg', // Replace with the actual image URL
@@ -195,7 +195,7 @@ const initialState: ProductType[] = [
     id: '16',
     title: 'Соломка тріски',
     price: {
-      zł: [16, 40, 70, 130],
+      zł: [16, 40, 75, 130],
       '€': calculatePriceInEuro([16, 40, 70, 130]),
     },
     img: 'https://imagizer.imageshack.com/img924/1908/Fevmgr.jpg',
