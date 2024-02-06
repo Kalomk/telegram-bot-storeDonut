@@ -235,7 +235,7 @@ const initialState: ProductType[] = [
     },
     img: 'https://imagizer.imageshack.com/img923/1805/g3MFhm.jpg',
     weight: [100, 250, 500, 1000],
-    category: 2,
+    category: 1,
   },
   {
     id: '20',
@@ -246,7 +246,20 @@ const initialState: ProductType[] = [
     },
     img: 'https://imagizer.imageshack.com/img924/1250/gaV77b.jpg',
     weight: [100, 250, 500, 1000],
-    category: 2,
+    category: 1,
+  },
+  {
+    id: '21',
+    title: 'Сет "Red Valentine"',
+    price: {
+      zł: [250],
+      '€': calculatePriceInEuro([250]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/1433/rWPpXo.jpg',
+    description:
+      'Палички вʼяленого лосося 250г,Соломка тріски з перцем,Бурштинова з перцем,Стружка краба,Соломка тунця,Ікряник з лосося,Соломка тріски,Філе тріски',
+    weight: [2000],
+    category: 3,
   },
 ];
 
