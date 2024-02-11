@@ -24,8 +24,10 @@ export interface UserDataTypes {
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg,user} = useTelegram();
-  const { cartItems, totalPrice, totalWeight,shipPrice,isFreeShip } = useSelector((state: RootState) => state.cart);
+  const { tg, user } = useTelegram();
+  const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
+    (state: RootState) => state.cart
+  );
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
@@ -33,7 +35,6 @@ const Form = () => {
 
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
-
 
   const initialValues = {
     userName: '',
@@ -71,8 +72,8 @@ const Form = () => {
         schema
           .min(5, 'Мінімальна кількість символів 5')
           .matches(
-            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/,
-            'Адреса повинна містити лише латинські літери'
+            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s.,/-]*$/,
+            'Адреса повинна містити лише латинські літери,а також крапки,коми,та "/"'
           )
           .required("Адреса пачкомату обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
@@ -83,8 +84,8 @@ const Form = () => {
         schema
           .min(5)
           .matches(
-            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s-]*$/,
-            'Ваша адреса повинна містити лише латинські літери'
+            /^[a-zA-Z0-9ęĘóÓąĄśŚłŁżŻźŹćĆńŃ\s.,/-]*$/,
+            'Адреса повинна містити лише латинські літери,а також крапки,коми,та "/"'
           )
           .required("Ваша адреса обов'язкова"),
       otherwise: (schema) => schema.min(0).notRequired(),
@@ -111,7 +112,7 @@ const Form = () => {
         isCatExist: !!catPic,
         freeDelivery: isFreeShip,
         products: cartItems,
-        userFromWeb:user
+        userFromWeb: user,
       };
 
       const formData = new FormData();
