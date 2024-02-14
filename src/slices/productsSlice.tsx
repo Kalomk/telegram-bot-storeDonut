@@ -25,7 +25,7 @@ const initialState = {
 
 // Define the initial state based on your array of products
 export const fetchProduct = createAsyncThunk<ProductType[]>('product/fetchProduct', async () => {
-  const response = (await axios.get(`https://snakicz-bot.net/getProducts`)).data;
+  const response = (await axios.get(`https://snakicz-bot.net/products/getProducts`)).data;
   return response;
 });
 
