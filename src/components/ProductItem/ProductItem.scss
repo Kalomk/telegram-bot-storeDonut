@@ -4,6 +4,11 @@
   align-items: center;
   flex-direction: column;
   padding: 15px;
+  .flex-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &__img {
     width: 120px;
     background-color: transparent;

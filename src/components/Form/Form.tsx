@@ -13,7 +13,6 @@ import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
 import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
 import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
-import { FormData, UserDataTypes } from 'snakicz';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -29,6 +28,7 @@ const Form = () => {
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
   const validationSchema = getValidationSchema(selectedAddress, includeCatPic);
+
   const initialValues = {
     userName: '',
     userLastName: '',
@@ -41,15 +41,18 @@ const Form = () => {
     catPic: undefined,
   };
 
-  const formik = useFormik<UserDataTypes>({
+  const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      const data: FormData = {
-        data: values,
+    onSubmit: async (values, { resetForm }) => {
+      const { catPic, ...dataValues } = values;
+      const formData = new FormData();
+      const data = {
+        data: dataValues,
         totalPrice,
         totalWeight,
         activePrice,
+        file: values.catPic,
         rightCurrentCountry,
         rightShipPrice: shipPrice,
         isCatExist: !!values.catPic,
@@ -59,16 +62,24 @@ const Form = () => {
         chatId,
       };
 
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'data' || key === 'products') {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, value);
+        }
+      });
+
       const sendingData = async () => {
+        await axios.post('http://https://snakicz-bot.net/bot/webData', formData);
         resetForm();
         dispatch(clearItems());
-        await axios.post('https://snakicz-bot.net/webData', data);
+        onClose();
       };
-      onClose();
       sendingData();
     },
   });
-  const setBielskoValues = useFormikAutoFill<UserDataTypes>({
+  const setBielskoValues = useFormikAutoFill({
     provider: formik,
     builder: ({ userCity, userIndexCity }) => {
       userCity.setValue('Bielsko-Biala');
@@ -215,7 +226,7 @@ const Form = () => {
         )}
         {inputFields.slice(4).map(({ name, label, type }) => {
           const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
-          const value = formik.values[fieldName];
+          const value = formik.values[fieldName] as string;
           const error = formik.errors[fieldName];
           const touch = formik.touched[fieldName];
           return (

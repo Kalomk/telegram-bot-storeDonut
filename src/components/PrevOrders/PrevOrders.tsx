@@ -90,6 +90,7 @@ const PrevOrders = () => {
 
   const onSendData = useCallback(() => {
     if (orderToSend) {
+      const formData = new FormData();
       const { isCatExist, userNickname, ...rest } = orderToSend;
       const data = {
         data: { ...rest },
@@ -98,17 +99,26 @@ const PrevOrders = () => {
         activePrice,
         rightCurrentCountry,
         rightShipPrice: shipPrice,
-        isCatExist,
         freeDelivery: isFreeShip,
         products: cartItems,
         userFromWeb: userNickname,
         chatId,
       } as unknown as FormData;
 
-      onClose();
-      dispatch(clearItems());
-      axios.post('https://snakicz-bot.net/webData', data);
-      return;
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'data' || key === 'products') {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      const sendingData = async () => {
+        await axios.post('http://https://snakicz-bot.net/bot/webData', formData);
+        dispatch(clearItems());
+        onClose();
+      };
+      sendingData();
     }
     navigate('/');
   }, [
