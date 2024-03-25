@@ -17,7 +17,7 @@ import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, user, chatId, onClose } = useTelegram();
+  const { tg, user, chatId = '692302840', onClose } = useTelegram();
   const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
     (state: RootState) => state.cart
   );
@@ -71,12 +71,21 @@ const Form = () => {
       });
 
       const sendingData = async () => {
-        await axios.post('http://https://snakicz-bot.net/bot/webData', formData);
-        resetForm();
-        dispatch(clearItems());
-        onClose();
+        const { data } = await axios.post('https://snakicz-bot.net/bot/webData', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        // resetForm();
+        // dispatch(clearItems());
+        // onClose();
+        console.log(data);
       };
       sendingData();
+
+      for (const [key, value] of formData.entries() as any) {
+        console.log(key, value);
+      }
     },
   });
   const setBielskoValues = useFormikAutoFill({
@@ -152,6 +161,7 @@ const Form = () => {
       <div className="form">
         <h3>Введіть ваші данні </h3>
         {!Array.isArray(data) &&
+          Object.keys(data).length !== 0 &&
           (!isLoading ? (
             <Button
               bg__style={'primary'}
@@ -275,6 +285,9 @@ const Form = () => {
           </label>
         )}
       </div>
+      <button type="submit" onClick={onSendData}>
+        click
+      </button>
     </div>
   );
 };

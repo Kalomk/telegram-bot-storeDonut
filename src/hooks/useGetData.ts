@@ -12,7 +12,7 @@ function useGetData<S>(fetchFunc: () => Promise<S>) {
         .finally(() => setIsLoading(false));
     };
     getDataFunc();
-  }, [fetchFunc]);
+  }, []);
 
   return { data, isLoading };
 }

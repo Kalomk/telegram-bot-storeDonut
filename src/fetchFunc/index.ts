@@ -8,6 +8,8 @@ export const getLastDataFromDB = async (chatId: string): Promise<Order | []> => 
       uniqueId: chatId,
     });
     const jsonedOrder = response.data as Order;
+    console.log('order: ' + JSON.stringify(jsonedOrder));
+
     return jsonedOrder;
   } catch (e) {
     console.log(e);
@@ -17,7 +19,7 @@ export const getLastDataFromDB = async (chatId: string): Promise<Order | []> => 
 export const fetchOrders = async (chatId: string): Promise<Order[] | []> => {
   try {
     const response = await axios.post('https://snakicz-bot.net/orders/getOrdersByUniqueId', {
-      chatId,
+      uniqueId: chatId,
     });
     return response.data as Order[];
   } catch (error) {
