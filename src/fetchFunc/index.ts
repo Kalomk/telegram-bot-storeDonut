@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { Order } from '../components/PrevOrders/PrevOrders';
+import { OrderType } from 'snakicz-types';
 import { inputFields } from '../components/Form/validationSchema';
 
-export const getLastDataFromDB = async (chatId: string): Promise<Order | []> => {
+export const getLastDataFromDB = async (chatId: string): Promise<OrderType | []> => {
   try {
-    const response = await axios.post('https://snakicz-bot.net/orders/getLastAddedOrderForUser', {
+    const response = await axios.post('https://snakicz-bot.net/orders/x', {
       uniqueId: chatId,
     });
-    const jsonedOrder = response.data as Order;
+    const jsonedOrder = response.data as OrderType;
     console.log('order: ' + JSON.stringify(jsonedOrder));
 
     return jsonedOrder;
@@ -16,12 +16,12 @@ export const getLastDataFromDB = async (chatId: string): Promise<Order | []> => 
     return [];
   }
 };
-export const fetchOrders = async (chatId: string): Promise<Order[] | []> => {
+export const fetchOrders = async (chatId: string): Promise<OrderType[] | []> => {
   try {
     const response = await axios.post('https://snakicz-bot.net/orders/getOrdersByUniqueId', {
       uniqueId: chatId,
     });
-    return response.data as Order[];
+    return response.data as OrderType[];
   } catch (error) {
     console.error('Error fetching orders:', error);
     return [];
@@ -30,13 +30,13 @@ export const fetchOrders = async (chatId: string): Promise<Order[] | []> => {
 
 export const getLastOrderInfo = async (
   formik: any,
-  orderData: Order,
+  orderData: OrderType,
   setSelectedAddress: (arg: 'pack' | 'user' | 'bielsko') => void
 ) => {
   try {
     // Set individual form field values using formik's setFieldValue method
     inputFields.forEach((field) => {
-      formik.setFieldValue(field.name, orderData[field.name as keyof Order] || '');
+      formik.setFieldValue(field.name, orderData[field.name as keyof OrderType] || '');
     });
 
     // Set selectedAddress based on jsonedOrder values

@@ -10,42 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import useGetData from '../../hooks/useGetData';
 import { fetchOrders } from '../../fetchFunc';
 import Loader from '../Loader/Loader';
-
-type OrderItem = {
-  id: string;
-  title: string;
-  imageUrl: string;
-  price: number;
-  weight: number;
-  count: number;
-  activePrice: 'zł' | '€';
-  activeCountry: string;
-};
-
-export type Order = {
-  id: number;
-  userName: string;
-  userLastName: string;
-  addressPack: string;
-  userAddress: string;
-  userCity: string;
-  userIndexCity: string;
-  userNickname: string;
-  isCatExist: boolean;
-  orderNumber: string;
-  freeDelivery: boolean;
-  totalPrice: number;
-  activePrice: string;
-  phoneNumber: string;
-  contactPhoneNumber: string;
-  email: string;
-  totalWeight: number;
-  orderItems: OrderItem[];
-  isStatisted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  userId: number;
-};
+import { CartItem as CartType, OrderType } from 'snakicz-types';
 
 const ORDER_STATUS_MAP = {
   true: { color: 'yellow', text: 'Так' },
@@ -55,9 +20,11 @@ const ORDER_STATUS_MAP = {
 const PrevOrders = () => {
   const { tg, chatId, onClose } = useTelegram();
   const { data, isLoading } = useGetData(() => fetchOrders(chatId));
-  const [orderToSend, setOrderToSend] = useState<Order | null>(null);
-  const [openTabMap, setOpenTabMap] = useState<{ [itemId: number]: boolean }>({});
-  const [openProductMenuMap, setOpenProductMenuMap] = useState<{ [itemId: number]: boolean }>({});
+  const [orderToSend, setOrderToSend] = useState<OrderType | null>(null);
+  const [openTabMap, setOpenTabMap] = useState<{ [itemId: string]: boolean }>({});
+  const [openProductMenuMap, setOpenProductMenuMap] = useState<{ [keystring: string]: boolean }>(
+    {}
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -73,7 +40,7 @@ const PrevOrders = () => {
     tg.MainButton.show();
   }, [tg.MainButton]);
 
-  const changeActiveItem = (id: number) => {
+  const changeActiveItem = (id: string) => {
     setOpenTabMap((prevIds) => ({
       [id]: !prevIds[id],
     }));
@@ -90,31 +57,12 @@ const PrevOrders = () => {
 
   const onSendData = useCallback(() => {
     if (orderToSend) {
-      const formData = new FormData();
-      const { isCatExist, userNickname, ...rest } = orderToSend;
-      const data = {
-        data: { ...rest },
-        totalPrice,
-        totalWeight,
-        activePrice,
-        rightCurrentCountry,
-        rightShipPrice: shipPrice,
-        freeDelivery: isFreeShip,
-        products: cartItems,
-        userFromWeb: userNickname,
-        chatId,
-      } as unknown as FormData;
-
-      Object.entries(data).forEach(([key, value]) => {
-        if (key === 'data' || key === 'products') {
-          formData.append(key, JSON.stringify(value));
-        } else {
-          formData.append(key, value);
-        }
-      });
-
       const sendingData = async () => {
-        await axios.post('http://https://snakicz-bot.net/bot/webData', formData);
+        await axios.post('http://https://snakicz-bot.net/bot/webData', orderToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         dispatch(clearItems());
         onClose();
       };
@@ -143,10 +91,10 @@ const PrevOrders = () => {
     };
   }, [onSendData, tg]);
 
-  const addToCartItems = (items: OrderItem[], id: number, currentOrder: Order) => {
+  const addToCartItems = (items: CartType[], currentOrder: OrderType) => {
     setOpenTabMap({});
     setOpenProductMenuMap(() => ({
-      [id]: true,
+      [currentOrder.orderNumber]: true,
     }));
 
     if (!isItemChangeClick.current) {
@@ -158,15 +106,18 @@ const PrevOrders = () => {
     isItemChangeClick.current = false;
   };
 
-  const renderOrderItems = (order: Order) => {
+  const renderOrderItems = (order: OrderType, items: CartType[]) => {
     return (
       <div className="order-items">
-        <span onClick={() => changeActiveItem(order.id)}>
-          {!openTabMap[order.id] ? 'Показати список товарів ▼' : 'Згорнути список ▲'}
+        <span onClick={() => changeActiveItem(order.orderNumber)}>
+          {!openTabMap[order.orderNumber] ? 'Показати список товарів ▼' : 'Згорнути список ▲'}
         </span>
-        {openTabMap[order.id] &&
+        {openTabMap[order.orderNumber] &&
           cartItems.map((item) => (
-            <div key={item.id} className={`order-item ${openTabMap[order.id] ? ' open ' : ''}`}>
+            <div
+              key={item.id}
+              className={`order-item ${openTabMap[order.orderNumber] ? ' open ' : ''}`}
+            >
               <CartItem {...item} />
             </div>
           ))}
@@ -174,14 +125,14 @@ const PrevOrders = () => {
     );
   };
 
-  const renderOrder = (order: Order) => {
-    const currentOrderId = openProductMenuMap[order.id];
+  const renderOrder = (order: OrderType) => {
+    const currentOrderId = openProductMenuMap[order.orderNumber];
     const checkRightTotalPrice = currentOrderId ? totalPrice + shipPrice : order.totalPrice;
     const checkRightActivePrice = currentOrderId ? activePrice : order.activePrice;
     const checkRightIsFreeShip = (currentOrderId ? isFreeShip : order.freeDelivery).toString();
-    const orderItemsData = JSON.parse(order.orderItems as unknown as string) as OrderItem[];
+    const orderItemsData = JSON.parse(order.orderItems as unknown as string) as CartType[];
 
-    const date = new Date(order.createdAt);
+    const date = new Date(order.createdAt!);
     const options = {
       weekday: undefined, // omit the weekday
       year: 'numeric',
@@ -196,8 +147,8 @@ const PrevOrders = () => {
 
     return (
       <div
-        onClick={currentOrderId ? undefined : () => addToCartItems(orderItemsData, order.id, order)}
-        key={order.id}
+        onClick={currentOrderId ? undefined : () => addToCartItems(orderItemsData, order)}
+        key={order.orderNumber}
         className={`order-container ${currentOrderId ? ' selected' : ''}`}
       >
         <div className="order-wrapper">
@@ -226,7 +177,11 @@ const PrevOrders = () => {
             </div>
           </div>
         </div>
-        {currentOrderId ? renderOrderItems(order) : <div>Натисніть, щоб редагувати замовлення</div>}
+        {currentOrderId ? (
+          renderOrderItems(order, orderItemsData)
+        ) : (
+          <div>Натисніть, щоб редагувати замовлення</div>
+        )}
       </div>
     );
   };

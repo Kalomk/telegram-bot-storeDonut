@@ -136,12 +136,13 @@ const filtersSlice = createSlice({
       );
     },
     removeItems: (state, action: PayloadAction<string>) => {
+      state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
+
       const totalPrice = calcTotalPrice(state.cartItems);
       const activePrice = getActivePrice(state.cartItems);
       const totalWeight = calcTotalWeight(state.cartItems);
       const activeCountry = getActiveCountryGroup(state.cartItems);
 
-      state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
       state.totalPrice = +totalPrice;
       state.totalWeight = totalWeight;
       state.activePrice = activePrice;

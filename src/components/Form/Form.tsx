@@ -13,6 +13,7 @@ import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
 import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
 import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
+import { ProductType } from 'snakicz-types';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,9 @@ const Form = () => {
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
+
+  const { entities: productItems } = useSelector((state: RootState) => state.products);
+
   const { data, isLoading } = useGetData(() => getLastDataFromDB(chatId));
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
@@ -61,31 +65,28 @@ const Form = () => {
         userFromWeb: user?.username,
         chatId,
       };
+      console.log(totalWeight);
 
+      console.log(cartItems);
       Object.entries(data).forEach(([key, value]) => {
-        if (key === 'data' || key === 'products') {
+        if (key === 'data' || key === 'products' || key === 'productItems') {
           formData.append(key, JSON.stringify(value));
         } else {
           formData.append(key, value);
         }
       });
 
-      const sendingData = async () => {
-        const { data } = await axios.post('https://snakicz-bot.net/bot/webData', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        // resetForm();
-        // dispatch(clearItems());
-        // onClose();
-        console.log(data);
-      };
-      sendingData();
-
-      for (const [key, value] of formData.entries() as any) {
-        console.log(key, value);
-      }
+      // const sendingData = async () => {
+      //   await axios.post('https://snakicz-bot.net/bot/webData', formData, {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   });
+      //   resetForm();
+      //   dispatch(clearItems());
+      //   onClose();
+      // };
+      // sendingData();
     },
   });
   const setBielskoValues = useFormikAutoFill({
