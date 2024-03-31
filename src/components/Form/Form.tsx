@@ -14,6 +14,8 @@ import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
 import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
 import { ProductType } from 'snakicz-types';
+import { updateProductWeightFromProductTotalWeight } from '@/utils/updateProductWeight';
+import { FormType } from 'mainTypes';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -51,42 +53,39 @@ const Form = () => {
     onSubmit: async (values, { resetForm }) => {
       const { catPic, ...dataValues } = values;
       const formData = new FormData();
-      const data = {
-        data: dataValues,
-        totalPrice,
-        totalWeight,
+      const data: FormType = {
+        data: dataValues as unknown as string,
+        totalPrice: totalPrice.toString(),
+        totalWeight: totalWeight.toString(),
         activePrice,
-        file: values.catPic,
+        file: values.catPic!,
         rightCurrentCountry,
-        rightShipPrice: shipPrice,
-        isCatExist: !!values.catPic,
-        freeDelivery: isFreeShip,
-        products: cartItems,
+        rightShipPrice: shipPrice.toString(),
+        isCatExist: !!values.catPic as unknown as string,
+        freeDelivery: isFreeShip as unknown as string,
+        products: cartItems as unknown as string,
         userFromWeb: user?.username,
         chatId,
       };
-      console.log(totalWeight);
-
-      console.log(cartItems);
       Object.entries(data).forEach(([key, value]) => {
-        if (key === 'data' || key === 'products' || key === 'productItems') {
+        if (key === 'data' || key === 'products') {
           formData.append(key, JSON.stringify(value));
         } else {
-          formData.append(key, value);
+          formData.append(key, value as Blob);
         }
       });
 
-      // const sendingData = async () => {
-      //   await axios.post('https://snakicz-bot.net/bot/webData', formData, {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //     },
-      //   });
-      //   resetForm();
-      //   dispatch(clearItems());
-      //   onClose();
-      // };
-      // sendingData();
+      const sendingData = async () => {
+        await axios.post('https://snakicz-bot.net/bot/webData', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        resetForm();
+        dispatch(clearItems());
+        onClose();
+      };
+      sendingData();
     },
   });
   const setBielskoValues = useFormikAutoFill({

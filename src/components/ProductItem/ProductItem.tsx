@@ -1,4 +1,4 @@
-import { ProductType } from '../../slices/productsSlice';
+import { ProductType } from 'snakicz-types';
 import Button from '../Button/Buttons';
 import './ProductItem.scss';
 import { useState } from 'react';
@@ -17,18 +17,17 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
   const [isDescShow, setIsDescShow] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const completeId = product.id + product.weight[selectedIndex];
+  const completeId = product.id! + product.weight[selectedIndex];
   const cartItem = useSelector((state: RootState) =>
-    state.cart.cartItems.find((item) => item.id === completeId)
+    state.cart.cartItems.find((item) => item.id! === completeId!.toString())
   );
   const prices = useSelector(filteredPrice);
-  console.log(prices);
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
   const { activeCountry } = useSelector((state: RootState) => state.activeCountry);
   const addCount = cartItem ? cartItem.count : null;
   const sendToCart = () => {
     const info: CartItem = {
-      id: completeId,
+      id: completeId.toString(),
       title: product.title,
       imageUrl: product.img,
       price: prices[selectedIndex],
@@ -81,6 +80,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
             </li>
           ))}
         </ul>
+        <div className="product__count">
+          <span>Кількість:</span> <b>{product.totalWeightProduct}</b>
+        </div>
         <Button bg__style="primary" className="product__btn" onClick={sendToCart}>
           <span>Додати до корзини</span>
           {addCount && <i>{addCount}</i>}

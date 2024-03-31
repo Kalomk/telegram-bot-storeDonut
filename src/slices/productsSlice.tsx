@@ -1,18 +1,8 @@
 // productSlice.ts
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { ProductType } from 'snakicz-types';
 
-export interface ProductType {
-  id: string;
-  title: string;
-  price: { zł: { [key: string]: number }; '€': { [key: string]: number } };
-  img: string;
-  weight: number[];
-  description?: string;
-  totalProductWeight: number;
-  isEnable: boolean;
-  category: number;
-}
 interface ProductSliceType {
   entities: ProductType[] | [];
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';

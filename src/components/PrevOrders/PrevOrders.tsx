@@ -11,6 +11,7 @@ import useGetData from '../../hooks/useGetData';
 import { fetchOrders } from '../../fetchFunc';
 import Loader from '../Loader/Loader';
 import { CartItem as CartType, OrderType } from 'snakicz-types';
+import { FormType } from 'mainTypes';
 
 const ORDER_STATUS_MAP = {
   true: { color: 'yellow', text: 'Так' },
@@ -57,8 +58,22 @@ const PrevOrders = () => {
 
   const onSendData = useCallback(() => {
     if (orderToSend) {
+      const { totalPrice, catExistConfirmPicUrl, userNickname, ...dataValues } = orderToSend;
+      const data: FormType = {
+        data: dataValues as unknown as string,
+        totalPrice: totalPrice.toString(),
+        totalWeight: totalWeight.toString(),
+        activePrice,
+        rightCurrentCountry,
+        rightShipPrice: shipPrice.toString(),
+        isCatExist: false as unknown as string,
+        freeDelivery: isFreeShip as unknown as string,
+        products: cartItems as unknown as string,
+        userFromWeb: userNickname,
+        chatId,
+      };
       const sendingData = async () => {
-        await axios.post('http://https://snakicz-bot.net/bot/webData', orderToSend, {
+        await axios.post('http://https://snakicz-bot.net/bot/webData', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
