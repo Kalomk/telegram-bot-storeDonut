@@ -13,8 +13,6 @@ import { getLastDataFromDB, getLastOrderInfo } from '../../fetchFunc';
 import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
 import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
-import { ProductType } from 'snakicz-types';
-import { updateProductWeightFromProductTotalWeight } from '@/utils/updateProductWeight';
 import { FormType } from 'mainTypes';
 
 const Form = () => {
