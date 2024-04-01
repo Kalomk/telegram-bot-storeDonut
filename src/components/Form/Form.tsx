@@ -18,16 +18,13 @@ import { FormType } from 'mainTypes';
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, user, chatId = '692302840', onClose } = useTelegram();
+  const { tg, user, chatId, onClose } = useTelegram();
   const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
     (state: RootState) => state.cart
   );
   const [includeCatPic, setIncludeCatPic] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<'pack' | 'user' | 'bielsko'>('user');
   const { activePrice } = useSelector((state: RootState) => state.activePrice);
-
-  const { entities: productItems } = useSelector((state: RootState) => state.products);
-
   const { data, isLoading } = useGetData(() => getLastDataFromDB(chatId));
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
@@ -74,14 +71,17 @@ const Form = () => {
       });
 
       const sendingData = async () => {
-        await axios.post('https://snakicz-bot.net/bot/webData', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        resetForm();
-        dispatch(clearItems());
-        onClose();
+        axios
+          .post('https://snakicz-bot.net/bot/webData', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then(() => {
+            resetForm();
+            dispatch(clearItems());
+            onClose();
+          });
       };
       sendingData();
     },
