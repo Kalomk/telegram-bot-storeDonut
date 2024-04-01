@@ -70,18 +70,16 @@ const Form = () => {
         }
       });
 
+      resetForm();
+      dispatch(clearItems());
+      onClose();
+
       const sendingData = async () => {
-        axios
-          .post('https://snakicz-bot.net/bot/webData', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then(() => {
-            resetForm();
-            dispatch(clearItems());
-            onClose();
-          });
+        axios.post('https://snakicz-bot.net/bot/webData', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       };
       sendingData();
     },
@@ -161,15 +159,12 @@ const Form = () => {
         {!Array.isArray(data) &&
           Object.keys(data).length !== 0 &&
           (!isLoading ? (
-            <div>
-              <h2>Повторіть попередньо введені данні</h2>
-              <Button
-                bg__style={'primary'}
-                onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
-              >
-                Повторити замовлення
-              </Button>
-            </div>
+            <Button
+              bg__style={'primary'}
+              onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
+            >
+              Повторити замовлення
+            </Button>
           ) : (
             <Loader />
           ))}

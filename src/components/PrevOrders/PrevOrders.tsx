@@ -72,11 +72,11 @@ const PrevOrders = () => {
         userFromWeb: userNickname,
         chatId,
       };
+
+      dispatch(clearItems());
+      onClose();
       const sendingData = async () => {
-        axios.post('http://https://snakicz-bot.net/bot/webData', data).then(() => {
-          dispatch(clearItems());
-          onClose();
-        });
+        axios.post('http://https://snakicz-bot.net/bot/webData', data);
       };
       sendingData();
     }
