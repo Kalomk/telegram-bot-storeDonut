@@ -73,17 +73,13 @@ const PrevOrders = () => {
         chatId,
       };
       const sendingData = async () => {
-        await axios.post('http://https://snakicz-bot.net/bot/webData', data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+        axios.post('http://https://snakicz-bot.net/bot/webData', data).then(() => {
+          dispatch(clearItems());
+          onClose();
         });
-        dispatch(clearItems());
-        onClose();
       };
       sendingData();
     }
-    navigate('/');
   }, [
     activePrice,
     cartItems,
