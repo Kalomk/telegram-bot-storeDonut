@@ -161,12 +161,15 @@ const Form = () => {
         {!Array.isArray(data) &&
           Object.keys(data).length !== 0 &&
           (!isLoading ? (
-            <Button
-              bg__style={'primary'}
-              onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
-            >
-              Повторити замовлення
-            </Button>
+            <div>
+              <h2>Повторіть попередньо введені данні</h2>
+              <Button
+                bg__style={'primary'}
+                onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
+              >
+                Повторити замовлення
+              </Button>
+            </div>
           ) : (
             <Loader />
           ))}
