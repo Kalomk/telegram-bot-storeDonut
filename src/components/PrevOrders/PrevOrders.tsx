@@ -60,7 +60,7 @@ const PrevOrders = () => {
     if (orderToSend) {
       const { totalPrice, catExistConfirmPicUrl, userNickname, ...dataValues } = orderToSend;
       const data: FormType = {
-        data: dataValues as unknown as string,
+        data: JSON.stringify(dataValues),
         totalPrice: totalPrice.toString(),
         totalWeight: totalWeight.toString(),
         activePrice,
@@ -68,18 +68,19 @@ const PrevOrders = () => {
         rightShipPrice: shipPrice.toString(),
         isCatExist: false as unknown as string,
         freeDelivery: isFreeShip as unknown as string,
-        products: cartItems as unknown as string,
+        products: JSON.stringify(cartItems),
         userFromWeb: userNickname,
         chatId,
       };
+
       const sendingData = async () => {
         axios.post('https://snakicz-bot.net/bot/webData', data);
       };
+
       sendingData()
         .then(() => {
           dispatch(clearItems());
           onClose();
-          console.log('huy');
         })
         .catch((error) => console.log(error));
     }
@@ -120,7 +121,7 @@ const PrevOrders = () => {
     isItemChangeClick.current = false;
   };
 
-  const renderOrderItems = (order: OrderType, items: CartType[]) => {
+  const renderOrderItems = (order: OrderType) => {
     return (
       <div className="order-items">
         <span onClick={() => changeActiveItem(order.orderNumber)}>
@@ -191,11 +192,7 @@ const PrevOrders = () => {
             </div>
           </div>
         </div>
-        {currentOrderId ? (
-          renderOrderItems(order, orderItemsData)
-        ) : (
-          <div>Натисніть, щоб редагувати замовлення</div>
-        )}
+        {currentOrderId ? renderOrderItems(order) : <div>Натисніть, щоб редагувати замовлення</div>}
       </div>
     );
   };
@@ -203,12 +200,7 @@ const PrevOrders = () => {
   if (isLoading) {
     return <Loader />;
   }
-  return (
-    <div className="prevOrders">
-      {data.map((order) => renderOrder(order))}
-      <button onClick={onSendData}>send</button>
-    </div>
-  );
+  return <div className="prevOrders">{data.map((order) => renderOrder(order))}</div>;
 };
 
 export default PrevOrders;
