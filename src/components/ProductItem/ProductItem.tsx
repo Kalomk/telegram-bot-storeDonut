@@ -10,9 +10,10 @@ import { filteredPrice } from '../../slices/priceFilter';
 interface ProductItemProps {
   product: ProductType;
   className: string;
+  index: number;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
+const ProductItem: React.FC<ProductItemProps> = ({ product, className, index }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isDescShow, setIsDescShow] = useState<boolean>(false);
 
@@ -30,7 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
       id: completeId.toString(),
       title: product.title,
       imageUrl: product.img,
-      price: prices[selectedIndex],
+      price: prices[index][selectedIndex],
       weight: product.weight[selectedIndex],
       count: 0,
       activePrice,
@@ -63,7 +64,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className }) => {
         <div className="product__price">
           <span>Вартість:</span>{' '}
           <b>
-            {prices[selectedIndex]} {activePrice}{' '}
+            {prices[index][selectedIndex]} {activePrice}{' '}
           </b>
         </div>
         <ul className="product__weight">

@@ -18,7 +18,7 @@ import { FormType } from 'mainTypes';
 const Form = () => {
   const dispatch = useDispatch();
 
-  const { tg, user, chatId, onClose } = useTelegram();
+  const { tg, user, chatId = '692302840', onClose } = useTelegram();
   const { cartItems, totalPrice, totalWeight, shipPrice, isFreeShip } = useSelector(
     (state: RootState) => state.cart
   );
@@ -70,10 +70,6 @@ const Form = () => {
         }
       });
 
-      resetForm();
-      dispatch(clearItems());
-      onClose();
-
       const sendingData = async () => {
         axios.post('https://snakicz-bot.net/bot/webData', formData, {
           headers: {
@@ -81,7 +77,13 @@ const Form = () => {
           },
         });
       };
-      sendingData();
+      sendingData()
+        .then(() => {
+          resetForm();
+          dispatch(clearItems());
+          onClose();
+        })
+        .catch((error) => console.log(error));
     },
   });
   const setBielskoValues = useFormikAutoFill({
@@ -281,9 +283,7 @@ const Form = () => {
           </label>
         )}
       </div>
-      <button type="submit" onClick={onSendData}>
-        click
-      </button>
+      <button onClick={onSendData}>click</button>
     </div>
   );
 };

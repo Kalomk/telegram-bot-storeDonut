@@ -72,9 +72,9 @@ const ProductList = () => {
         {status === 'pending' ? (
           <Loader />
         ) : (
-          products.map((item) => (
+          products.map((item, index) => (
             <Reveal key={item.id}>
-              <ProductItem product={item} className={'item'} />
+              <ProductItem index={index} product={item} className={'item'} />
             </Reveal>
           ))
         )}

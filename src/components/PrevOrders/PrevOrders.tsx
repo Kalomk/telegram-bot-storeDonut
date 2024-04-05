@@ -19,7 +19,7 @@ const ORDER_STATUS_MAP = {
 };
 
 const PrevOrders = () => {
-  const { tg, chatId, onClose } = useTelegram();
+  const { tg, chatId = '692302840', onClose } = useTelegram();
   const { data, isLoading } = useGetData(() => fetchOrders(chatId));
   const [orderToSend, setOrderToSend] = useState<OrderType | null>(null);
   const [openTabMap, setOpenTabMap] = useState<{ [itemId: string]: boolean }>({});
@@ -56,7 +56,7 @@ const PrevOrders = () => {
     });
   }, [setOpenProductMenuMap, tg.MainButton, openProductMenuMap, orderToSend]);
 
-  const onSendData = useCallback(() => {
+  const onSendData = useCallback(async () => {
     if (orderToSend) {
       const { totalPrice, catExistConfirmPicUrl, userNickname, ...dataValues } = orderToSend;
       const data: FormType = {
@@ -72,13 +72,16 @@ const PrevOrders = () => {
         userFromWeb: userNickname,
         chatId,
       };
-
-      dispatch(clearItems());
-      onClose();
       const sendingData = async () => {
-        axios.post('http://https://snakicz-bot.net/bot/webData', data);
+        axios.post('https://snakicz-bot.net/bot/webData', data);
       };
-      sendingData();
+      sendingData()
+        .then(() => {
+          dispatch(clearItems());
+          onClose();
+          console.log('huy');
+        })
+        .catch((error) => console.log(error));
     }
   }, [
     activePrice,
@@ -200,7 +203,12 @@ const PrevOrders = () => {
   if (isLoading) {
     return <Loader />;
   }
-  return <div className="prevOrders">{data.map((order) => renderOrder(order))}</div>;
+  return (
+    <div className="prevOrders">
+      {data.map((order) => renderOrder(order))}
+      <button onClick={onSendData}>send</button>
+    </div>
+  );
 };
 
 export default PrevOrders;

@@ -22,9 +22,7 @@ export const filteredPrice = createSelector(
   (state: RootState) => state.products.entities,
   (state: RootState) => state.activePrice.activePrice,
   (products, activePrice) => {
-    const pricesObj = products.map((item) => item.price[activePrice]);
-    const prices = Object.values(pricesObj[0]);
-
+    const prices = products.map((item) => Object.values(item.price[activePrice]));
     return prices;
   }
 );
