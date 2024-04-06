@@ -261,6 +261,31 @@ const initialState: ProductType[] = [
     weight: [2000],
     category: 3,
   },
+  {
+    id: '22',
+    title: 'Сет "Грізлі"',
+    price: {
+      zł: [130],
+      '€': calculatePriceInEuro([130]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/2875/KL79ow.jpg',
+    description: 'Голд фіш 250г,Філе тріски 250г,Ставридка 250г,Бурштинова з перцем 250г',
+    weight: [1000],
+    category: 3,
+  },
+  {
+    id: '23',
+    title: 'Сет "Сет Палички"',
+    price: {
+      zł: [180],
+      '€': calculatePriceInEuro([180]),
+    },
+    img: 'https://imagizer.imageshack.com/img924/6641/ICRfSn.jpg',
+    description:
+      'Соломка тріски 250 г,Соломка тріски з перцем 250 г,Соломка тунця 250 г,Ікряник з лосося 250 г,Рибна павутинка 250 г,Палички вʼяленого лосося 250 г',
+    weight: [1500],
+    category: 3,
+  },
 ];
 
 // Create a slice with only the initial state
