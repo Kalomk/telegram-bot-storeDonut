@@ -30,6 +30,8 @@ const Form = () => {
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
   const validationSchema = getValidationSchema(selectedAddress, includeCatPic);
 
+  const [isFormLoaded, setIsFormLoaded] = useState(false);
+
   const initialValues = {
     userName: '',
     userLastName: '',
@@ -46,6 +48,7 @@ const Form = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
+      setIsFormLoaded(true);
       const { catPic, ...dataValues } = values;
       const formData = new FormData();
       const data: FormType = {
@@ -80,11 +83,14 @@ const Form = () => {
 
       sendingData().finally(() => {
         // Use setTimeout to delay execution
-        setTimeout(() => {
-          resetForm();
-          dispatch(clearItems());
-          onClose();
-        }, 1000); // Adjust the delay time (in milliseconds) as needed
+        setTimeout((data) => {
+          if (data.message === 'Everything is alright') {
+            setIsFormLoaded(false);
+            resetForm();
+            dispatch(clearItems());
+            onClose();
+          }
+        }, 1500); // Adjust the delay time (in milliseconds) as needed
       });
     },
   });
@@ -151,6 +157,21 @@ const Form = () => {
       }
     });
   }, [formik.values]);
+
+  useEffect(() => {
+    // Check if the form is valid based on the Yup schema
+    if (isFormLoaded) {
+      tg.MainButton.setParams({
+        text: 'Відправляємо данні',
+      });
+      tg.offEvent('mainButtonClicked', onSendData);
+    } else {
+      tg.onEvent('mainButtonClicked', onSendData);
+      tg.MainButton.setParams({
+        text: 'Відправити данні',
+      });
+    }
+  }, [setIsFormLoaded]);
 
   return (
     <div className="form-wrapper">
