@@ -79,7 +79,7 @@ const Form = () => {
       };
 
       sendingData()
-        .then(() => {
+        .finally(() => {
           resetForm();
           dispatch(clearItems());
           onClose();
