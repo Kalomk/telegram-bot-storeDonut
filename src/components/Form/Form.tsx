@@ -310,7 +310,6 @@ const Form = () => {
                 )}
               </label>
             )}
-            <button onClick={onSendData}>Click</button>
           </div>
         </>
       ) : (
