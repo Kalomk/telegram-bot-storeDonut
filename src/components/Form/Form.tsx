@@ -70,23 +70,22 @@ const Form = () => {
         }
       });
 
-      // Upload image and other data to the server concurrently
-      const uploadImagePromise = axios.post('https://snakicz-bot.net/bot/webData', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const sendingData = async () => {
+        axios.post('https://snakicz-bot.net/bot/webData', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      };
+
+      sendingData().finally(() => {
+        // Use setTimeout to delay execution
+        setTimeout(() => {
+          resetForm();
+          dispatch(clearItems());
+          onClose();
+        }, 1000); // Adjust the delay time (in milliseconds) as needed
       });
-      // You might have other data uploading promises here if needed
-
-      // Wait for all promises to resolve
-      await Promise.all([uploadImagePromise]);
-
-      // All data has been sent to the server, now call onClose function
-      onClose();
-
-      // Optionally, reset the form and dispatch actions
-      resetForm();
-      dispatch(clearItems());
     },
   });
   const setBielskoValues = useFormikAutoFill({
@@ -286,7 +285,6 @@ const Form = () => {
           </label>
         )}
       </div>
-      <button onClick={onSendData}>Click</button>
     </div>
   );
 };
