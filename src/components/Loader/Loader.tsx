@@ -1,10 +1,11 @@
 import logo from '../../images/snakicz-logo.png';
 import './Loader.scss';
 
-const Loader = () => {
+const Loader = ({ children, mt = '120px' }: { children?: JSX.Element; mt?: string }) => {
   return (
-    <div className="loader">
+    <div style={{ marginTop: mt }} className="loader">
       <img src={logo} alt="logo" />
+      {children}
     </div>
   );
 };

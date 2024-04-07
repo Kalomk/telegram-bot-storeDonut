@@ -14,6 +14,7 @@ import useGetData from '../../hooks/useGetData';
 import Loader from '../Loader/Loader';
 import { useFormikAutoFill } from '../../hooks/useFormikAutoFill';
 import { FormType } from 'mainTypes';
+import imageCompression from 'browser-image-compression';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const Form = () => {
   const currentCoutryFromLS = localStorage.getItem('currentCountry');
   const rightCurrentCountry = currentCoutryFromLS ? currentCoutryFromLS : 'Poland';
   const validationSchema = getValidationSchema(selectedAddress, includeCatPic);
+
+  const [isFormLoaded, setisFormLoaded] = useState(false);
 
   const initialValues = {
     userName: '',
@@ -47,14 +50,23 @@ const Form = () => {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       tg.MainButton.hide();
+      setisFormLoaded(true);
       const { catPic, ...dataValues } = values;
       const formData = new FormData();
+      const options = {
+        maxSizeMB: 0.15,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+      const compressedFile = values.catPic
+        ? await imageCompression(values.catPic, options)
+        : undefined;
       const data: FormType = {
         data: dataValues as unknown as string,
         totalPrice: totalPrice.toString(),
         totalWeight: totalWeight.toString(),
         activePrice,
-        file: values.catPic!,
+        file: compressedFile,
         rightCurrentCountry,
         rightShipPrice: shipPrice.toString(),
         isCatExist: !!values.catPic as unknown as string,
@@ -72,23 +84,29 @@ const Form = () => {
       });
 
       const sendingData = async () => {
-        axios.post('https://snakicz-bot.net/bot/webData', formData, {
+        await axios.post('https://snakicz-bot.net/bot/webData', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
       };
-
       sendingData().finally(() => {
-        // Use setTimeout to delay execution
+        // Calculate timeout based on file size
+        const fileSizeInKB = data.file !== undefined ? data.file.size / 1024 : 10;
+        let timeout = 1000; // Default timeout
+        if (fileSizeInKB > 50) {
+          timeout = 2000; // Increase timeout if file size is greater than 1000 KB
+        }
         setTimeout(() => {
+          setisFormLoaded(false);
           resetForm();
           dispatch(clearItems());
           onClose();
-        }, 2000); // Adjust the delay time (in milliseconds) as needed
+        }, timeout); // Adjust the delay time (in milliseconds) based on file size
       });
     },
   });
+
   const setBielskoValues = useFormikAutoFill({
     provider: formik,
     builder: ({ userCity, userIndexCity }) => {
@@ -155,137 +173,153 @@ const Form = () => {
 
   return (
     <div className="form-wrapper">
-      <a href="/cart" className="button">
-        <img style={{ width: 25, height: 25, marginBottom: 3 }} src={arrow} alt="" />
-        <span>Кошик</span>
-      </a>
-      <div className="form">
-        <h3>Введіть ваші данні </h3>
-        {!Array.isArray(data) &&
-          Object.keys(data).length !== 0 &&
-          (!isLoading ? (
-            <Button
-              bg__style={'primary'}
-              onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
-            >
-              Повторити замовлення
-            </Button>
-          ) : (
-            <Loader />
-          ))}
-        {inputFields.slice(0, 4).map(({ name, label, type }) => {
-          const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
-          const value = formik.values[fieldName];
-          const error = formik.errors[fieldName];
-          const touch = formik.touched[fieldName];
-          return (
-            <React.Fragment key={fieldName}>
-              <>
-                <input
-                  className="form__street"
-                  type={type}
-                  name={name}
-                  placeholder={label}
-                  onChange={onHandleChange}
-                  value={value}
-                  onBlur={formik.handleBlur} // Add onBlur event handler
-                />
-                {touch && error && <div className="error">{error as string}</div>}
-              </>
-            </React.Fragment>
-          );
-        })}
-        <select
-          disabled={formik.values.addressPack !== '' || formik.values.userAddress !== ''}
-          value={selectedAddress}
-          onChange={(e) => onSelectChange(e)}
-          className={'select'}
-        >
-          <option value={'pack'}>Я знаю свій пачкомат</option>
-          <option value={'user'}>Визначити пачкомат автоматично</option>
-          <option value={'bielsko'}>Безкоштовна доставка по м. Белсько-Бяла</option>
-        </select>
-        {selectedAddress === 'pack' && (
-          <>
-            <input
-              className="form__street"
-              type="text"
-              name="addressPack"
-              onChange={onHandleChange}
-              value={formik.values.addressPack}
-              placeholder="Точна адреса пачкомату"
-              onBlur={formik.handleBlur} // Add onBlur event handler
-            />
-            {formik.touched.addressPack && formik.errors.addressPack && (
-              <div className="error">{formik.errors.addressPack}</div>
+      {!isFormLoaded ? (
+        <>
+          <a href="/cart" className="button">
+            <img style={{ width: 25, height: 25, marginBottom: 3 }} src={arrow} alt="" />
+            <span>Кошик</span>
+          </a>
+          <div className="form">
+            <h3>Введіть ваші данні </h3>
+            {!isLoading ? (
+              !Array.isArray(data) &&
+              Object.keys(data).length !== 0 && (
+                <Button
+                  bg__style={'primary'}
+                  onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
+                >
+                  Повторити замовлення
+                </Button>
+              )
+            ) : (
+              <Loader mt="20px" />
             )}
-          </>
-        )}
-        {(selectedAddress === 'user' || selectedAddress === 'bielsko') && (
-          <>
-            <input
-              className="form__street"
-              type="text"
-              name="userAddress"
-              onChange={onHandleChange}
-              value={formik.values.userAddress}
-              placeholder="Ваша адреса"
-              onBlur={formik.handleBlur} // Add onBlur event handler
-            />
-            {formik.touched.userAddress && <div className="error">{formik.errors.userAddress}</div>}
-          </>
-        )}
-        {inputFields.slice(4).map(({ name, label, type }) => {
-          const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
-          const value = formik.values[fieldName] as string;
-          const error = formik.errors[fieldName];
-          const touch = formik.touched[fieldName];
-          return (
-            <React.Fragment key={fieldName}>
+            {inputFields.slice(0, 4).map(({ name, label, type }) => {
+              const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
+              const value = formik.values[fieldName];
+              const error = formik.errors[fieldName];
+              const touch = formik.touched[fieldName];
+              return (
+                <React.Fragment key={fieldName}>
+                  <>
+                    <input
+                      className="form__street"
+                      type={type}
+                      name={name}
+                      placeholder={label}
+                      onChange={onHandleChange}
+                      value={value}
+                      onBlur={formik.handleBlur} // Add onBlur event handler
+                    />
+                    {touch && error && <div className="error">{error as string}</div>}
+                  </>
+                </React.Fragment>
+              );
+            })}
+            <select
+              disabled={formik.values.addressPack !== '' || formik.values.userAddress !== ''}
+              value={selectedAddress}
+              onChange={(e) => onSelectChange(e)}
+              className={'select'}
+            >
+              <option value={'pack'}>Я знаю свій пачкомат</option>
+              <option value={'user'}>Визначити пачкомат автоматично</option>
+              <option value={'bielsko'}>Безкоштовна доставка по м. Белсько-Бяла</option>
+            </select>
+            {selectedAddress === 'pack' && (
               <>
                 <input
                   className="form__street"
-                  type={type}
-                  name={name}
-                  placeholder={label}
+                  type="text"
+                  name="addressPack"
                   onChange={onHandleChange}
-                  value={value}
+                  value={formik.values.addressPack}
+                  placeholder="Точна адреса пачкомату"
                   onBlur={formik.handleBlur} // Add onBlur event handler
                 />
-                {touch && error && <div className="error">{error as string}</div>}
+                {formik.touched.addressPack && formik.errors.addressPack && (
+                  <div className="error">{formik.errors.addressPack}</div>
+                )}
               </>
-            </React.Fragment>
-          );
-        })}
-        <label className="labels" style={{ marginRight: 'auto' }}>
-          <div>
-            {' '}
-            <input
-              type="checkbox"
-              name="includeCatPic"
-              checked={includeCatPic}
-              onChange={() => setIncludeCatPic(!includeCatPic)}
-            />{' '}
-            <span>Я маю кицю</span>
+            )}
+            {(selectedAddress === 'user' || selectedAddress === 'bielsko') && (
+              <>
+                <input
+                  className="form__street"
+                  type="text"
+                  name="userAddress"
+                  onChange={onHandleChange}
+                  value={formik.values.userAddress}
+                  placeholder="Ваша адреса"
+                  onBlur={formik.handleBlur} // Add onBlur event handler
+                />
+                {formik.touched.userAddress && (
+                  <div className="error">{formik.errors.userAddress}</div>
+                )}
+              </>
+            )}
+            {inputFields.slice(4).map(({ name, label, type }) => {
+              const fieldName = name as keyof typeof initialValues; // Explicitly define the type of 'name'
+              const value = formik.values[fieldName] as string;
+              const error = formik.errors[fieldName];
+              const touch = formik.touched[fieldName];
+              return (
+                <React.Fragment key={fieldName}>
+                  <>
+                    <input
+                      className="form__street"
+                      type={type}
+                      name={name}
+                      placeholder={label}
+                      onChange={onHandleChange}
+                      value={value}
+                      onBlur={formik.handleBlur} // Add onBlur event handler
+                    />
+                    {touch && error && <div className="error">{error as string}</div>}
+                  </>
+                </React.Fragment>
+              );
+            })}
+            <label className="labels" style={{ marginRight: 'auto' }}>
+              <div>
+                {' '}
+                <input
+                  type="checkbox"
+                  name="includeCatPic"
+                  checked={includeCatPic}
+                  onChange={() => setIncludeCatPic(!includeCatPic)}
+                />{' '}
+                <span>Я маю кицю</span>
+              </div>
+            </label>
+            {includeCatPic && (
+              <label>
+                <input
+                  type="file"
+                  name="catPic"
+                  onChange={onHandleChange}
+                  className="form__catPic"
+                  placeholder="Просимо вислати фото кота"
+                />
+                <span>
+                  Надішліть фото своєї киці та отримайте для неї подарунок (акція діє для замовлень
+                  загальною вагою від одного 1 кг){' '}
+                </span>
+                {formik.errors.catPic && (
+                  <div className="error">{formik.errors.catPic as string}</div>
+                )}
+              </label>
+            )}
+            <button onClick={onSendData}>Click</button>
           </div>
-        </label>
-        {includeCatPic && (
-          <label>
-            <input
-              type="file"
-              name="catPic"
-              onChange={onHandleChange}
-              className="form__catPic"
-              placeholder="Просимо вислати фото кота"
-            />
-            <span>
-              Надішліть фото своєї киці та отримайте для неї подарунок (акція діє для замовлень
-              загальною вагою від одного 1 кг){' '}
-            </span>
-            {formik.errors.catPic && <div className="error">{formik.errors.catPic as string}</div>}
-          </label>
-        )}
-      </div>
+        </>
+      ) : (
+        <div>
+          <Loader>
+            <div style={{ fontSize: 30 }}>Відправляємо данні...</div>
+          </Loader>
+        </div>
+      )}
     </div>
   );
 };
