@@ -78,7 +78,7 @@ const Form = () => {
         });
       };
 
-      sendingData()
+      await sendingData()
         .then(() => {
           resetForm();
           dispatch(clearItems());
