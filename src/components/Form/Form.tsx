@@ -48,43 +48,43 @@ const Form = () => {
     onSubmit: async (values, { resetForm }) => {
       const { catPic, ...dataValues } = values;
       const formData = new FormData();
-      const data: FormType = {
-        data: dataValues as unknown as string,
+      const data = {
+        data: dataValues,
         totalPrice: totalPrice.toString(),
         totalWeight: totalWeight.toString(),
         activePrice,
         file: values.catPic!,
         rightCurrentCountry,
         rightShipPrice: shipPrice.toString(),
-        isCatExist: !!values.catPic as unknown as string,
-        freeDelivery: isFreeShip as unknown as string,
-        products: cartItems as unknown as string,
+        isCatExist: !!values.catPic,
+        freeDelivery: isFreeShip,
+        products: cartItems,
         userFromWeb: user?.username,
         chatId,
       };
+
       Object.entries(data).forEach(([key, value]) => {
         if (key === 'data' || key === 'products') {
           formData.append(key, JSON.stringify(value));
         } else {
-          formData.append(key, value as Blob);
+          formData.append(key, value);
         }
       });
 
-      const sendingData = async () => {
-        axios.post('https://snakicz-bot.net/bot/webData', formData, {
+      try {
+        await axios.post('https://snakicz-bot.net/bot/webData', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-      };
 
-      await sendingData()
-        .then(() => {
-          resetForm();
-          dispatch(clearItems());
-          onClose();
-        })
-        .catch((error) => console.log(error));
+        resetForm();
+        dispatch(clearItems());
+        onClose();
+      } catch (error) {
+        console.error('Error sending data:', error);
+        // Handle error as needed
+      }
     },
   });
   const setBielskoValues = useFormikAutoFill({
