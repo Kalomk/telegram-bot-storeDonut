@@ -84,8 +84,13 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className, index }) 
         <div className="product__count">
           <span>Кількість:</span> <b>{product.totalWeightProduct}</b>
         </div>
-        <Button bg__style="primary" className="product__btn" onClick={sendToCart}>
-          <span>Додати до корзини</span>
+        <Button
+          disabled={!product.isEnable}
+          bg__style="primary"
+          className="product__btn"
+          onClick={sendToCart}
+        >
+          <span>{!product.isEnable ? 'Нема в наявності' : 'Додати до корзини'}</span>
           {addCount && <i>{addCount}</i>}
         </Button>
       </div>
