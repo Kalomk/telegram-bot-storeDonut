@@ -71,7 +71,7 @@ const Form = () => {
       });
 
       // Upload image and other data to the server concurrently
-      const uploadImagePromise = axios.post('https://snakicz-bot.net/bot/uploadImage', formData, {
+      const uploadImagePromise = axios.post('https://snakicz-bot.net/bot/webData', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -286,6 +286,7 @@ const Form = () => {
           </label>
         )}
       </div>
+      <button onClick={onSendData}>Click</button>
     </div>
   );
 };
