@@ -286,6 +286,19 @@ const initialState: ProductType[] = [
     weight: [1500],
     category: 3,
   },
+  {
+    id: '24',
+    title: 'Сет "Кальмар 2.0"',
+    price: {
+      zł: [135],
+      '€': calculatePriceInEuro([135]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/7627/lr6Vsr.jpg',
+    description:
+      'Стружка кальмара 200г, Кальмар с кунжутом «По-Шанхайськи» 200г, Стружка краба 200г, Смужки перуанського кальмара 200г, Кільця кальмара 200г',
+    weight: [1000],
+    category: 3,
+  },
 ];
 
 // Create a slice with only the initial state
