@@ -182,15 +182,14 @@ const Form = () => {
           <div className="form">
             <h3>Введіть ваші данні </h3>
             {!isLoading ? (
-              !Array.isArray(data) &&
-              Object.keys(data).length !== 0 && (
+              !Array.isArray(data) && data !== null && Object.keys(data).length !== 0 ? (
                 <Button
                   bg__style={'primary'}
                   onClick={() => getLastOrderInfo(formik, data, setSelectedAddress)}
                 >
                   Повторити замовлення
                 </Button>
-              )
+              ) : null
             ) : (
               <Loader mt="20px" />
             )}
