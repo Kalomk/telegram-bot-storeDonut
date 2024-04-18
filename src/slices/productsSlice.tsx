@@ -239,17 +239,6 @@ const initialState: ProductType[] = [
   },
   {
     id: '20',
-    title: 'Голд Фіш',
-    price: {
-      zł: [16, 40, 75, 140],
-      '€': calculatePriceInEuro([16, 40, 75, 140]),
-    },
-    img: 'https://imagizer.imageshack.com/img924/1250/gaV77b.jpg',
-    weight: [100, 250, 500, 1000],
-    category: 1,
-  },
-  {
-    id: '21',
     title: 'Сет "Red Valentine"',
     price: {
       zł: [250],
@@ -262,7 +251,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '22',
+    id: '21',
     title: 'Сет "Грізлі"',
     price: {
       zł: [130],
@@ -274,7 +263,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '23',
+    id: '22',
     title: 'Сет "Сет Палички"',
     price: {
       zł: [180],
@@ -287,7 +276,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '24',
+    id: '23',
     title: 'Сет "Кальмар 2.0"',
     price: {
       zł: [135],
