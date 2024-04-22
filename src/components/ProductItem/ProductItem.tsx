@@ -61,26 +61,28 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, className, index }) 
             </ul>
           </div>
         )}
-        <div className="product__price">
-          <span>Вартість:</span>{' '}
-          <b>
-            {prices[index][selectedIndex]} {activePrice}{' '}
-          </b>
+        <div className="product__obj">
+          <div className="product__price">
+            <span>Вартість:</span>{' '}
+            <b>
+              {prices[index][selectedIndex]} {activePrice}{' '}
+            </b>
+          </div>
+          <ul className="product__weight">
+            {product.weight.map((weight, index) => (
+              <li key={index + weight} onClick={() => setSelectedIndex(index)}>
+                <Button
+                  bg__style={index === selectedIndex ? 'primary' : 'bgempty'}
+                  className="product__button"
+                >
+                  <span style={index === product.weight.length - 1 ? { color: 'red' } : undefined}>
+                    {weight}
+                  </span>
+                </Button>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="product__weight">
-          {product.weight.map((weight, index) => (
-            <li key={index + weight} onClick={() => setSelectedIndex(index)}>
-              <Button
-                bg__style={index === selectedIndex ? 'primary' : 'bgempty'}
-                className="product__button"
-              >
-                <span style={index === product.weight.length - 1 ? { color: 'red' } : undefined}>
-                  {weight}
-                </span>
-              </Button>
-            </li>
-          ))}
-        </ul>
         <div className="product__count">
           <span>Кількість:</span> <b>{product.totalWeightProduct}</b>
         </div>

@@ -14,10 +14,15 @@
     background-color: transparent;
     height: 120px;
   }
+
+  &__obj {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   &__weight {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
