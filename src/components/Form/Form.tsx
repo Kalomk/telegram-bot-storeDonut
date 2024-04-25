@@ -97,6 +97,7 @@ const Form = () => {
         if (fileSizeInKB > 50) {
           timeout = 2000; // Increase timeout if file size is greater than 1000 KB
         }
+        //reset
         setTimeout(() => {
           setisFormLoaded(false);
           resetForm();
