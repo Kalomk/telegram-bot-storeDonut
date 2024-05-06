@@ -291,18 +291,7 @@ const Form = () => {
             </React.Fragment>
           );
         })}
-        <label className="labels" style={{ marginRight: 'auto' }}>
-          <div>
-            {' '}
-            <input
-              type="checkbox"
-              name="includeCatPic"
-              checked={includeCatPic}
-              onChange={() => setIncludeCatPic(!includeCatPic)}
-            />{' '}
-            <span>Я маю кицю</span>
-          </div>
-        </label>
+       
         {includeCatPic && (
           <label>
             <input
