@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { fetchProduct } from '../../slices/productsSlice';
 import { AnyAction } from 'redux';
 import Loader from '../Loader/Loader';
-import axios from 'axios';
 
 const ProductList = () => {
   const { tg } = useTelegram();
