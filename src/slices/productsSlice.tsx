@@ -319,7 +319,7 @@ const initialState: ProductType[] = [
     },
     img: 'https://imagizer.imageshack.com/img922/3154/pQxTJa.jpg',
     weight: [110],
-    category: 3,
+    category: 4,
   },
   {
     id: '27',
@@ -330,7 +330,7 @@ const initialState: ProductType[] = [
     },
     img: 'https://imagizer.imageshack.com/img923/5012/optROz.jpg',
     weight: [90],
-    category: 3,
+    category: 4,
   },
 ];
 
