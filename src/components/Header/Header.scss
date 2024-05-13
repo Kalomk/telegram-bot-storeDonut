@@ -3,13 +3,16 @@
   height: 50px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  
   padding: 0 20px;
   white-space: normal;
   &__btns {
+    margin-top: 10px;
     display: flex;
     align-items: center;
     gap: 5px;
+    flex-wrap: wrap;
+    max-width: 360px;
   }
 }
 
