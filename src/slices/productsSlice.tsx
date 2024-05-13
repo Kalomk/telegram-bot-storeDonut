@@ -288,6 +288,50 @@ const initialState: ProductType[] = [
     weight: [1000],
     category: 3,
   },
+  {
+    id: '24',
+    title: 'Грінки Flint Житні зі смаком баварських ковбасок',
+    price: {
+      zł: [5],
+      '€': calculatePriceInEuro([5]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/650/23PZEp.jpg',
+    weight: [100],
+    category: 4,
+  },
+  {
+    id: '25',
+    title: 'Сухарики Flint Пшенично-житні зі смаком грибної пательні',
+    price: {
+      zł: [5],
+      '€': calculatePriceInEuro([5]),
+    },
+    img: 'https://imagizer.imageshack.com/img924/3851/j5mzIP.jpg',
+    weight: [100],
+    category: 4,
+  },
+  {
+    id: '26',
+    title: 'Сухарики Flint Пшенично-житні зі смаком краба',
+    price: {
+      zł: [5],
+      '€': calculatePriceInEuro([5]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/3154/pQxTJa.jpg',
+    weight: [110],
+    category: 3,
+  },
+  {
+    id: '27',
+    title: 'Грінки Flint Craft Житньо-пшеничні хвилясті зі смаком часнику',
+    price: {
+      zł: [5],
+      '€': calculatePriceInEuro([5]),
+    },
+    img: 'https://imagizer.imageshack.com/img923/5012/optROz.jpg',
+    weight: [90],
+    category: 3,
+  },
 ];
 
 // Create a slice with only the initial state
