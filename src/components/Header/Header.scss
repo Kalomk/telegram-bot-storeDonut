@@ -3,11 +3,12 @@
   height: 50px;
   display: flex;
   align-items: center;
-  
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 0 20px;
   white-space: normal;
   &__btns {
-    margin-top: 10px;
+  
     display: flex;
     align-items: center;
     gap: 5px;
