@@ -332,6 +332,39 @@ const initialState: ProductType[] = [
     weight: [90],
     category: 4,
   },
+  {
+    id: '28',
+    title: 'Сухарики Flint Пшенично-житні зі смаком сметани із зеленню',
+    price: {
+      zł: [3.25],
+      '€': calculatePriceInEuro([3.25]),
+    },
+    img: 'https://imagizer.imageshack.com/img923/7606/F9QJPX.jpg',
+    weight: [70],
+    category: 4,
+  },
+  {
+    id: '29',
+    title: 'Грінки Flint Житні зі смаком телятини з аджикою',
+    price: {
+      zł: [5],
+      '€': calculatePriceInEuro([5]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/8741/W9lk91.jpg',
+    weight: [100],
+    category: 4,
+  },
+  {
+    id: '30',
+    title: 'Сухарики Flint Baguette Пшеничні зі смаком грибів у вершковому соусі',
+    price: {
+      zł: [7.25],
+      '€': calculatePriceInEuro([7.25]),
+    },
+    img: 'https://imagizer.imageshack.com/img922/8747/jJOWci.jpg',
+    weight: [150],
+    category: 4,
+  },
 ];
 
 // Create a slice with only the initial state
