@@ -139,17 +139,6 @@ const initialState: ProductType[] = [
   },
   {
     id: '11',
-    title: 'Соломка тунця',
-    price: {
-      zł: [15, 35, 65, 120],
-      '€': calculatePriceInEuro([15, 35, 65, 120]),
-    },
-    img: 'https://imagizer.imageshack.com/img923/2519/oHrl15.jpg',
-    weight: [100, 250, 500, 1000],
-    category: 1,
-  },
-  {
-    id: '12',
     title: 'Смужки перуанського кальмара',
     price: {
       zł: [16, 40, 75, 140],
@@ -160,18 +149,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '13',
-    title: 'Павутиння кальмара з перцем',
-    price: {
-      zł: [16, 40, 75, 140],
-      '€': calculatePriceInEuro([16, 40, 75, 140]),
-    },
-    img: 'https://imagizer.imageshack.com/img922/1011/2aKEFs.jpg',
-    weight: [100, 250, 500, 1000],
-    category: 2,
-  },
-  {
-    id: '14',
+    id: '12',
     title: 'Сет Рибний',
     price: { zł: [125], '€': [28] },
     img: 'https://imagizer.imageshack.com/img922/7360/xJQY7p.jpg', // Replace with the actual image URL
@@ -181,7 +159,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '15',
+    id: '13',
     title: 'Стружка краба',
     price: {
       zł: [16, 40, 75, 145],
@@ -192,7 +170,7 @@ const initialState: ProductType[] = [
     category: 2,
   },
   {
-    id: '16',
+    id: '14',
     title: 'Соломка тріски',
     price: {
       zł: [16, 40, 70, 130],
@@ -203,18 +181,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '17',
-    title: 'Стружка кальмара',
-    price: {
-      zł: [16, 40, 80, 150],
-      '€': calculatePriceInEuro([16, 40, 80, 150]),
-    },
-    img: 'https://imagizer.imageshack.com/img924/4177/2rovl5.jpg',
-    weight: [100, 250, 500, 1000],
-    category: 2,
-  },
-  {
-    id: '18',
+    id: '15',
     title: 'Сет Гігант',
     price: {
       zł: [225],
@@ -227,7 +194,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '19',
+    id: '16',
     title: 'Палички вʼяленого лосося',
     price: {
       zł: [15, 35, 60, 115],
@@ -238,7 +205,7 @@ const initialState: ProductType[] = [
     category: 1,
   },
   {
-    id: '20',
+    id: '17',
     title: 'Сет "Red Valentine"',
     price: {
       zł: [250],
@@ -251,11 +218,11 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '21',
+    id: '18',
     title: 'Сет XXL',
     price: {
-      zł: [225],
-      '€': calculatePriceInEuro([225]),
+      zł: [175],
+      '€': calculatePriceInEuro([175]),
     },
     img: 'https://imagizer.imageshack.com/img923/9002/habg0E.jpg',
     description: 'Мікс сухариків 5 смаків,Стружка кальмара,Стружка краба 100г,Кільця кальмара 100г,Кальмар Шанхайський 100г,Кальмар Перуанський 100г,Павутинка кальмара з перцем 100г,Соломка тріски 100г,Соломка тріски з перцем 100г,Ікряник з лосося 100г,Павутинка тунця з перцем 100г,Палички вʼяленого лосося 100г,Анчоус 100г,Філе тріски 100г,Бурштинова з перцем 100г,Ставридка 100г',
@@ -263,7 +230,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '22',
+    id: '19',
     title: 'Сет "Сет Палички"',
     price: {
       zł: [180],
@@ -276,7 +243,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '23',
+    id: '20',
     title: 'Сет "Кальмар 2.0"',
     price: {
       zł: [135],
@@ -289,7 +256,7 @@ const initialState: ProductType[] = [
     category: 3,
   },
   {
-    id: '24',
+    id: '21',
     title: 'Грінки Flint Житні зі смаком баварських ковбасок',
     price: {
       zł: [5],
@@ -300,7 +267,7 @@ const initialState: ProductType[] = [
     category: 4,
   },
   {
-    id: '25',
+    id: '22',
     title: 'Сухарики Flint Пшенично-житні зі смаком грибної пательні',
     price: {
       zł: [5],
@@ -311,7 +278,7 @@ const initialState: ProductType[] = [
     category: 4,
   },
   {
-    id: '26',
+    id: '23',
     title: 'Сухарики Flint Пшенично-житні зі смаком краба',
     price: {
       zł: [5],
@@ -322,7 +289,7 @@ const initialState: ProductType[] = [
     category: 4,
   },
   {
-    id: '27',
+    id: '24',
     title: 'Грінки Flint Craft Житньо-пшеничні хвилясті зі смаком часнику',
     price: {
       zł: [5],
@@ -333,7 +300,7 @@ const initialState: ProductType[] = [
     category: 4,
   },
   {
-    id: '28',
+    id: '25',
     title: 'Сухарики Flint Пшенично-житні зі смаком сметани із зеленню',
     price: {
       zł: [3.25],
@@ -344,7 +311,7 @@ const initialState: ProductType[] = [
     category: 4,
   },
   {
-    id: '29',
+    id: '26',
     title: 'Грінки Flint Житні зі смаком телятини з аджикою',
     price: {
       zł: [5],
@@ -355,7 +322,7 @@ const initialState: ProductType[] = [
     category: 4,
   },
   {
-    id: '30',
+    id: '27',
     title: 'Сухарики Flint Baguette Пшеничні зі смаком грибів у вершковому соусі',
     price: {
       zł: [7.25],
